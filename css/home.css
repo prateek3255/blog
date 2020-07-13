@@ -1,0 +1,11 @@
+/**
+ * @file Defines styles specific to the home page
+ * Custom properties are set in `_includes/shortcodes/css-root.js`
+ * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
+ */
+@media (min-width: 40em) {
+  #site_header h1 {
+    font-size: var(--font-size);
+  }
+}

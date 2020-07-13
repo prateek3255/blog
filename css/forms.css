@@ -1,0 +1,8 @@
+/**
+ * @file Defines styles specific to pages with form elements
+ * Custom properties are set in `_includes/shortcodes/css-root.js`
+ * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
+ * To apply this stylesheet:
+ * Set a template’s `data.form` key to a value of `true`.
+ */

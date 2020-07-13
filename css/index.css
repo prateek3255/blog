@@ -1,0 +1,174 @@
+/**
+ * @file Defines styles common to all pages
+ * Custom properties are set in `_includes/shortcodes/css-root.js`
+ * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
+ */
+
+/* Set box-sizing for all elements */
+*:
+*:before
+*:after {
+  box-sizing: border-box;
+}
+
+/* Visually hide an element, but leave it available for screen readers */
+.screen-reader-text {
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
+
+/* Layout */
+.grid {
+  display: grid;
+}
+  
+.gap {
+  gap: var(--base-unit);
+}
+
+body {
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 1fr minmax(calc(100vw - 66ch), 66ch) 1fr; 
+  min-height: 100vh;
+}
+
+#site_header,
+#site_header + nav,
+main,
+#site_footer {
+  grid-column: 2;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+}
+
+/* Margin */
+.no-margin {
+  margin: 0;
+}
+
+/* Colors */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+time,
+footer {
+  color: var(--gray);
+}
+
+code {
+  background-color: var(--grayscale-100);
+  border-radius: 3px;
+  color: var(--black);
+  hyphens: manual;
+  padding: 1px 3px;
+  word-break: break-all;
+}
+
+/* Typography */
+body {
+  font-family: Nunito;
+  font-size: 1.25em;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+nav a,
+time {
+  font-weight: 700;
+}
+
+article p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+time,
+#site_footer {
+  font-size: small;
+}
+
+ul {
+  list-style: square;
+}
+
+/* Links */
+a {
+  color: inherit;
+}
+
+a:focus,
+a:hover,
+a:visited {
+  opacity: 0.8;
+}
+
+nav a {
+  padding: 0.5em;
+}
+
+/* Border */
+#site_header + nav {
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+#site_footer {
+  border-top: var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+
+.body-border {
+  border: 12px solid var(--accent);
+}
+
+.social {
+  text-align: right;
+}
+
+.social a {
+  display: block;
+  color: var(--text-color);
+  padding: 10px;
+}
+
+.social a:hover {
+  color: var(--accent);
+}
+
+.social ul {
+  margin: 5px 0 0 0;
+  padding: 0;
+}
+
+.social li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style: none;
+}
+
+.footer-img-container {
+  grid-row: 3;
+  grid-column: 2;
+  /* background: url('http://localhost:8080/img/prateek-bitmoji.png') no-repeat 50%; */
+  height: 160px;
+  position: relative;
+}
+
+.footer-img {
+  position: absolute;
+  top: -6px;
+  margin: auto;
+  left: 0;
+  right: 0;
+}

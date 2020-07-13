@@ -1,0 +1,37 @@
+/**
+ * @file Defines styles specific to posts
+ * Custom properties are set in `_includes/shortcodes/css-root.js`
+ * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
+ */
+.article-header h2 {
+  font-size: 2.5em;
+  margin-top: 1em;
+}
+
+article {
+  max-width: calc(100vw - var(--base-unit) * 3);
+}
+
+blockquote {
+	background-color: var(--grayscale-100);
+	border-inline-start: var(--border);
+	color: var(--black);
+	margin: var(--base-unit);
+	padding: var(--base-unit);
+}
+
+pre {
+  background-color: var(--grayscale-100);
+  border-radius: 3px;
+  border: var(--border);
+  display: block;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+pre code {
+  padding: 0;
+  background-color: transparent;
+  border-radius: unset;
+}
