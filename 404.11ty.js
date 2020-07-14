@@ -10,7 +10,7 @@
  */
 exports.data ={
   locale: 'en',
-  title: '🎉 Congratulations! You found the sample 404 page!',
+  title: '🎉 Congratulations! You found the WIP 404 page!',
   layout: 'layouts/page',
   permalink: '404.html',
   templateEngineOverride: '11ty.js,md',
@@ -32,7 +32,6 @@ exports.render = data =>
 
 ### Other options
 
-* [😇 Complain to ${data.author.name.givenName} on Twitter](${data.author.social.accounts.find(
-  account => account.name === 'Twitter').url})
+* [😇 Complain to ${data.author.name.givenName} on Twitter](${data.author.social.twitter})
 * [📥 File an issue in Git](${data.pkg.bugs.url})
 * [🏡 Return to the homepage](${data.pkg.bugs.url})`

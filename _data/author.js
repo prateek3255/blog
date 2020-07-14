@@ -16,37 +16,16 @@
  */
 module.exports = {
   name: {
-    fullName: 'Reuben L. Lillie',
-    givenName: 'Reuben',
-    surname: 'Lillie'
+    fullName: 'Prateek Surana',
+    givenName: 'Prateek',
+    surname: 'Surana'
   },
   social: {
-    // Add or remove accounts for social media platforms
-    accounts: [
-      {
-        name: 'GitHub',
-        url: 'https://github.com/reubenlillie/'
-      },
-      {
-        name: 'GitLab',
-        url: 'https://gitlab.com/reubenlillie/'
-      },
-      {
-        name: 'Instagram',
-        url: 'https://www.instagram.com/reuben.lillie/'
-      },
-      {
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/in/reubenlillie/'
-      },
-      {
-        name: 'Messenger',
-        url: 'https://m.me/reubenlillie/'
-      },
-      {
-        name: 'Twitter',
-        url: 'https://twitter.com/reubenlillie/'
-      }
-    ]
+    twitter: 'https://twitter.com/psuranas',
+    github: 'https://github.com/prateek3255',
+    stackOverflow: 'https://stackoverflow.com/users/8252081/prateek-surana',
+    medium: 'https://medium.com/@prateeksurana3255',
+    quora: 'https://www.quora.com/profile/Prateek-Surana-11',
+    linkedIn: 'https://www.linkedin.com/in/psuranas/'
   }
 }

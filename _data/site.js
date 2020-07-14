@@ -16,7 +16,7 @@
  */
 module.exports = {
   // The root for the site domain (without a trailing slash)
-  baseUrl: 'http://localhost:8080',
+  baseUrl: process.env.BASE_URL,
   // Uses this locale when one is not set in content/content.11tydata.js
   defaultLocale: 'en-US',
   // Localized strings and other options for English
@@ -24,13 +24,13 @@ module.exports = {
   en: {
     // English as used in the Unite States
     locale: 'en-US',
-    title: '🍦.11ty.js',
+    title: 'Prateek\'s Blog',
     // The subtitle, slogan, or catchphrase for your site,
     // used in _includes/shortcodes/site-header
-    tagline: 'The vanilla JavaScript 🕚 Eleventy starter project of your dreams 💭',
+    tagline: 'The Times of a JavaScript developer',
     // Puncuation between a title and subtitle,
     // used in _includes/shortcodes/title-tag
-    separator: ' 🍦 ',
+    separator: ' ',
     // The link text for skip-to-content lins, used by screen readers
     skipToContent: 'Skip to main content',
     // The link text to invite users to edit a page in the project Git repository

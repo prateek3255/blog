@@ -4,8 +4,8 @@
   "description": "A starter project showing how to build a blog with the Eleventy static site generator using JavaScript templates.",
   "main": "index.js",
   "scripts": {
-    "build": "ELEVENTY_ENV=production npx eleventy",
-    "dev": "ELEVENTY_ENV=development npx eleventy --serve",
+    "build": "ELEVENTY_ENV=production BASE_URL=https://prateeksurana.me/blog npx eleventy",
+    "dev": "ELEVENTY_ENV=development BASE_URL=http://localhost:8080 npx eleventy --serve",
     "debug": "DEBUG=* npx eleventy"
   },
   "repository": {
