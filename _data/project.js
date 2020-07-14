@@ -1,6 +1,6 @@
 /**
  * @file Exposes environment variables to templates
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /**

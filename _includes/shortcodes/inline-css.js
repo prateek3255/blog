@@ -1,6 +1,6 @@
 /**
  * @file Defines a shortcode for loading inline stylesheets
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /**

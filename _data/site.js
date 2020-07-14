@@ -1,6 +1,6 @@
 /**
  * @file Contains global data for configuring the site
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 // Edit the values for the properties in this file to fit your site.

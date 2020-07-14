@@ -1,6 +1,6 @@
 /**
  * @file Contains global copyright data
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 // Edit the values for the properties in this file to fit your site.

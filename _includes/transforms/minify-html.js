@@ -1,6 +1,6 @@
 /**
  * @file Defines a filter to minify HTML template files
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /*

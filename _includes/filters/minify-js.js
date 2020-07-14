@@ -1,6 +1,6 @@
 /**
  * @file Defines a filter to minify JavaScript inline
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /*

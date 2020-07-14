@@ -1,6 +1,6 @@
 /**
  * @file Contains data common to all pages, to reduce repetition
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /**

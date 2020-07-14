@@ -1,6 +1,6 @@
 /**
  * @file Defines a filter to convert a file’s contents to a string
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /*

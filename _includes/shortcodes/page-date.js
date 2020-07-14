@@ -1,6 +1,6 @@
 /**
  * @file Defines a shortcode for displaying a page’s date
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  * @see {@link https://www.11ty.dev/docs/languages/javascript/#javascript-template-functions JavaScript template functions in 11ty}
  * @see {@link https://www.11ty.dev/docs/dates/}
  */

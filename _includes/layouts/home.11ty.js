@@ -1,6 +1,6 @@
 /**
  * @file Defines the chained template for home page
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  * @see {@link https://www.11ty.dev/docs/layouts/#layout-chaining Layout chaining in 11ty}
  */
 

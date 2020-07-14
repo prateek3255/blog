@@ -1,6 +1,6 @@
 /**
  * @file Defines a universal shortcode for social media metadata
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  * @see {@link https://www.11ty.dev/docs/shortcodes/ Shortcodes in 11ty}
  */
 

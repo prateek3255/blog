@@ -1,6 +1,6 @@
 /**
  * @file Imports transforms and configures them with 11ty (.eleventy.js)
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 // Import transforms to include

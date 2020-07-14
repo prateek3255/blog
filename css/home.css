@@ -1,7 +1,7 @@
 /**
  * @file Defines styles specific to the home page
  * Custom properties are set in `_includes/shortcodes/css-root.js`
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
  */
 @media (min-width: 40em) {

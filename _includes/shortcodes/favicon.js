@@ -1,6 +1,6 @@
 /**
  * @file Defines a shortcode to load a favicon for the user’s platform
- * @author Reuben L. Lillie <reubenlillie@gmail.com>
+ * @author Prateek Surana
  */
 
 /**
