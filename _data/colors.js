@@ -3,11 +3,7 @@
  * @author Prateek Surana
  */
 
-// Edit the values for the properties in this file to fit your site.
-// You can add as many new properties as you want,
-// but you shouldn’t remove any of the ones already included here
-// without also editing the files where those properties are used.
-// Otherwise, the site will probably break.
+
 
 /**
  * Global site data module
