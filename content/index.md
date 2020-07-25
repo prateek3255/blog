@@ -9,7 +9,7 @@ pagination:
   size: 3
   alias: posts
   reverse: true
-permalink: "/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
+permalink: "{{ site.en.postsArchive.url }}/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
 ---
 
 This is your blog landing page. 🛬
