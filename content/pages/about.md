@@ -11,7 +11,7 @@ This project takes a fair amount of inspiration from the [eleventy-base-blog](ht
 
 But this project differs from all other existing blog starter projects—built with Eleventy or otherwise—in one crucial respect:
 
-<p style="text-align:center;"><strong>It’s all 🍦 vanilla JavaScript.</strong></p>
+<p style="text-align:center;"><strong>It’s all vanilla JavaScript.</strong></p>
 
 `this` flavor of Eleventy means:
 
