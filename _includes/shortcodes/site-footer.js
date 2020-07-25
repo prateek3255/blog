@@ -30,22 +30,22 @@ module.exports = eleventyConfig =>
         <div class="social">
         <ul>
         <li>
-            <a href="${data.author.twitter}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="${data.author.social.twitter}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </li>
                         <li>
-                            <a href="${data.author.github}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                            <a href="${data.author.social.github}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="${data.author.stackOverflow}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                            <a href="${data.author.social.stackOverflow}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="${data.author.medium}" target="_blank"><i class="fa fa-medium" aria-hidden="true"></i></a>
+                            <a href="${data.author.social.medium}" target="_blank"><i class="fa fa-medium" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="${data.author.quora}" target="_blank"><i class="fa fa-quora" aria-hidden="true"></i></a>
+                            <a href="${data.author.social.quora}" target="_blank"><i class="fa fa-quora" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                                <a href="${data.author.linkedIn}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                <a href="${data.author.social.linkedIn}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </li>
                     </ul>
         </div>
