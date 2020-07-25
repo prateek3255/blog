@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Welcome to 🍦.11ty.js',
   date: '2020-04-10',
-  permalink: '/blog/welcome/',
+  permalink: '/welcome/',
   templateEngineOverride: '11ty.js,md',
   description: 'Not only is this first blog post meant to be inviting and informative, you can get a taste of how quirky Reuben’s writing gets when he tries to be playful with his prose.'
 }

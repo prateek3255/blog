@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Getting Started with 🍦.11ty.js, Part IV: Installing Node.js and Eleventy',
   date: '2020-04-15',
-  permalink: '/blog/installing-nodejs-and-eleventy/',
+  permalink: '/installing-nodejs-and-eleventy/',
   templateEngineOverride: '11ty.js,md',
   description: 'Learn about what Node.js is and how to finish installing 🍦.11ty.js and its dependencies.'
 }

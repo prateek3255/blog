@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Getting Started with 🍦.11ty.js, Part II: Using Your Terminal',
   date: '2020-04-13',
-  permalink: '/blog/terminal/',
+  permalink: '/terminal/',
   templateEngineOverride: '11ty.js,md',
   description: 'Learn the basics of the command line interface that comes preinstalled with your operating system.'
 }

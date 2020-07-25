@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Getting Started with 🍦.11ty.js, Part III: An Introduction to Git',
   date: '2020-04-14',
-  permalink: '/blog/intro-to-git/',
+  permalink: '/intro-to-git/',
   templateEngineOverride: '11ty.js,md',
   description: 'Learn about what Git is and how to install a personal copy of 🍦.11ty.js on your computer.'
 }

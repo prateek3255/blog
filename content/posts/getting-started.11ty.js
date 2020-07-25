@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Getting Started with 🍦.11ty.js, Part I: An Introduction to Local Development',
   date: '2020-04-11',
-  permalink: '/blog/getting-started/',
+  permalink: '/getting-started/',
   templateEngineOverride: '11ty.js,md',
   description: 'Learn about what a local development environment is and the software you’ll need to run 🍦.11ty.js on your own computer.'
 }
