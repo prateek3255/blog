@@ -44,6 +44,9 @@ module.exports = function (eleventyConfig) {
    */
   eleventyConfig.addPassthroughCopy('css')
   eleventyConfig.addPassthroughCopy('img')
+  eleventyConfig.addPassthroughCopy('favicons')
+  eleventyConfig.addPassthroughCopy('favicon.ico')
+  eleventyConfig.addPassthroughCopy('browserconfig.xml')
 
   /**
    * Have Eleventy watch the following additional files for live browsersync

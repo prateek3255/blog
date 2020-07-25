@@ -25,7 +25,7 @@ module.exports = eleventyConfig =>
   eleventyConfig.addShortcode('favicon', function (data) {
     // You can only use one of these return statements at a time
     // Comment the next line ⬇️ to disable emoji favicons 
-    return `<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍦</text></svg>">`
+    // return `<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍦</text></svg>">`
     // Uncomment the next line ⬇️ to enable favicons via the Real Favicon Generator
-    // return `${this.fileToString('favicons/html_code.html')}`
+    return `${this.fileToString('favicons/html_code.html')}`
   })
