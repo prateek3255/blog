@@ -11,7 +11,7 @@
 exports.data ={
   title: 'Getting Started with 🍦.11ty.js, Part V: Choosing a Text Editor',
   date: '2020-04-17',
-  permalink: '/blog/text-editor/',
+  permalink: '/text-editor/',
   templateEngineOverride: '11ty.js,md',
   description: 'Learn about what a text editor is and how to edit 🍦.11ty.js files.'
 }

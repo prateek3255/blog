@@ -60,7 +60,7 @@ module.exports = {
       // Invite the user to visit your archive of posts, used on home page
       prompt: '… peruse your blog archives 👀',
       // The landing page for your archive of posts
-      url: '/blog/'
+      url: '/'
     },
     /*
      * Options for displaying dates in this locale
