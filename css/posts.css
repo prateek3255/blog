@@ -21,17 +21,16 @@ blockquote {
 	padding: var(--base-unit);
 }
 
-pre {
-  background-color: var(--grayscale-100);
-  border-radius: 3px;
-  border: var(--border);
-  display: block;
+ pre {
+  /* background-color: var(--grayscale-100); */
+  /* border-radius: 3px; */
+  /* border: var(--border); */
+  /* display: block; */
   padding: 1em;
   overflow-x: auto;
 }
 
+
 pre code {
-  padding: 0;
   background-color: transparent;
-  border-radius: unset;
 }
