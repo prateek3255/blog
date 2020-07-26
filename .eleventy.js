@@ -19,6 +19,7 @@ var fs = require('fs')
  * helps keep the codebase organized—at least that’s the idea.
  */
 var includes = require('./_includes/index')
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 
 /**
  * 11ty’s configuration module
@@ -37,6 +38,9 @@ module.exports = function (eleventyConfig) {
    * @see {@link https://www.11ty.dev/docs/data-deep-merge/ Data deep merge in 11ty}
    */
   eleventyConfig.setDataDeepMerge(true)
+
+  // Add the syntax higlighter plugin
+  eleventyConfig.addPlugin(syntaxHighlight);
 
   /**
    * Copy static assets to the output directory

@@ -1,30 +1,12 @@
-/**
- * @file Defines the chained template for the blog post
- * @author Prateek Surana
- * @see {@link https://www.11ty.dev/docs/layouts/#layout-chaining Layout chaining in 11ty}
- */
+---
+title: Choosing a Text Editor
+date: 2020-04-17
+permalink: /text-editor/
+templateEngineOverride: 11ty.js,md
+description: Learn about what a text editor is and how to edit 🍦.11ty.js files
+---
 
-/**
- * Acts as front matter in JavaScript templates
- * @see {@link https://www.11ty.dev/docs/languages/javascript/#optional-data-method Optional `data` in JavaScript templates in 11ty}
- */
-exports.data ={
-  title: 'Getting Started with 🍦.11ty.js, Part V: Choosing a Text Editor',
-  date: '2020-04-17',
-  permalink: '/text-editor/',
-  templateEngineOverride: '11ty.js,md',
-  description: 'Learn about what a text editor is and how to edit 🍦.11ty.js files.'
-}
-
-/**
- * The content of the blog post
- * @method
- * @name render()
- * @param {Object} data 11ty’s data object
- * @return {String} The rendered template
- */
-exports.render = data =>
-`_This is the final post in a five-part series on [“Getting Started with 🍦.11ty.js”](/blog/getting-started/)_
+_This is the final post in a five-part series on [“Getting Started with 🍦.11ty.js”](/blog/getting-started/)_
 
 > **👣 Background** 
 >
@@ -70,15 +52,19 @@ In <code>./content/pages</code> and <code>./content/posts/</code>, you can edit 
 
 To preview your site with Eleventy, you can enter the following command into your terminal:
 
-<pre><code>npx eleventy --serve</code></pre>
+```js
+function hello() {
+  return true
+}
+```
 
 Then open your browser and navigate to the <abbr title="URL: Universal Resource Locator">URL</abbr> Eleventy prints to your terminal (likely <code>http://localhost:8080</code>).
 
 Use the <code>build</code> command, and Eleventy will generate a copy of your site to publish online with just about any webhost you like (for example, [Netlify](https://docs.netlify.com/)):
 
-<pre><code>npm run build</code></pre>
-
+```js
+npm run build
+```
 🎉 You’re all set with 🍦.11ty.js! The only practical limit is your imagination.
 
 Have fun! Make something worthwhile. And, if you feel so inclined, submit an issue, feature request, or merge request on GitLab to help make 🍦.11ty.js even better.
-`

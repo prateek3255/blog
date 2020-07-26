@@ -160,7 +160,6 @@ nav a {
 .footer-img-container {
   grid-row: 3;
   grid-column: 2;
-  /* background: url('http://localhost:8080/img/prateek-bitmoji.png') no-repeat 50%; */
   height: 100%;
   position: relative;
   display: flex;
@@ -170,4 +169,5 @@ nav a {
 
 .footer-img {
     margin-bottom: -11px;
+    height: 150px;
 }

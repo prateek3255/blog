@@ -30,6 +30,7 @@ module.exports = eleventyConfig =>
       ${this.favicon(data)}
       ${this.socialMeta(data)}
       <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+      <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>
         ${this.minifyCSS(this.inlineCSS(data))}
@@ -37,3 +38,5 @@ module.exports = eleventyConfig =>
       ${this.externalCSS(data)}
     </head>`
   })
+
+  // <link href="${data.site.baseUrl}css/prism.css" rel="stylesheet">
