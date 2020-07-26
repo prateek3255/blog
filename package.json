@@ -4,22 +4,22 @@
   "description": "A starter project showing how to build a blog with the Eleventy static site generator using JavaScript templates.",
   "main": "index.js",
   "scripts": {
-    "build": "ELEVENTY_ENV=production BASE_URL=https://prateeksurana.me/blog npx eleventy",
-    "dev": "ELEVENTY_ENV=development BASE_URL=http://localhost:8080 npx eleventy --serve",
+    "build": "ELEVENTY_ENV=production BASE_URL=https://prateeksurana.me/blog/ npx eleventy",
+    "dev": "ELEVENTY_ENV=development BASE_URL=http://localhost:8080/ npx eleventy --serve",
     "debug": "DEBUG=* npx eleventy"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/reubenlillie/eleventy-dot-js-blog.git",
-    "https": "https://gitlab.com/reubenlillie/eleventy-dot-js-blog.git",
-    "editUrl": "https://gitlab.com/reubenlillie/eleventy-dot-js-blog/-/edit/master"
+    "url": "git://github.com/prateek3255/blog.git",
+    "https": "https://github.com/prateek3255/blog.git",
+    "editUrl": "https://github.com/prateek3255/blog/-/edit/master"
   },
-  "author": "Reuben L. Lillie",
+  "author": "Prateek Surana",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/reubenlillie/eleventy-dot-js-blog/issues"
+    "url": "https://github.com/prateek3255/blog/issues"
   },
-  "homepage": "https://gitlab.com/reubenlillie/eleventy-dot-js-blog#readme",
+  "homepage": "https://github.com/prateek3255/blog#readme",
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
     "clean-css": "^4.2.3",

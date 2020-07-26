@@ -38,7 +38,7 @@ module.exports = eleventyConfig =>
         files.push(data.tags[0]) 
       }
       files.map(file =>
-        html += `<link href="./css/${file}.css" rel="stylesheet" media="screen">`)
+        html += `<link href="${data.site.baseUrl}css/${file}.css" rel="stylesheet" media="screen">`)
     }
     return html
   })
