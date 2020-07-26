@@ -29,7 +29,7 @@ module.exports = eleventyConfig =>
         ? 'padding:var(--base-unit);border:var(--border);' : ''}">
         <time>${this.pageDate(item.data)}</time>
         <h2 class="no-margin">
-          <a href="${item.data.page.url}">${item.data.title}</a>
+          <a href=".${item.data.page.url}">${item.data.title}</a>
         </h2>
         <p class="no-margin">${item.data.description}</p>
       </article>`).join('')}
