@@ -23,7 +23,7 @@ module.exports = function (data) {
       </main>
       ${this.siteFooter(data)}
       <div class="footer-img-container">
-      <img class="footer-img" src="${data.site.baseUrl}img/prateek-bitmoji.png"></img>
+      <img class="footer-img" alt="Footer Emoji" src="${data.site.baseUrl}img/prateek-bitmoji.png"></img>
       </div>
     </body>
   </html>`
