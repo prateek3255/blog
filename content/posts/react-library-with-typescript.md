@@ -285,4 +285,4 @@ There still many things that you can and should do that I couldn't cover in the 
 - Add test cases using [Jest and React Testing Library](https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript).
 - Setup [Husky pre-commit hook with ESLint](https://www.orangejellyfish.com/blog/code-consistency-with-eslint-and-husky/) for enforcing linting in your code.
 
-If this post helped you in anyway then do [share it on Twitter,](https://twitter.com/intent/tweet?url=https://prateeksurana.me/typescript-react-library) and [follow me](http://twitter.com/psuranas) for more.
+If this post helped you in anyway then do [share it on Twitter,](https://twitter.com/intent/tweet?url=https://prateeksurana.me/blog/react-library-with-typescript/) and [follow me](http://twitter.com/psuranas) for more.
