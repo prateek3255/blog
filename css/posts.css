@@ -13,12 +13,25 @@ article {
   max-width: calc(100vw - var(--base-unit) * 3);
 }
 
+h2 {
+  margin-top: 1.8em;
+}
+
 blockquote {
 	background-color: var(--grayscale-100);
-	border-inline-start: var(--border);
-	color: var(--black);
-	margin: var(--base-unit);
-	padding: var(--base-unit);
+	/* border: var(--border); */
+  color: var(--black);
+	margin: 1.7em 0em 0em 0em;
+  padding: 0.5em 1em;
+  position: relative;
+}
+
+blockquote::before {
+  content: '💡';
+  position: absolute;
+  top: -25px;
+  left: -22px;
+  font-size: 50px;
 }
 
  pre {
