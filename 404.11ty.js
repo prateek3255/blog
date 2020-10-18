@@ -28,8 +28,6 @@ exports.data ={
 exports.render = data =>
 `Unless you were looking for this page on purpose, well … the other resource you were actually looking for probably can’t be found at the address you requested.
 
-📝 Edit this template to help your visitors find their way back to more meaningful content.
-
 ### Other options
 
 * [😇 Complain to ${data.author.name.givenName} on Twitter](${data.author.social.twitter})

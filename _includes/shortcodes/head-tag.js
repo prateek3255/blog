@@ -29,9 +29,14 @@ module.exports = eleventyConfig =>
       ${this.description(data)}
       ${this.favicon(data)}
       ${this.socialMeta(data)}
+      <link rel="preload" as="style"  type="text/css" href="//fonts.googleapis.com/css?family=Nunito" onload="this.onload=null;this.rel='stylesheet'" />
+      <link rel="preload" as="style"  href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css" onload="this.onload=null;this.rel='stylesheet'" >
+      <link rel="preload" as="style"  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" onload="this.onload=null;this.rel='stylesheet'" >
+      <noscript>
       <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
-      <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      </noscript>
       <style>
         ${this.minifyCSS(this.inlineCSS(data))}
       </style>
