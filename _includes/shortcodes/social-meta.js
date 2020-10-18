@@ -38,8 +38,8 @@ module.exports = eleventyConfig =>
         <meta name="twitter:image" content="${data.site.baseUrl}img/${data.thumbnail}">
         <meta name="twitter:card" content="summary_large_image">`
         // Create a file named ./img/headshot.jpg to make the fallback work
-      : `<meta property="og:image" content="${data.site.baseUrl}img/headshot.jpg">
-        <meta name="twitter:image" content="${data.site.baseUrl}img/headshot.jpg">
+      : `<meta property="og:image" content="${data.site.baseUrl}img/headshot.png">
+        <meta name="twitter:image" content="${data.site.baseUrl}img/headshot.png">
         <meta name="twitter:card" content="summary_large_image">`
     meta += `<meta property="og:url" content="${data.page.url}">`
     return meta
