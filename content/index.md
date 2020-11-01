@@ -2,6 +2,8 @@
 title: 📔 Prateek Surana's blog
 navTitle: 📔 Blog
 tags: nav
+externalCSS: 
+  - pages
 weight: 3
 layout: layouts/archive
 pagination:
