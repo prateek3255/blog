@@ -31,7 +31,7 @@
 }
 
 body {
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr minmax(calc(100vw - 66ch), 66ch) 1fr; 
   min-height: 100vh;
 }
@@ -123,9 +123,15 @@ nav a {
 }
 
 #site_footer {
-  border-top: var(--border);
+  display: flex;
+  align-items: flex-end;
+}
+
+#footer_content {
   display: flex;
   justify-content: space-between;
+  border-top: var(--border);
+  width: 100%;
 }
 
 .body-border {
