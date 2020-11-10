@@ -52,7 +52,7 @@ This way, someone new cloning your repo can create `.env` and add all the requir
 
 <h2 id="accessing-environment-variables-via-webpack">Accessing environment variables via Webpack</h2>
 
-Now let's read these variables in our code. To do that, we would be using the `[dotenv-webpack` plugin](https://www.npmjs.com/package/dotenv-webpack). Install this plugin as a dev dependency -
+Now let's read these variables in our code. To do that, we would be using the [`dotenv-webpack` plugin](https://www.npmjs.com/package/dotenv-webpack). Install this plugin as a dev dependency -
 
 ```bash
 yarn install dotenv-webpack --dev
