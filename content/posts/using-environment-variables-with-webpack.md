@@ -171,4 +171,4 @@ module.exports = env => ({
 
 And that's it. With this setup you can securely access multiple environment values for separate values for production and development environments.
 
-If this post helped you in anyway then do [share it on twitter,](https://twitter.com/intent/tweet?url=https://prateeksurana.me/typescript-react-library) and [follow me](http://twitter.com/psuranas) for more.
+If this post helped you in anyway then do [share it on twitter,](https://twitter.com/intent/tweet?url=https://prateeksurana.me/blog/using-environment-variables-with-webpack) and [follow me](http://twitter.com/psuranas) for more.
