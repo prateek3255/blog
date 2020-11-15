@@ -126,11 +126,11 @@ This way, linters like [ESLint](https://eslint.org/) or compilers like [TypeScri
 
 When using environment variables, you might need to use different values for some keys depending on whether you are in a development or production environment.
 
-For example, `SOME_IMPORTANT_API_KEY` could have some domain restrictions for the production environment, which would not work on the development `[localhost](http://localhost)` domains, so we need a way to have separate values for our environment variables in development and production environments.
+For example, `SOME_IMPORTANT_API_KEY` could have some domain restrictions for the production environment, which would not work on the development `localhost` domains, so we need a way to have separate values for our environment variables in development and production environments.
 
 So we would need to create two files here, namely `.env.production` and `.env.development`, which would contain the variables for the production and development environments, respectively.
 
-To read these `.env` files, we would need to pass [environment variables via the CLI](https://webpack.js.org/guides/environment-variables/) to our scripts in the `package.json` to read them in our `webpack.config.js` file. Assuming you are using `[webpack-dev-server](https://webpack.js.org/configuration/dev-server/)` for your development environment, your scripts would look something like this -
+To read these `.env` files, we would need to pass [environment variables via the CLI](https://webpack.js.org/guides/environment-variables/) to our scripts in the `package.json` to read them in our `webpack.config.js` file. Assuming you are using [`webpack-dev-server`](https://webpack.js.org/configuration/dev-server/) for your development environment, your scripts would look something like this -
 
 ```json
 // package.json
@@ -138,7 +138,7 @@ To read these `.env` files, we would need to pass [environment variables via the
 {
 	...
 	scripts: {
-		"build": "webpack --env production --mode production",
+	  "build": "webpack --env production --mode production",
 	  "dev": "webpack-dev-server --env development --mode development",
 		...
   }
@@ -146,7 +146,7 @@ To read these `.env` files, we would need to pass [environment variables via the
 }
 ```
 
-Now you can read the value of environment variables you just passed in through your CLI in your webpack config, and load the appropriate `.env` file using the `[dotenv-webpack` 's path](https://github.com/mrsteele/dotenv-webpack#properties) property.
+Now you can read the value of environment variables you just passed in through your CLI in your webpack config, and load the appropriate `.env` file using the [`dotenv-webpack` 's path](https://github.com/mrsteele/dotenv-webpack#properties) property.
 
 ```jsx
 // webpack.config.js
