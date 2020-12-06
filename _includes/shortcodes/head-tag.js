@@ -9,8 +9,7 @@
  * @module _includes/shortcodes/head-tag
  * @param {Object} eleventyConfig 11ty’s Config API
  */
-module.exports = eleventyConfig =>
-
+module.exports = (eleventyConfig) =>
   /**
    * HTML `<head>` markup
    * @method
@@ -20,7 +19,7 @@ module.exports = eleventyConfig =>
    * @example `${this.headTag(data)}`
    * @see {@link https://www.11ty.dev/docs/data/ Using data in 11ty}
    */
-  eleventyConfig.addShortcode('headTag', function (data) {
+  eleventyConfig.addShortcode("headTag", function (data) {
     return `<head>
       ${this.titleTag(data)}
       <meta charset="utf-8">
@@ -41,7 +40,21 @@ module.exports = eleventyConfig =>
         ${this.minifyCSS(this.inlineCSS(data))}
       </style>
       ${this.externalCSS(data)}
-    </head>`
-  })
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      ${
+        data.project.environment === "production"
+          ? `
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHRSMP3QE5"></script>
+          <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  // <link href="${data.site.baseUrl}css/prism.css" rel="stylesheet">
+        gtag('config', 'G-KHRSMP3QE5');
+      </script>`
+          : ""
+      }
+    </head>`;
+  });
+
+// <link href="${data.site.baseUrl}css/prism.css" rel="stylesheet">
