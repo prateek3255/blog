@@ -1,8 +1,8 @@
 ---
-title: 📔 Prateek Surana's blog
+title:  Prateek Surana's blog
 navTitle: 📔 Blog
 tags: nav
-description: Check out the stuff he's been writing lately
+description: Prateek is a Frontend Engineer currently building Devfolio. Check out the stuff he's been writing lately
 externalCSS: 
   - pages
 weight: 3

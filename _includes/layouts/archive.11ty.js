@@ -23,7 +23,7 @@ exports.data = {
 exports.render = function (data) {
   return `<article>
     <header class="article-header">
-      <h2>${data.title}</h2>
+      <h1>${data.title}</h1>
     </header>
     ${data.content}
     ${this.archive(data, data.pagination.items)}

@@ -42,5 +42,6 @@ module.exports = eleventyConfig =>
         <meta name="twitter:image" content="${data.site.baseUrl}img/headshot.png">
         <meta name="twitter:card" content="summary_large_image">`
     meta += `<meta property="og:url" content="${data.page.url}">`
+    meta += `<meta property="og:type" content="article">`
     return meta
   })
