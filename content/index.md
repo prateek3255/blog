@@ -1,5 +1,5 @@
 ---
-title:  Prateek Surana's blog
+title:  Prateek's blog
 navTitle: 📔 Blog
 tags: nav
 description: Prateek is a Frontend Engineer currently building Devfolio. Check out the stuff he's been writing lately

@@ -10,6 +10,7 @@
 }
 
 article {
+  width: 800px;
   max-width: calc(100vw - var(--base-unit) * 3);
 }
 
