@@ -21,7 +21,7 @@ exports.data = {
  */
 exports.render = function (data) {
   return `<article>
-    <a href="/" class="blog-sticky-title">
+    <a href="${data.site.baseUrl}" class="blog-sticky-title">
       <div>
       <div style="margin-right: 6px;">🤓 </div>
       <span>Prateek's Blog<span>
