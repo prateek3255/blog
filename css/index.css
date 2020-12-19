@@ -32,7 +32,7 @@
 
 body {
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: 1fr minmax(calc(100vw - 66ch), 66ch) 1fr; 
+  grid-template-columns: 1fr minmax(auto, 800px) 1fr; 
   min-height: 100vh;
 }
 
