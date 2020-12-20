@@ -392,3 +392,5 @@ Then you can directly access it from any other package in your workspace by just
 - Integrate [Netlify](https://www.netlify.com/) or some other service to automatically deploy the Storybook whenever a PR is merged into master and to generate pull previews whenever a new PR is opened.
 - Setup test cases [using React Testing library and Jest](https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript).
 - Add [code-splitting](https://github.com/rollup/rollup-starter-code-splitting) to let the consumer application import only the required components instead of the whole library.
+
+If this post helped you in anyway then do [share it on twitter,](https://twitter.com/intent/tweet?url=https%3A%2F%2Fprateeksurana.me%2Fblog%2Freact-component-library-using-storybook-6%2F&text=Creating%20a%20React%20component%20library%20using%20Storybook%206%20by%20@psuranas) and [follow me](http://twitter.com/psuranas) for more.

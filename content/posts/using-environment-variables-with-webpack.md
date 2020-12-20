@@ -171,4 +171,4 @@ module.exports = env => ({
 
 And that's it. With this setup you can securely access multiple environment values for separate values for production and development environments.
 
-If this post helped you in anyway then do [share it on twitter,](https://twitter.com/intent/tweet?url=https://prateeksurana.me/blog/using-environment-variables-with-webpack) and [follow me](http://twitter.com/psuranas) for more.
+If this post helped you in anyway then do [share it on twitter,](https://twitter.com/intent/tweet?url=https%3A%2F%2Fprateeksurana.me%2Fblog%2Fusing-environment-variables-with-webpack%2F&text=Using%20environment%20variables%20with%20Webpack%20by%20@psuranas) and [follow me](http://twitter.com/psuranas) for more.
