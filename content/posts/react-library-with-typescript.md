@@ -3,13 +3,13 @@ title: How to build a React library using TypeScript
 date: 2020-10-18
 permalink: /react-library-with-typescript/
 templateEngineOverride: 11ty.js,md
-description: Learn step by step how to setup a React Library from scratch using TypeScript, and publish it to NPM.
+description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
 thumbnail: react-library-with-typescript.png
 ---
 
 Code reusability and modular design are what have made React one of the best JavaScript frameworks out there. Also, thanks to NPM, publishing a new JavaScript module has never been easier. All you need to do is point the main JavaScript file in your `package.json` and run `npm publish`. Although, you need to take care of a few more things when it comes to publishing a TypeScript package, and that's what we'll discuss in this guide.
 
-## Why TypeScript?
+<h2 id="why-typescript">Why TypeScript?</h2>
 
 [TypeScript is a strict syntactical superset of JavaScript](https://www.typescriptlang.org/) and adds optional static typing to the language, giving you the ability to write code free from the JavaScript type errors.
 

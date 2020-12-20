@@ -3,7 +3,7 @@ title: Using environment variables with Webpack
 date: 2020-11-09
 permalink: /using-environment-variables-with-webpack/
 templateEngineOverride: 11ty.js,md
-description: A simple step by step guide for setting up environment variables with Webpack and handling different values for Production and Development environments.
+description: A guide for setting up and using environment variables with Webpack and handling different values for Production and Development environments.
 thumbnail: using-environment-variables-with-webpack.png
 ---
 
@@ -140,8 +140,8 @@ To read these `.env` files, we would need to pass [environment variables via the
 	scripts: {
 	  "build": "webpack --env production --mode production",
 	  "dev": "webpack-dev-server --env development --mode development",
-		...
-  }
+	   ...
+  	}
 	...
 }
 ```

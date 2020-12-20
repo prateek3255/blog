@@ -18,6 +18,10 @@ h2 {
   margin-top: 1.8em;
 }
 
+.article-img {
+  max-width: 100%;
+}
+
 blockquote {
 	background-color: var(--grayscale-100);
 	/* border: var(--border); */
@@ -106,6 +110,22 @@ pre code {
   .top-indicator-container {
     visibility: visible;
   }
+}
+
+.date-time {
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.read-time {
+  color: var(--gray);
+  font-size: small;
+  font-weight: 700;
+}
+
+.read-time::before {
+  content: "•";
+  padding: 0.5rem
 }
 
 

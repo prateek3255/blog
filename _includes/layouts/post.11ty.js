@@ -34,7 +34,10 @@ exports.render = function (data) {
     </div>
     <header class="article-header">
       <h1 class="no-margin">${data.title}</h1>
-      <time>${this.pageDate(data)}</time>
+      <div class="date-time">
+        <time>${this.pageDate(data)}</time>
+        <span class="read-time">- min read</span>
+      </div>
     </header>
     ${data.content}
   </article>`

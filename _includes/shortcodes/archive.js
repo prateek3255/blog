@@ -23,7 +23,7 @@ module.exports = eleventyConfig =>
    */
   eleventyConfig.addShortcode('archive', function (data, arr) {
     var l10n = data.site[data.locale]
-    return `<section class="grid gap" style="margin-top: 3rem;">
+    return `<section class="grid gap" style="margin-top: 3rem; margin-bottom: 2rem;">
     ${arr.map(item =>
       `<article style="${(item.data.highlight !== undefined && item.data.highlight === true)
         ? 'padding:var(--base-unit);border:var(--border);' : ''}">
