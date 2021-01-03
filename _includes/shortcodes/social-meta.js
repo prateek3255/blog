@@ -22,6 +22,7 @@ module.exports = eleventyConfig =>
    * @see {@link https://www.11ty.dev/docs/data/ Using data in 11ty}
    */
   eleventyConfig.addShortcode('socialMeta', data => {
+    var currentURL = `${data.site.baseUrl}${data.page.url.slice(1)}`
     var meta = '';
     meta += (data.title)
       ? `<meta property="og:title" content="${data.title}">
@@ -41,7 +42,8 @@ module.exports = eleventyConfig =>
       : `<meta property="og:image" content="${data.site.baseUrl}img/headshot.png">
         <meta name="twitter:image" content="${data.site.baseUrl}img/headshot.png">
         <meta name="twitter:card" content="summary_large_image">`
-    meta += `<meta property="og:url" content="${data.page.url}">`
+    meta += `<meta property="og:url" content="${currentURL}">`
+    meta += `<link rel="canonical" href="${currentURL}" />`
     meta += `<meta property="og:type" content="article">`
     return meta
   })
