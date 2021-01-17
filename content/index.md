@@ -9,7 +9,7 @@ weight: 3
 layout: layouts/archive
 pagination:
   data: collections.posts
-  size: 3
+  size: 4
   alias: posts
   reverse: true
 permalink: "/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
