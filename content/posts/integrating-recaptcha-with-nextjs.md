@@ -1,5 +1,5 @@
 ---
-title: Integrating ReCAPTCHA with Next.js
+title: Integrating reCAPTCHA with Next.js
 date: 2021-01-17
 permalink: /integrating-recaptcha-with-next/
 templateEngineOverride: 11ty.js,md
@@ -301,7 +301,7 @@ Thanks to hCaptcha's clean and similar to reCAPTCHA APIs, it takes no time to sw
 
 The setting up process is very similar to reCAPTCHA. You can go to their [signup page](https://www.hcaptcha.com/signup-interstitial) to create an account and get the site key and secret key for your site. I renamed the keys to `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` and `HCAPTCHA_SECRET_KEY`, respectively, in the `.env.local` file.
 
-They also have a React wrapper component called `[@hcaptcha/react-hcaptcha](https://github.com/hCaptcha/react-hcaptcha)`, which also has a very similar API to the React component we used for reCAPTCHA. These are the only changes (apart from renaming reCAPTCHA variables) I had to integrate the component on the client in `pages/index.js` :
+They also have a React wrapper component called [`@hcaptcha/react-hcaptcha`](https://github.com/hCaptcha/react-hcaptcha), which also has a very similar API to the React component we used for reCAPTCHA. These are the only changes (apart from renaming reCAPTCHA variables) I had to integrate the component on the client in `pages/index.js` :
 
 ```jsx
 .
