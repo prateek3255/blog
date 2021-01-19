@@ -6,6 +6,13 @@ templateEngineOverride: 11ty.js,md
 description: Check out how you can take advantage of Next.js' API routes to get the most out of CAPTCHA solutions like reCAPTCHA and hCaptcha.
 thumbnail: integrating-recaptcha-with-nextjs.png
 ---
+In this post on integrating reCAPTCHA with Next.js, we will be looking at what is a CAPTCHA, how does it work and why you might need it. Then we'll work on a demo to illustrate how you can take advantage of Next.js features to integrate it nicely with your website.
+
+So you must've probably seen this before, but have you ever wondered what it does?
+
+<p style="text-align:center;">
+  <img src="../img/captcha-intro.jpg" style="max-width: 300px;" alt="A regular reCAPTCHA"/>
+</p>
 
 A CAPTCHA is a [Turing test](https://en.wikipedia.org/wiki/Turing_test) designed to tell humans and bots apart and is generally used by websites to prevent spam and abuse. It uses a challenge that is easy for humans but hard for bots. 
 
@@ -59,7 +66,7 @@ After clicking submit, you should be able to see the public and secret keys.
 
 <img class="article-img" src="../img/recaptcha-keys.png" alt="reCAPTCHA keys" />
 
-To have separate keys for production and development environments and avoid pushing these keys to version control, we would store these keys in the environment variables. Next.js comes with [built-in support for environment variables](https://nextjs.org/docs/basic-features/environment-variables). For the development environment, create a file called `.env.local` and add the following to it, and paste the keys you copied from the reCAPTCHA dashboard here appropriately.
+To have separate keys for production and development environments and avoid pushing these keys to version control, we would store these keys in the environment variables. Unlike typical react app setups where you would need to manually [setup environment variables manually via Webpack plugins](https://prateeksurana.me/blog/using-environment-variables-with-webpack/), Next.js comes with [built-in support for environment variables](https://nextjs.org/docs/basic-features/environment-variables). For the development environment, create a file called `.env.local` and add the following to it, and paste the keys you copied from the reCAPTCHA dashboard here appropriately.
 
 ```bash
 # Add the public site key here

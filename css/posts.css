@@ -45,7 +45,13 @@ blockquote::before {
   /* border: var(--border); */
   /* display: block; */
   padding: 1em;
+  font-size: 0.87em;
   overflow-x: auto;
+}
+
+
+code[class*="language-"], pre[class*="language-"] {
+  font-size: 0.87em;
 }
 
 
