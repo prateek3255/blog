@@ -1,30 +1,28 @@
 {
-  "name": "eleventy-dot-js-blog",
-  "version": "0.1.1",
-  "description": "A starter project showing how to build a blog with the Eleventy static site generator using JavaScript templates.",
-  "main": "index.js",
   "scripts": {
-    "build": "ELEVENTY_ENV=production BASE_URL=https://prateeksurana.me/blog/ npx eleventy",
-    "dev": "ELEVENTY_ENV=development BASE_URL=http://localhost:8080/ npx eleventy --serve",
-    "debug": "DEBUG=* npx eleventy"
+    "start": "npm-run-all --parallel css eleventy",
+    "eleventy": "eleventy --serve",
+    "debug": "set DEBUG=* & eleventy",
+    "css": "postcss src/static/css/tailwind.css --o _tmp/static/css/style.css --watch",
+    "build": "cross-env NODE_ENV=production eleventy && cross-env NODE_ENV=production postcss src/static/css/tailwind.css --o _site/static/css/style.css"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/prateek3255/blog.git",
-    "https": "https://github.com/prateek3255/blog.git",
-    "editUrl": "https://github.com/prateek3255/blog/edit/master"
-  },
-  "author": "Prateek Surana",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/prateek3255/blog/issues"
-  },
-  "homepage": "https://github.com/prateek3255/blog#readme",
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-    "clean-css": "^4.2.3",
+    "@tailwindcss/typography": "^0.3.1",
+    "alpinejs": "^2.6.0",
+    "cross-env": "^7.0.2",
+    "cssnano": "^4.1.10",
     "html-minifier": "^4.0.0",
-    "terser": "^4.6.13"
+    "js-yaml": "^3.14.0",
+    "luxon": "^1.25.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^8.3.1",
+    "prismjs": "^1.21.0",
+    "tailwindcss": "^2.0.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "postcss": "^8.2.1"
   }
 }
