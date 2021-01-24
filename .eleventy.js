@@ -27,18 +27,18 @@ module.exports = function (eleventyConfig) {
   );
 
   // Add Tailwind Output CSS as Watch Target
-  eleventyConfig.addWatchTarget("./_tmp/static/css/style.css");
+  eleventyConfig.addWatchTarget("./_tmp/css/style.css");
 
   // Copy Static Files to /_Site
   eleventyConfig.addPassthroughCopy({
-    "./_tmp/static/css/style.css": "./static/css/style.css",
-    "./node_modules/alpinejs/dist/alpine.js": "./static/js/alpine.js",
+    "./_tmp/css/style.css": "./css/style.css",
+    "./node_modules/alpinejs/dist/alpine.js": "./js/alpine.js",
     "./node_modules/prismjs/themes/prism-tomorrow.css":
-      "./static/css/prism-tomorrow.css",
+      "./css/prism-tomorrow.css",
   });
 
   // Copy Image Folder to /_site
-  eleventyConfig.addPassthroughCopy("./src/static/img");
+  eleventyConfig.addPassthroughCopy("./src/img");
 
   // Copy favicon to route of /_site
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
