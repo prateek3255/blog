@@ -1,22 +1,41 @@
 ---
-layout: default
-title: Neat Starter
-path: home
+layout: blog
 ---
 
-<div class="container mx-auto lg:h-screen flex flex-col justify-center items-center">
-  <h1>
-    Welcome to
-    <strong class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-      {{title}}
-    </strong>
-  </h1>
+<section class="mt-15">
+    {% set postslist = collections.post %}
 
-  <p>
-    <abbr title="netlify cms, eleventy, alpine js & tailwind css">NEAT</abbr>
-    Starter Template. Get Started by editing.
-    <code class="bg-gray-100 text-blue-800 p-1">/index.njk</code>
-  </p>
+    {% for post in postslist | reverse %}
+        <article class="my-8">
+            <h2 class="font-bold text-3xl text-gray-900 mb-2">
+                <a href="{{ post.url | url }}">
+                    {% if post.data.title %}
+                        {{ post.data.title }}
+                    {% else %}
+                        Untitled
+                    {% endif %}
+                </a>
+            </h2>
+            <p class="text-base leading-6 text-gray-500 mb-3">
+                <time>
+                    {{ post.date | readableDate }}
+                    by
+                    <a>{{ post.data.author }}</a>
 
-  {% include "./_includes/partials/content.html" %}
-</div>
+                </time>
+            </p>
+            {% if post.data.description %}
+                <p class="text-lg text-gray-500 mb-3">
+                    {{ post.data.description }}
+                </p>
+            {% endif %}
+
+            <p>
+                <a href="{{ post.url | url }}" class="text-indigo-500 font-bold text-lg">
+                    Read more →
+                </a>
+            </p>
+
+        </article>
+    {% endfor %}
+</section>

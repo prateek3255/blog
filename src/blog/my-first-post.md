@@ -9,6 +9,7 @@ tags:
   - left
   - center
   - right
+permalink: /my-first-post/
 ---
 # This is a Heading h1
 
