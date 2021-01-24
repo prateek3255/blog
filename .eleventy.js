@@ -2,6 +2,7 @@ const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
+const fs = require('fs');
 
 module.exports = function (eleventyConfig) {
   // Disable automatic use of your .gitignore
@@ -57,6 +58,26 @@ module.exports = function (eleventyConfig) {
 
     return content;
   });
+
+  /**
+   * Serve the rendered 404 page when using `eleventy --serve` locally
+   * @see {@link https://www.11ty.dev/docs/quicktips/not-found/#with-serve Adding a 404 page in 11ty}
+   */
+  // eleventyConfig.setBrowserSyncConfig({
+  //   callbacks: {
+  //     ready: (err, bs) => {
+  //       bs.addMiddleware("*", (req, res) => {
+  //         const content_404 = fs.readFileSync('_site/404.html');
+  //         // Provides the 404 content without redirect
+  //         res.write(content_404);
+  //         // Add 404 http status code in request header
+  //         // res.writeHead(404, { "Content-Type": "text/html" })
+  //         res.writeHead(404);
+  //         res.end()
+  //       })
+  //     }
+  //   }
+  // })
 
   // Let Eleventy transform HTML files as nunjucks
   // So that we can use .html instead of .njk

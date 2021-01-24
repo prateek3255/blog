@@ -21,6 +21,15 @@
     "prismjs": "1.21.0",
     "tailwindcss": "2.0.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/prateek3255/blog.git",
+    "https": "https://github.com/prateek3255/blog.git",
+    "editUrl": "https://github.com/prateek3255/blog/edit/master"
+  },
+  "bugs": {
+    "url": "https://github.com/prateek3255/blog/issues"
+  },
   "dependencies": {
     "autoprefixer": "10.1.0",
     "postcss": "8.2.1"

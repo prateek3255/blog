@@ -5,7 +5,7 @@
 /*Your Custom CSS Goes here*/
 
 h1 {
-  @apply text-4xl tracking-tighter mb-3 text-center lg:text-7xl;
+  @apply text-4xl mb-3 text-center lg:text-7xl;
 }
 
 h3 {
@@ -17,4 +17,36 @@ h3 {
 body :not(pre) > code[class*="language-"],
 body pre[class*="language-"] {
   @apply bg-gray-800;
+}
+
+.article-img {
+  max-width: 100%;
+}
+
+blockquote {
+  @apply bg-gray-200 text-black text-xl;
+}
+
+blockquote {
+  /* border: var(--border); */
+  font-style: initial !important;
+	margin: 1.7em 0em 0em 0em;
+  padding: 0.5em 2.0em;
+  position: relative;
+}
+
+blockquote::before {
+  content: '💡';
+  position: absolute;
+  top: -5px;
+  left: -32px;
+  font-size: 58px;
+}
+
+.prose blockquote p:first-of-type::before {
+  content: normal;
+}
+
+.prose blockquote {
+  @apply font-normal;
 }
