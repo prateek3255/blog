@@ -3,19 +3,21 @@ layout: default
 prism: true
 ---
 
-<div class="container max-w-4xl mt-6  px-6">
-    <div class="pb-5 mb-5 border-b border-gray-100">
-        <h1 class="font-bold text-5xl">{{title}}</h1>
-        <p class="text-center text-base leading-6 font-medium text-gray-500">
-            <time> {{ date | readableDate }}
-                by
-                <a>{{ author }}</a>
-
-            </time>
-        </p>
-
-    </div>
-    <article class="prose lg:prose-xl my-4 mx-auto">
-        {{ content | safe }}</article>
-
+<div class="container max-w-4xl mt-6 px-6">
+  <div class="pb-5 mb-5 border-b border-gray-100">
+    <h1 class="font-bold text-5xl">{{title}}</h1>
+    <p class="text-center text-base leading-6 font-medium text-gray-500">
+      <time> {{ date | readableDate }}</time> by {{settings.author}} &nbsp; •
+      &nbsp;<span class="read-time"> - min read </span>
+    </p>
+  </div>
+  <article class="prose lg:prose-xl my-4 mx-auto relative">
+    {{ content | safe }}
+    <hr/>
+    <a class="fixed bottom-12 bg-white text-accent-blue flex items-center justify-center rounded cursor-pointer z-10 invisible lg:visible top-indicator-container" aria-label="Scroll to top" href="#">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="top-indicator" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+        <path d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"></path>
+      </svg>
+    </a>
+  </article>
 </div>

@@ -84,6 +84,8 @@
       gtag('config', 'G-KHRSMP3QE5');
     </script>
     {% endif %}
+    <script async src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+    <script async src="https://unpkg.com/smoothscroll-anchor-polyfill"></script>
   </head>
   <body>
     {% include "./partials/navbar.html" %}
@@ -92,6 +94,19 @@
 
     {% include "./partials/footer.html" %}
     <script src="{{environment.baseURL}}js/alpine.js"></script>
-
+    <script>
+      var article = document.getElementsByTagName('article')[0];
+      var readTime = document.getElementsByClassName('read-time')[0];
+      if(article && readTime) {
+        var textContent = article.textContent;
+        var str = textContent.replace(/(^\s*)|(\s*$)/gi,"");
+        str = str.replace(/[ ]{2,}/gi," ");
+        str = str.replace(/\\n /,"\\n");
+        var wordCount = str.split(' ').filter(s=>s!=='\\n').length;
+        var readingTimeInMinutes = Math.floor(wordCount / 228) + 1;
+        var readingTimeAsString = readingTimeInMinutes + " min read";
+        readTime.innerText = readingTimeAsString;
+      }
+    </script>
   </body>
 </html>

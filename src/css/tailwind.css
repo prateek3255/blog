@@ -4,6 +4,12 @@
 
 /*Your Custom CSS Goes here*/
 
+html {
+  /* This is required for the polyfill */
+  --scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
 /* body {
   @apply border-accent-blue border-8;
 } */
@@ -54,3 +60,17 @@ blockquote::before {
 .prose blockquote {
   @apply font-normal;
 }
+
+.top-indicator-container {
+  right: calc(50vw - 560px);
+}
+
+.top-indicator {
+  transition: transform .3s ease-in;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.top-indicator:hover {
+  transform: scale(1.3);
+} 
