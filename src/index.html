@@ -8,7 +8,7 @@ layout: blog
     {% for post in postslist | reverse %}
         <article class="my-8">
             <h2 class="font-bold text-3xl text-gray-900 mb-2">
-                <a href="{{ post.url | url }}">
+                <a href="{{environment.baseURL}}{{post.url.slice(1)}}">
                     {% if post.data.title %}
                         {{ post.data.title }}
                     {% else %}
@@ -31,7 +31,7 @@ layout: blog
             {% endif %}
 
             <p>
-                <a href="{{ post.url | url }}" class="text-indigo-500 font-bold text-lg">
+                <a href="{{environment.baseURL}}{{post.url.slice(1)}}" class="text-indigo-500 font-bold text-lg">
                     Read more →
                 </a>
             </p>
