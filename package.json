@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "start": "npm-run-all --parallel css eleventy",
+    "start": "BASE_URL=http://localhost:8080/ npm-run-all --parallel css eleventy",
     "eleventy": "eleventy --serve",
     "debug": "set DEBUG=* & eleventy",
     "css": "postcss src/css/tailwind.css --o _tmp/css/style.css --watch",
-    "build": "cross-env NODE_ENV=production eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css"
+    "build": "cross-env NODE_ENV=production BASE_URL=https://prateeksurana.me/blog/ eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css"
   },
   "devDependencies": {
     "@11ty/eleventy": "0.11.0",

@@ -11,7 +11,9 @@ module.exports = {
       center: true,
     },
     extend: {
-      colors: {},
+      colors: {
+        'accent-blue': '#46CBE8'
+      },
     },
   },
   variants: {},
