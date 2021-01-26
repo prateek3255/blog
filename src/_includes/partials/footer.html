@@ -1,0 +1,44 @@
+<footer
+  class="{{ 'fixed' if path == 'home' }} bottom-0 text-center w-full py-8"
+>
+  <small class="text-gray-500"
+    >Copyright © {{settings.name}}
+    <span id="copyright">
+      <script>
+        document
+          .getElementById("copyright")
+          .appendChild(document.createTextNode(new Date().getFullYear()));
+      </script> </span
+    >. Made with
+    <a
+      href="https://www.11ty.dev/"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="underline"
+      >Eleventy,</a
+    >
+    <a
+      href="https://tailwindcss.com/"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="underline"
+      >Tailwind CSS</a
+    >, and ❤
+    by
+    <a
+      href="{{settings.url}}"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="underline"
+      >{{settings.author}}</a
+    >
+    •
+    <a
+      href="{{pkg.repository.editUrl}}/{{page.inputPath}}"
+      class="underline"
+      target="_blank"
+      rel="noreferrer noopener"
+      >Edit this page on GitHub</a
+    >
+  </small>
+</footer>

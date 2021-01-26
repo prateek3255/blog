@@ -1,0 +1,10 @@
+---
+items:
+  - text: About
+    url: "/"
+  - text: Twitter
+    url: "https://twitter.com/psuranas"
+  - text: GitHub
+    url: "https://github.com/prateek3255"
+  - text: Blog
+    url: "/blog"

@@ -1,97 +1,91 @@
-/**
- * @file Configures preferences for Eleventy
- * @author Prateek Surana
- * @see {@link https://www.11ty.dev/docs/config/ 11ty Documentation}
- */
-
-// Require native Node.js modules
-var fs = require('fs')
-
-/**
- * Require the includes module for the following.
- *
- * - Filters (for modifying content on input)
- * - Shortcodes (for reusable content)
- * - Transforms (for modifying a template’s output)
- *
- * Storing these modules in separate directories,
- * rather than all in this file,
- * helps keep the codebase organized—at least that’s the idea.
- */
-var includes = require('./_includes/index')
+const yaml = require("js-yaml");
+const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const htmlmin = require("html-minifier");
+const fs = require('fs');
 
-/**
- * 11ty’s configuration module
- * @module .eleventy
- * @param {Object} eleventyConfig 11ty’s Config API
- * @return {Object} 11ty’s Config object optional
- * @see {@link https://www.11ty.dev/docs/config/ Configuring 11ty}
- */
 module.exports = function (eleventyConfig) {
+  // Disable automatic use of your .gitignore
+  eleventyConfig.setUseGitIgnore(false);
 
-  // Pass 11ty’s Conig object to the includes module (~/_includes)
-  includes(eleventyConfig)
+  // Merge data instead of overriding
+  eleventyConfig.setDataDeepMerge(true);
 
-  /**
-   * Combine data in the Eleventy data cascade, rather than overwriting it
-   * @see {@link https://www.11ty.dev/docs/data-deep-merge/ Data deep merge in 11ty}
-   */
-  eleventyConfig.setDataDeepMerge(true)
+  // human readable date
+  eleventyConfig.addFilter("readableDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
+      "dd LLL yyyy"
+    );
+  });
 
-  // Add the syntax higlighter plugin
+  // Syntax Highlighting for Code blocks
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  /**
-   * Copy static assets to the output directory
-   * @see {@link https://www.11ty.dev/docs/copy/ Passthrough copy in 11ty}
-   */
-  eleventyConfig.addPassthroughCopy('css')
-  eleventyConfig.addPassthroughCopy('img')
-  eleventyConfig.addPassthroughCopy('favicons')
-  eleventyConfig.addPassthroughCopy('favicon.ico')
-  eleventyConfig.addPassthroughCopy('browserconfig.xml')
+  // To Support .yaml Extension in _data
+  // You may remove this if you can use JSON
+  eleventyConfig.addDataExtension("yaml", (contents) =>
+    yaml.safeLoad(contents)
+  );
 
-  /**
-   * Have Eleventy watch the following additional files for live browsersync
-   * @see @{@link https://www.11ty.dev/docs/config/#add-your-own-watch-targets Add your own watch targets in 11ty}
-   */
-  eleventyConfig.addWatchTarget('./**/*.css')
-  eleventyConfig.addWatchTarget('./**/*.js')
+  // Add Tailwind Output CSS as Watch Target
+  eleventyConfig.addWatchTarget("./_tmp/css/style.css");
+
+  // Copy Static Files to /_Site
+  eleventyConfig.addPassthroughCopy({
+    "./_tmp/css/style.css": "./css/style.css",
+    "./node_modules/alpinejs/dist/alpine.js": "./js/alpine.js",
+    "./node_modules/prismjs/themes/prism-tomorrow.css":
+      "./css/prism-tomorrow.css",
+  });
+
+  // Copy Image Folder to /_site
+  eleventyConfig.addPassthroughCopy("./src/img");
+
+  // Copy favicon to route of /_site
+  eleventyConfig.addPassthroughCopy("./src/favicon.ico");
+  eleventyConfig.addPassthroughCopy("./src/favicons");
+
+  // Minify HTML
+  eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
+    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
+    if (outputPath.endsWith(".html")) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true
+      });
+      return minified;
+    }
+
+    return content;
+  });
 
   /**
    * Serve the rendered 404 page when using `eleventy --serve` locally
    * @see {@link https://www.11ty.dev/docs/quicktips/not-found/#with-serve Adding a 404 page in 11ty}
    */
-  eleventyConfig.setBrowserSyncConfig({
-    callbacks: {
-      ready: (err, bs) => {
-        bs.addMiddleware("*", (req, res) => {
-          const content_404 = fs.readFileSync('public/404.html');
-          // Provides the 404 content without redirect
-          res.write(content_404);
-          // Add 404 http status code in request header
-          // res.writeHead(404, { "Content-Type": "text/html" })
-          res.writeHead(404);
-          res.end()
-        })
-      }
-    }
-  })
+  // eleventyConfig.setBrowserSyncConfig({
+  //   callbacks: {
+  //     ready: (err, bs) => {
+  //       bs.addMiddleware("*", (req, res) => {
+  //         const content_404 = fs.readFileSync('_site/404.html');
+  //         // Provides the 404 content without redirect
+  //         res.write(content_404);
+  //         // Add 404 http status code in request header
+  //         // res.writeHead(404, { "Content-Type": "text/html" })
+  //         res.writeHead(404);
+  //         res.end()
+  //       })
+  //     }
+  //   }
+  // })
 
-  // If you want to use an alternative file structure,
-  // then you can uncomment this return statement
-  // and change the values for one or more of these directories
-  // (defaults shown).
-  
+  // Let Eleventy transform HTML files as nunjucks
+  // So that we can use .html instead of .njk
   return {
     dir: {
-      input: '.',
-      includes: '_includes',
-      data: '_data',
-      output: 'public'
+      input: "src",
     },
-    pathPrefix: '/',
-  }
-
-}
+    htmlTemplateEngine: "njk",
+  };
+};

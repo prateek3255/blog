@@ -1,5 +1,9 @@
-# Ignore installed npm packages
+_site/
+_tmp/
+.DS_Store
 node_modules/
-
-# Ignore eleventy output during manual tests
-public/
+.vscode/
+_site/
+*git/
+package-lock.json
+.env

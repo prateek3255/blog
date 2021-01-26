@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*Your Custom CSS Goes here*/
+
+html {
+  /* This is required for the polyfill */
+  --scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+/* body {
+  @apply border-accent-blue border-8;
+} */
+
+h1 {
+  @apply text-4xl mb-3 text-center lg:text-7xl;
+}
+
+h3 {
+  @apply text-2xl font-bold mb-3;
+}
+
+/* Syntax Highlighting*/
+
+body :not(pre) > code[class*="language-"],
+body pre[class*="language-"] {
+  @apply bg-gray-800;
+}
+
+.article-img {
+  max-width: 100%;
+}
+
+blockquote {
+  @apply bg-gray-200 text-black text-xl;
+}
+
+blockquote {
+  /* border: var(--border); */
+  font-style: initial !important;
+	margin: 1.7em 0em 0em 0em;
+  padding: 0.5em 2.0em;
+  position: relative;
+}
+
+blockquote::before {
+  content: '💡';
+  position: absolute;
+  top: -5px;
+  left: -32px;
+  font-size: 58px;
+}
+
+.prose blockquote p:first-of-type::before {
+  content: normal;
+}
+
+.prose blockquote {
+  @apply font-normal;
+}
+
+.top-indicator-container {
+  right: calc(50vw - 560px);
+}
+
+.top-indicator {
+  transition: transform .3s ease-in;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.top-indicator:hover {
+  transform: scale(1.3);
+} 

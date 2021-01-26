@@ -1,9 +1,0 @@
-/**
- * @file Defines styles specific to pages
- * Custom properties are set in `_includes/shortcodes/css-root.js`
- * @author Prateek Surana
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/--*CSS Custom Properties on MDN}
- */
-.article-header h1 {
-  font-size: 2.5em;
-} 
