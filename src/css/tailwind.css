@@ -4,9 +4,9 @@
 
 /*Your Custom CSS Goes here*/
 
-body {
+/* body {
   @apply border-accent-blue border-8;
-}
+} */
 
 h1 {
   @apply text-4xl mb-3 text-center lg:text-7xl;
