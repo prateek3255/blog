@@ -43,7 +43,7 @@ The way it works is as soon as the user submits the form, you execute the reCAPT
 
 Now this will prevent your frontend from malicious attacks. However, your backend APIs might still be insecure (assuming you are not using any other kind of protection, e.g., [CSRF tokens](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)) because anyone can open the network tab to check the APIs getting pinged and run a script to ping the API with spam data. Thankfully reCAPTCHA provides a solution for that as well. When a user successfully clears the reCAPTCHA, you are provided with a token that is valid for 2 minutes. You can now validate this token in your backend with a secret key to verify the request's authenticity.
 
-<img class="article-img" src="../img/recaptcha-working.png" alt="Working of reCAPTCHA" />
+<img class="article-img" src="../img/recaptcha-working.jpg" alt="Working of reCAPTCHA" />
 
 <h2 id="setting-up-the-project">Setting up the project</h2>
 
@@ -65,7 +65,7 @@ Let's register a new project on reCAPTCHA and get the required keys. For that, y
 
 After clicking submit, you should be able to see the public and secret keys. 
 
-<img class="article-img" src="../img/recaptcha-keys.png" alt="reCAPTCHA keys" />
+<img class="article-img" src="../img/recaptcha-keys.jpg" alt="reCAPTCHA keys" />
 
 To have separate keys for production and development environments and avoid pushing these keys to version control, we would store these keys in the environment variables. Unlike typical react app setups where you would need to manually [setup environment variables manually via Webpack plugins](https://prateeksurana.me/blog/using-environment-variables-with-webpack/), Next.js comes with [built-in support for environment variables](https://nextjs.org/docs/basic-features/environment-variables). For the development environment, create a file called `.env.local` and add the following to it, and paste the keys you copied from the reCAPTCHA dashboard here appropriately.
 
