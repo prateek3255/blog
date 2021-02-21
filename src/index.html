@@ -5,48 +5,5 @@ layout: blog
 <section class="mt-15">
     {% set postslist = collections.post %}
 
-    {% for post in postslist | reverse %}
-        <article class="my-8">
-            <h2 class="font-bold text-3xl text-gray-900 mb-2">
-                <a href="{{environment.baseURL}}{{post.url.slice(1)}}">
-                    {% if post.data.title %}
-                        {{ post.data.title }}
-                    {% else %}
-                        Untitled
-                    {% endif %}
-                </a>
-            </h2>
-            <p class="text-base leading-6 text-gray-500 mb-3">
-                <time>
-                    {{ post.date | readableDate }}
-                    by
-                    {{ post.data.author }}
-
-                </time>
-            </p>
-            {% if post.data.description %}
-                <p class="text-lg text-gray-500 mb-2">
-                    {{ post.data.description }}
-                </p>
-            {% endif %}
-            
-            <p class=" text-md mb-3">
-                {% for tag in post.data.tags %}
-                    {% if tag != 'post' %}
-                    <span class="text-indigo-700 mr-1">
-                        #{{tagsCase[tag]}}
-                    </span>
-                    {% endif %}
-                {% endfor %}
-            </p>
-       
-
-            <p>
-                <a href="{{environment.baseURL}}{{post.url.slice(1)}}" class="text-indigo-700 font-bold text-lg">
-                    Read more →
-                </a>
-            </p>
-
-        </article>
-    {% endfor %}
+    {% include "partials/postslist.html" %}
 </section>
