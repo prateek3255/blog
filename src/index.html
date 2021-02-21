@@ -34,7 +34,7 @@ layout: blog
                 {% for tag in post.data.tags %}
                     {% if tag != 'post' %}
                     <span class="text-indigo-700 mr-1">
-                        #{{tag}}
+                        #{{tagsCase[tag]}}
                     </span>
                     {% endif %}
                 {% endfor %}

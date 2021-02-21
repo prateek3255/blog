@@ -7,8 +7,8 @@ description: A guide for setting up and using environment variables with Webpack
 thumbnail: using-environment-variables-with-webpack.png
 author: Prateek Surana
 tags:
-  - Webpack
-  - Tutorial
+  - webpack
+  - tutorial
 ---
 
 When building for the web, we often have to deal with some sensitive data (like API keys), which cannot be pushed to source control or some things that are supposed to be different for development and production environments (like sending error logs to sentry only in a production environment). That's where environment variables come in as they let us store this kind of data with a breeze.

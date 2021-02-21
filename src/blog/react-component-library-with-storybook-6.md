@@ -7,10 +7,10 @@ description: Learn how to build a React component library using Storybook 6 and 
 thumbnail: react-component-library-using-storybook-6.png
 author: Prateek Surana
 tags:
-  - TypeScript
-  - React
-  - Tutorial
-  - Storybook
+  - typescript
+  - react
+  - tutorial
+  - storybook
 ---
 
 If you have multiple projects that are using the same design system (inputs, buttons, other reusable components, etc.), then you probably have a good enough use case to create a shared component library that can be published and consumed directly by all your projects.
