@@ -25,10 +25,21 @@ layout: blog
                 </time>
             </p>
             {% if post.data.description %}
-                <p class="text-lg text-gray-500 mb-3">
+                <p class="text-lg text-gray-500 mb-2">
                     {{ post.data.description }}
                 </p>
             {% endif %}
+            
+            <p class=" text-md mb-3">
+                {% for tag in post.data.tags %}
+                    {% if tag != 'post' %}
+                    <span class="text-indigo-700 mr-1">
+                        #{{tag}}
+                    </span>
+                    {% endif %}
+                {% endfor %}
+            </p>
+       
 
             <p>
                 <a href="{{environment.baseURL}}{{post.url.slice(1)}}" class="text-indigo-700 font-bold text-lg">

@@ -6,6 +6,10 @@ templateEngineOverride: 11ty.js,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
 thumbnail: react-library-with-typescript.png
 author: Prateek Surana
+tags:
+  - TypeScript
+  - React
+  - Tutorial
 ---
 
 Code reusability and modular design are what have made React one of the best JavaScript frameworks out there. Also, thanks to NPM, publishing a new JavaScript module has never been easier. All you need to do is point the main JavaScript file in your `package.json` and run `npm publish`. Although, you need to take care of a few more things when it comes to publishing a TypeScript package, and that's what we'll discuss in this guide.

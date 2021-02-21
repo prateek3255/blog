@@ -6,6 +6,10 @@ templateEngineOverride: 11ty.js,md
 description: Check out how you can take advantage of Next.js' API routes to get the most out of CAPTCHA solutions like reCAPTCHA and hCaptcha.
 thumbnail: integrating-recaptcha-with-nextjs.png
 author: Prateek Surana
+tags:
+  - Next.js
+  - React
+  - Tutorial
 ---
 In this post on integrating reCAPTCHA with Next.js, we will be looking at what is a CAPTCHA, how does it work and why you might need it. Then we'll work on a demo to illustrate how you can take advantage of Next.js features to integrate it nicely with your website.
 
