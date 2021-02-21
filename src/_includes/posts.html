@@ -11,13 +11,37 @@ prism: true
       &nbsp;<span class="read-time"> - min read </span>
     </p>
   </div>
-  <article class="prose lg:prose-xl my-4 mx-auto relative">
+  <article class="prose lg:prose-xl my-4 relative">
     {{ content | safe }}
-    <hr/>
+    
     <a class="fixed bottom-12 bg-white text-accent-blue flex items-center justify-center rounded cursor-pointer z-10 invisible lg:visible top-indicator-container" aria-label="Scroll to top" href="#">
       <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="top-indicator" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
         <path d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"></path>
       </svg>
     </a>
   </article>
+  <hr class=" my-4"/>
+  <div class="text-md mb-3 flex justify-between flex-col md:flex-row">
+     <div>
+        {% for tag in tags %}
+            {% if tag != 'post' %}
+            <a href="{{environment.baseURL}}tags/{{tag}}" class="text-indigo-700 mr-1">
+                #{{tagsCase[tag]}}
+            </a>
+            {% endif %}
+        {% endfor %}
+      </div>
+      <div class="mt-2 md:mt-0">
+        <span class="font-bold mr-2">
+          Enjoyed this blog, share it on:
+        </span>
+        <a href="https://twitter.com/intent/tweet?url={{environment.baseURL}}{{permalink.slice(1)}}&via=psuranas&text={{title}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700 mr-1">
+            Twitter
+        </a>
+
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{environment.baseURL}}{{permalink.slice(1)}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700">
+            LinkedIn
+        </a>
+      </div>
+  </div>
 </div>

@@ -290,5 +290,3 @@ There still many things that you can and should do that I couldn't cover in the 
 - You can deploy the demo to something like [Netlify](https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/) or [GitHub Pages](https://github.com/marketplace/actions/deploy-to-github-pages) and automate the process to deploy changes when you merge PRs automatically.
 - Add test cases using [Jest and React Testing Library](https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript).
 - Setup [Husky pre-commit hook with ESLint](https://www.orangejellyfish.com/blog/code-consistency-with-eslint-and-husky/) for enforcing linting in your code.
-
-If this post helped you in anyway then do [share it on Twitter,](https://twitter.com/intent/tweet?url=https%3A%2F%2Fprateeksurana.me%2Fblog%2Freact-library-with-typescript%2F&text=How%20to%20build%20a%20React%20library%20using%20TypeScript%20by%20@psuranas) and [follow me](http://twitter.com/psuranas) for more.

@@ -358,6 +358,6 @@ I created a separate branch in the demo repo, for the hCaptcha integration here 
 
 [👨🏻‍💻 Code till this step](https://github.com/prateek3255/recaptch-with-next/tree/integrate-hcaptcha)
 
-I hope this article helped you in gaining some insight on how you can integrate CAPTCHA with your Next.js website and which CAPTCHA service you should prefer. If it did then do [share it on twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fprateeksurana.me%2Fblog%2Fintegrating-recaptcha-with-next%2F&via=psuranas&text=Integrating%20ReCAPTCHA%20with%20Next.js) and [follow me](http://twitter.com/psuranas) for more.
+I hope this article helped you in gaining some insight on how you can integrate CAPTCHA with your Next.js website and which CAPTCHA service you should prefer.
 
 You can find the full code for both the [reCAPTCHA](https://github.com/prateek3255/recaptch-with-next) and [hCaptcha](https://github.com/prateek3255/recaptch-with-next/tree/integrate-hcaptcha) integration on GitHub.
