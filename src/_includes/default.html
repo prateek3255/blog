@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {# If the page is a tags page set the URL to blogs tagged {tagName} we need to slice here to ge the tag
+    bevuase the URL will be like /tags/typescript/. If its not the tags page then use the title property  #}
+    {% set currentTitle = "Blogs tagged " + tagsCase[page.url.slice(6, -1)] if page.url.includes('/tags/') else title %}
     <!-- Essentials -->
     <meta charset="UTF-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+    <title>{{currentTitle}}</title>
     <meta name="description" content="{{description}}" />
     <link rel="canonical" href="{{environment.baseURL}}{{page.url.slice(1)}}" />
 
@@ -41,7 +44,7 @@
 
 
     <!-- Twitter -->
-    <meta name="twitter:title" content="{{title}}" />
+    <meta name="twitter:title" content="{{currentTitle}}" />
     <meta property="twitter:description" content="{{description}}" />
     <meta
     name="twitter:image"
@@ -50,7 +53,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     
     <!-- Open graph -->
-    <meta property="og:title" content="{{title}}" />
+    <meta property="og:title" content="{{currentTitle}}" />
     <meta property="og:description" content="{{description}}" />
     <meta
       property="og:image"
