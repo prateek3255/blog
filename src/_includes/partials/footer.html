@@ -1,6 +1,22 @@
 <footer
-  class="{{ 'fixed' if path == 'home' }} bottom-0 text-center w-full py-8"
+  class="{{ 'fixed' if path == 'home' }} bottom-0 text-center w-full py-8 px-1 md:px-0"
 >
+  {% if not (page.url == '/' or page.url.includes('/tags/')) %}
+    <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6">
+      <div class=" mb-4 md:mb-0 md:mr-8 md:flex-shrink-0">
+        <img class="h-20 w-20 rounded-full border-indigo-500 border-2" src="{{environment.baseURL}}img/prateek-author.jpg" />
+      </div>
+      <div class="md:text-left text-center">
+        <h4 class="text-lg font-bold mb-2 md:mb-0">About Prateek Surana</h4>
+        <p class="text-base">
+          Prateek is a Frontend Engineer and an iOS developer, currently building 
+          <a href="https://devfolio.co" class="text-indigo-700" target="_blank" rel="noreferrer noopener">Devfolio</a>.
+          Apart from his unconditional love for JavaScript and React, he also enjoys watching Marvel movies and playing quirky games on his phone.
+        </p>
+      </div>
+    </div>
+  {% endif %}
+
   <small class="text-gray-500"
     >Copyright © {{settings.name}}
     <span id="copyright">
