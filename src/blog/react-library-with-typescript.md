@@ -105,7 +105,7 @@ Some of the important parameters we are using here are -
 
 TypeScript offers [a lot of flags for type checking and compiling](https://www.typescriptlang.org/tsconfig).
 
-It's time to test our setup now, create a file `src/index.js` and add the following snippet to it - 
+It's time to test our setup now, create a file `src/index.ts` and add the following snippet to it - 
 
 ```jsx
 export function sayHello(name: string) {
