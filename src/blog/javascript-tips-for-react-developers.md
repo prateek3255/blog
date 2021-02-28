@@ -11,16 +11,16 @@ tags:
   - react
   - javascript
 ---
-I have been building with React for the past three years. So naturally, I am not really proud of the code that I wrote when I was just beginning with React, because now I know the mistakes I made which I wasn't aware of back then.
+I have been working with React for the past couple of years, so naturally, I am not really proud of the code that I wrote when I was just beginning with React, because now I know the mistakes I made which I wasn't aware of back then.
 
-But fast-frowarding to today, I have learned quite a bit along the way through contributing to open source, watching/reading some interesting blogs and conference talks and viewing how other people code.
+But fast-forwarding to today, I have learned quite a bit along the way through contributing to open source, watching/reading some interesting blogs and conference talks and viewing how other people write code.
 
 Here are some Javascript tips that would've helped my past self and maybe you, in writing more efficient and maintainable React code -
 
 
 
 
-{% headingWithLink "Conditional Rendering" %}
+{% headingWithLink "1. Use conditional rendering effectively" %}
 
 As a React developer, you must've been in a situation where you only want to display a component when a certain condition from a prop or state is satisfied or render different components depending on the different values of the state.
 
@@ -118,7 +118,7 @@ const Dashboard = props => {
 
 
 
-{% headingWithLink "Avoid using truthy tests" %}
+{% headingWithLink "2. Avoid using truthy tests" %}
 
 If you are familiar with JavaScript then you might be aware of [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) and [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) values. So a truthy test is nothing but using this coercion ability of JavaScript in control flow statements like this
 
@@ -170,7 +170,7 @@ If the first operator is falsy then JavaScript returns that object. So in case o
 
 
 
-{% headingWithLink "Use optional chaining and nullish coalescing" %}
+{% headingWithLink "3. Use optional chaining and nullish coalescing" %}
 
 When dealing with data in our apps we often need to deal with parts of data that call be `null` or `undefined` and provide default values.
 
@@ -237,7 +237,7 @@ You might think here that the [Logical Or operator](https://developer.mozilla.or
 
 
 
-{% headingWithLink "Avoid premature optimization" %}
+{% headingWithLink "4. Avoid premature optimization" %}
 
 Be really careful when you want to memoize something in React, because if not done properly it might lead to even worse performance.
 
@@ -312,7 +312,7 @@ So when do you actually need to memoize? Well Kent C. Dodds [covers all the abov
 
 
 
-{% headingWithLink "Be vigilant with dependency arrays" %}
+{% headingWithLink "5. Be vigilant with dependency arrays" %}
 
 The React hooks related to memoization([`useCallback`](https://reactjs.org/docs/hooks-reference.html#usecallback) and [`useMemo`](https://reactjs.org/docs/hooks-reference.html#usememo)) and the [`useEffect`](https://reactjs.org/docs/hooks-reference.html#useeffect) hook take a second argument as an array usually known as dependency array.
 
