@@ -74,3 +74,18 @@ blockquote::before {
 .top-indicator:hover {
   transform: scale(1.3);
 } 
+
+/**
+* Header anchor
+*/
+
+.header-anchor {
+  color: inherit !important;
+  font-weight: inherit !important;
+  text-decoration: none !important;
+}
+
+.header-anchor:hover .icon {
+  opacity: 1;
+}
+

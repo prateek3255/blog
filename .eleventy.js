@@ -2,7 +2,29 @@ const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
-const fs = require('fs');
+
+/**
+ * Converts strings to slugs
+ * @reference https://gist.github.com/codeguy/6684588
+ * @param {string} str The string to be slugified
+ */
+function stringtoSlug (str) {
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+
+  // remove accents, swap ñ for n, etc
+  var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+  var to   = "aaaaeeeeiiiioooouuuunc------";
+  for (var i=0, l=from.length ; i<l ; i++) {
+      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
+
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
+}
 
 module.exports = function (eleventyConfig) {
   // Disable automatic use of your .gitignore
@@ -10,6 +32,21 @@ module.exports = function (eleventyConfig) {
 
   // Merge data instead of overriding
   eleventyConfig.setDataDeepMerge(true);
+
+  // Add shortcode for rendering heading with link
+  eleventyConfig.addNunjucksShortcode(
+    "headingWithLink",
+    function (heading) {
+      const slug = stringtoSlug(heading);
+      return `<h2 class="relative">
+      <a id="${slug}" href="#${slug}" class="header-anchor">
+      <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="absolute top-2 -left-7 opacity-0 icon" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+      ${heading}
+      </a>
+      </h2>`;
+    }
+  );
 
   // human readable date
   eleventyConfig.addFilter("readableDate", (dateObj) => {
@@ -52,7 +89,7 @@ module.exports = function (eleventyConfig) {
       let minified = htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
-        collapseWhitespace: true
+        collapseWhitespace: true,
       });
       return minified;
     }
