@@ -25,7 +25,7 @@ prism: true
      <div>
         {% for tag in tags %}
             {% if tag != 'post' %}
-            <a href="{{environment.baseURL}}tags/{{tag}}" class="text-indigo-700 mr-1">
+            <a href="{{environment.baseURL}}tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
                 #{{tagsCase[tag]}}
             </a>
             {% endif %}
