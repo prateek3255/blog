@@ -2,7 +2,7 @@
 title: Integrating reCAPTCHA with Next.js
 date: 2021-01-17
 permalink: /integrating-recaptcha-with-next/
-templateEngineOverride: 11ty.js,md
+templateEngineOverride: njk,md
 description: Check out how you can take advantage of Next.js' API routes to get the most out of CAPTCHA solutions like reCAPTCHA and hCaptcha.
 thumbnail: integrating-recaptcha-with-nextjs.png
 author: Prateek Surana
@@ -31,13 +31,19 @@ reCAPTCHA, though more famous than any other solutions out there but is [infamou
 
 We will cover this with the following steps -
 
-1. [Why you might need to use reCAPTCHA and how does it work](#why-you-might-need-recaptcha-and-how-does-it-work)
-2. [Setting up the project](#setting-up-the-project)
-3. [Adding reCAPTCHA to the frontend](#adding-recaptcha-to-the-frontend)
-4. [Verifying captcha via Next.js' API routes](#verifying-recaptcha-via-nextjs-api-routes)
-5. [Bonus: Integrating hCaptcha and why you might need it](#integrating-hcaptcha-and-why-you-need-it)
+1. {% slugifiedLink "Why you need to use reCAPTCHA and how does it work" %}
+2. {% slugifiedLink "Setting up the project" %}
+3. {% slugifiedLink "Adding reCAPTCHA to the frontend" %}
+4. {% slugifiedLink "Verifying captcha via Next.js' API routes" %}
+5. {% slugifiedLink "Bonus: Integrating hCaptcha and why you might need it" %}
 
-<h2 id="why-you-might-need-recaptcha-and-how-does-it-work">Why you need to use reCAPTCHA and how does it work</h2>
+
+
+
+
+
+
+{% headingWithLink "Why you need to use reCAPTCHA and how does it work" %}
 
 Before we dive into integrating reCAPTCHA, let's take a moment to understand why you need it and how does it solve your problems.
 
@@ -49,7 +55,12 @@ Now this will prevent your frontend from malicious attacks. However, your backen
 
 <img class="article-img" src="../img/recaptcha-working.jpg" alt="Working of reCAPTCHA" />
 
-<h2 id="setting-up-the-project">Setting up the project</h2>
+
+
+
+
+
+{% headingWithLink "Setting up the project" %}
 
 I will be using a plain starter built using [`create-next-app`](https://www.npmjs.com/package/create-next-app) with a simple form. If you want to follow along, you can get the initial state from [this commit](https://github.com/prateek3255/recaptch-with-next/tree/4be05a0163a2629b88b6bf8dc6863c9bb29da2a2). The initial setup looks like this, and it just shows your email in an alert when you click on register
 
@@ -84,7 +95,11 @@ You can use different environment keys for production with the proper domains ad
 
 [👨🏻‍💻 Code till this step](https://github.com/prateek3255/recaptch-with-next/tree/4be05a0163a2629b88b6bf8dc6863c9bb29da2a2)
 
-<h2 id="adding-recaptcha-to-the-frontend">Adding reCAPTCHA to the frontend</h2>
+
+
+
+
+{% headingWithLink "Adding reCAPTCHA to the frontend" %}
 
 We need the public site key to be available to the client. Adding the `NEXT_PUBLIC_` suffix to the environment variable would [make it visible to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser). The `RECAPTCHA_SECRET_KEY` environment variable would only be available on the server.
 
@@ -169,7 +184,12 @@ You should be able to see the challenge after submitting a form couple of times 
 
 [👨🏻‍💻 Code till this step](https://github.com/prateek3255/recaptch-with-next/tree/14f229c3a9567938c2be1181517c48b29fc101cc)
 
-<h2 id="verifying-recaptcha-via-nextjs-api-routes">Verifying captcha via Next.js' API routes</h2>
+
+
+
+
+
+{% headingWithLink "Verifying captcha via Next.js' API routes" %}
 
 Likely, you don't want to show your user's info in an alert box when he submits your form. You might want to store that info somewhere in your backend instead or provide an appropriate response to the user in case of a login form. For that, we can replace the code that shows the alert with an API call that saves the info the user entered to your backend because we have already added the reCAPTCHA that would prevent any bot or spammers, right?
 
@@ -301,7 +321,12 @@ If you followed along till here, then pat yourself on the back. Your frontend an
 
 [👨🏻‍💻 Code till this step](https://github.com/prateek3255/recaptch-with-next/tree/a57aadb1dddf4289892c8949de6d8715ba1a07d1)
 
-<h2 id="integrating-hcaptcha-and-why-you-need-it">Bonus: Integrating hCAPTCHA and why you might need it</h2>
+
+
+
+
+
+{% headingWithLink "Bonus: Integrating hCAPTCHA and why you might need it" %}
 
 Although reCAPTCHA might be great for security, but if you're concerned about your user's privacy, then [hCaptcha](https://www.hcaptcha.com/) might be a better choice. Do checkout why [Cloudflare moved from reCAPTCHA to hCaptcha](https://blog.cloudflare.com/moving-from-recaptcha-to-hcaptcha/). hCaptcha differs from reCAPTCHA in the following ways:
 

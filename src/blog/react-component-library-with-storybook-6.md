@@ -2,7 +2,7 @@
 title: Creating a React component library using Storybook 6
 date: 2020-12-20
 permalink: /react-component-library-using-storybook-6/
-templateEngineOverride: 11ty.js,md
+templateEngineOverride: njk,md
 description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
 thumbnail: react-component-library-using-storybook-6.png
 author: Prateek Surana
@@ -21,13 +21,18 @@ Another benefit is that you can develop UI components easily in isolation and re
 
 In this tutorial, I would be covering the steps for creating and publishing a React component library ([Storybook supports countless other frontend frameworks](https://storybook.js.org/)), with the following steps -
 
-1. [Setting up the project](#setting-up-the-project)
-2. [Installing Storybook](#installing-storybook)
-3. [Adding stories and setting up the file structure](#adding-stories-and-setting-up-the-file-structure)
-4. [Compiling the Library using Rollup](#compiling-the-library-using-rollup)
-5. [Publishing and consuming the library](#publishing-and-consuming-the-library)
+1. {% slugifiedLink "Setting up the project" %}
+2. {% slugifiedLink "Installing Storybook" %}
+3. {% slugifiedLink "Adding stories and setting up the file structure" %}
+4. {% slugifiedLink "Compiling the Library using Rollup" %}
+5. {% slugifiedLink "Publishing and consuming the library" %}
 
-<h2 id="setting-up-the-project">Setting up the project</h2>
+
+
+
+
+
+{% headingWithLink "Setting up the project" %}
 
 Since we are building a component library that would be published to a package manager like NPM, we would be better off if we setup React from scratch instead of using something like create-react-app, which is better suited for web applications.
 
@@ -95,7 +100,12 @@ These options help TypeScript to [ignore and enforce certain rules while compili
 
 [GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/0f3932074fea5e97b2aaab6d31a794b4ef937514)
 
-<h2 id="installing-storybook">Installing Storybook</h2>
+
+
+
+
+
+{% headingWithLink "Installing Storybook" %}
 
 Now that we have the React boilerplate ready we can now install Storybook, run the following command in the root folder to add Storybook to your project
 
@@ -125,7 +135,12 @@ This config would run TypeScript stories defined in the `src` folder, which we w
 
 [GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/f758d09f8df37268387f0b47987a91ff820a7ed7)
 
-<h2 id="adding-stories-and-setting-up-the-file-structure">Adding stories and setting up the file structure</h2>
+
+
+
+
+
+{% headingWithLink "Adding stories and setting up the file structure" %}
 
 Now that we have the Storybook setup, we can start creating our components and writing stories for them.
 
@@ -238,7 +253,12 @@ If you followed the above steps, your final story preview would look something l
 
 [GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a)
 
-<h2 id="compiling-the-library-using-rollup">Compiling the Library using Rollup</h2>
+
+
+
+
+
+{% headingWithLink "Compiling the Library using Rollup" %}
 
 Now that you know how to build components with Storybook, it's time to move to the next step, which is compiling our library so that our end applications can consume it.
 
@@ -350,7 +370,12 @@ Don't forget to add the `lib` folder to `.gitignore`.
 
 [GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/8c5aab293f894c2e8e6416b4f522024f6d7c3585)
 
-<h2 id="publishing-and-consuming-the-library">Publishing and consuming the library</h2>
+
+
+
+
+
+{% headingWithLink "Publishing and consuming the library" %}
 
 Publishing the library to NPM couldn't be any easier. Since we have already defined all the required fields in `package.json`, you just need to run `npm publish`.
 

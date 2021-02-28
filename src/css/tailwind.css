@@ -41,7 +41,7 @@ blockquote {
   /* border: var(--border); */
   font-style: initial !important;
 	margin: 1.7em 0em 0em 0em;
-  padding: 0.5em 2.0em;
+  padding: 0.5em 2.0em !important;
   position: relative;
 }
 

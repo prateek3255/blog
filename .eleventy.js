@@ -47,6 +47,15 @@ module.exports = function (eleventyConfig) {
       </h2>`;
     }
   );
+  
+  // Creates a link from the slugified string
+  eleventyConfig.addNunjucksShortcode(
+    "slugifiedLink",
+    function (text) {
+      const slug = stringtoSlug(text);
+      return `[${text}](#${slug})`;
+    }
+  );
 
   // human readable date
   eleventyConfig.addFilter("readableDate", (dateObj) => {

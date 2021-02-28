@@ -2,7 +2,7 @@
 title: Using environment variables with Webpack
 date: 2020-11-09
 permalink: /using-environment-variables-with-webpack/
-templateEngineOverride: 11ty.js,md
+templateEngineOverride: njk,md
 description: A guide for setting up and using environment variables with Webpack and handling different values for Production and Development environments.
 thumbnail: using-environment-variables-with-webpack.png
 author: Prateek Surana
@@ -20,11 +20,16 @@ Now there are two ways of using environment variables -
 
 This post will cover the second method and show you how to inject environment variables from a `.env` file to your application via Webpack's `dotenv-webpack` plugin via discussing the following steps -
 
-1. [The .env file](#the-dot-env-file)
-2. [Accessing environment variables via Webpack](#accessing-environment-variables-via-webpack)
-3. [Using different .env files for production and development environments](#using-different-env-for-production-and-development)
+1. {% slugifiedLink "The .env file" %}
+2. {% slugifiedLink "Accessing environment variables via Webpack" %}
+3. {% slugifiedLink "Using different .env files for production and development environments" %}
 
-<h2 id="the-dot-env-file">The .env file</h2>
+
+
+
+
+
+{% headingWithLink "The .env file" %}
 
 I prefer creating a `.env` file with all the environment variables in the project root and [adding a line that references this file to your `.gitignore`](https://www.atlassian.com/git/tutorials/saving-changes/gitignore)  so that they are not pushed to source control. This way, whenever someone new is cloning your repository, they wouldn't need to add these variables to their system environment (which can be really painful in operating systems like Windows).
 
@@ -54,7 +59,13 @@ SOME_IMPORTANT_API_KEY=
 
 This way, someone new cloning your repo can create `.env` and add all the required variables accordingly.
 
-<h2 id="accessing-environment-variables-via-webpack">Accessing environment variables via Webpack</h2>
+
+
+
+
+
+
+{% headingWithLink "Accessing environment variables via Webpack" %}
 
 Now let's read these variables in our code. To do that, we would be using the [`dotenv-webpack` plugin](https://www.npmjs.com/package/dotenv-webpack). Install this plugin as a dev dependency -
 
@@ -126,7 +137,13 @@ const requestMyAwesomeService = () => {
 
 This way, linters like [ESLint](https://eslint.org/) or compilers like [TypeScript](https://www.typescriptlang.org/) would prevent you from spelling mistakes, and you would get [nifty auto-complete while importing these variables with editors like VSCode](https://code.visualstudio.com/docs/editor/intellisense).
 
-<h2 id="using-different-env-for-production-and-development">Using different .env files for production and development environments</h2>
+
+
+
+
+
+
+{% headingWithLink "Using different .env files for production and development environments" %}
 
 When using environment variables, you might need to use different values for some keys depending on whether you are in a development or production environment.
 

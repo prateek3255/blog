@@ -2,7 +2,7 @@
 title: How to build a React library using TypeScript
 date: 2020-10-18
 permalink: /react-library-with-typescript/
-templateEngineOverride: 11ty.js,md
+templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
 thumbnail: react-library-with-typescript.png
 author: Prateek Surana
@@ -14,7 +14,12 @@ tags:
 
 Code reusability and modular design are what have made React one of the best JavaScript frameworks out there. Also, thanks to NPM, publishing a new JavaScript module has never been easier. All you need to do is point the main JavaScript file in your `package.json` and run `npm publish`. Although, you need to take care of a few more things when it comes to publishing a TypeScript package, and that's what we'll discuss in this guide.
 
-<h2 id="why-typescript">Why TypeScript?</h2>
+
+
+
+
+
+{% headingWithLink "Why TypeScript?" %}
 
 [TypeScript is a strict syntactical superset of JavaScript](https://www.typescriptlang.org/) and adds optional static typing to the language, giving you the ability to write code free from the JavaScript type errors.
 
@@ -24,18 +29,28 @@ Also if your library becomes popular you will need to add type-definitions somet
 
 And I think this goes without saying that TypeScript makes your code more robust and less prone to errors.
 
+
+
+
+
+
 ## Let's Begin
 
 We'll be building a small library with a `create-react-app` demo to help you understand the basic boilerplate setup for building and publishing a TypeScript React library, with the following steps -
 
-1. [Initializing a project and adding TypeScript](#initializing-a-project-and-adding-typescript)
-2. [Setting up TypeScript config](#setting-up-typescript-config)
-3. [Compiling TypeScript](#compiling-typescript)
-4. [Adding React](#adding-react)
-5. [Setting up the demo](#setting-up-the-demo)
-6. [Getting ready for Publishing](#getting-ready-for-publishing)
+1. {% slugifiedLink "Initializing a project and adding TypeScript" %}
+2. {% slugifiedLink "Setting up TypeScript config" %}
+3. {% slugifiedLink "Compiling TypeScript" %}
+4. {% slugifiedLink "Adding React" %}
+5. {% slugifiedLink "Setting up the demo" %}
+6. {% slugifiedLink "Getting ready for Publishing" %}
 
-<h2 id="initializing-a-project-and-adding-typescript">Initializing a project and adding TypeScript</h2>
+
+
+
+
+
+{% headingWithLink "Initializing a project and adding TypeScript" %}
 
 > A small heads up that I'll be using [yarn](https://yarnpkg.com/) as the package manager throughout this guide since it is [much better than npm.](https://www.cubui.com/blog/javascript/why-yarn-is-better-than-npm/)
 
@@ -65,7 +80,12 @@ yarn add --dev typescript
 
 While you're at it, don't forget to set up git in your folder and regularly commit; if you’re a beginner to git, I would recommend going through this [git tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
 
-<h2 id="setting-up-typescript-config">Setting up TypeScript config</h2>
+
+
+
+
+
+{% headingWithLink "Setting up TypeScript config" %}
 
 To compile TypeScript and enforce/ignore certain rules, we will need to create a config file called `tsconfig.json` in the root directory. Also, at the time of writing this tutorial, I'm using [TypeScript version 4.0.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html). So if any somethings are not working for you, it might be because some keys might have been updated or deprecated. I would recommend you to consult the [release notes](https://www.typescriptlang.org/docs/handbook/release-notes/overview.html) for that.
 
@@ -126,7 +146,13 @@ Now run `yarn build` inside your root folder, and you should see a folder called
 - `index.js` - The compiled output file.
 - `index.d.ts` - The [type definitions](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html) for your code.
 
-<h2 id="compiling-typescript">Compiling TypeScript</h2>
+
+
+
+
+
+
+{% headingWithLink "Compiling TypeScript" %}
 
 Although we completed the setup for TypeScript and added a build script in the last step, we're not quite ready yet. To be able to publish our package to NPM, you need to be aware of the different types of modules available in the JavaScript ecosystem -
 
@@ -166,7 +192,13 @@ As one last step, we need to specify the entry points for different types of mod
 
 > If your library has some external dependencies or some other assets, I would recommend using module bundlers like [Rollup to compile your library](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396).
 
-<h2 id="adding-react">Adding React</h2>
+
+
+
+
+
+
+{% headingWithLink "Adding React" %}
 
 We have the TypeScript setup up and running, now its time to add React.
 
@@ -197,7 +229,14 @@ const SayHello = ({ name }: { name: string }): JSX.Element => (
 export default SayHello;
 ```
 
-<h2 id="setting-up-the-demo">Setting up the demo</h2>
+
+
+
+
+
+
+
+{% headingWithLink "Setting up the demo" %}
 
 To be able to use and test our library, we would need an example project. We will be using [`create-react-app` with the TypeScript template](https://create-react-app.dev/docs/adding-typescript/) for creating an example app to test our library. Run the following in the root folder -
 
@@ -252,7 +291,13 @@ export default App;
 
 Run yarn start in **the example folder**, and you should be able to see your component in the browser. To update the lib
 
-<h2 id="getting-ready-for-publishing">Getting ready for publishing</h2>
+
+
+
+
+
+
+{% headingWithLink "Getting ready for publishing" %}
 
 So now that we have added the demo and tested our module locally its now time to publish it to NPM so others can use it as well.
 
