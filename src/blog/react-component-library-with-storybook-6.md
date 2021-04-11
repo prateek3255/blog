@@ -1,7 +1,7 @@
 ---
 title: Creating a React component library using Storybook 6
 date: 2020-12-20
-updatedAt: 2020-12-20
+updatedAt: 2021-04-11
 permalink: /react-component-library-using-storybook-6/
 templateEngineOverride: njk,md
 description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
@@ -281,9 +281,9 @@ yarn add --dev rollup rollup-plugin-typescript2 @rollup/plugin-commonjs @rollup/
 
 Now before we add the rollup config, there are a few types of JavaScript modules that you should be aware of - 
 
-- [CommonJS](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules) - This the module format used by Node and webpack <2 (using the `require` function). Even though we are publishing a React module, we need to consider that it might also be used within an SSR (Server side rendering) environment, which generally uses Node.
-- [ESM](https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules) - This is the modern module format that we normally use in our React applications in which modules are defined using a variety of import and export statements. The main benefit of shipping ES modules is that it [makes your library tree-shakable](https://bitsofco.de/what-is-tree-shaking/). This is supported by tools like Rollup and webpack 2+
-- [UMD](https://riptutorial.com/javascript/example/16339/universal-module-definition) - This module format is not as popular these days. It is required when the user requires our module using a script tag.
+- [CommonJS](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules) - This module format is most commonly used with Node using the `require` function. Even though we are publishing a React module (which will be consumed by an application generally written in ESM format, then bundled and compiled by tools like webpack), we need to consider that it might also be used within a Server side rendering environment, which generally uses Node and hence might require a CJS counterpart of the library (ESM modules are supported in Node environment as of [v10 behind an experimental flag](https://nodejs.org/dist./v10.22.0/docs/api/esm.html)).
+- [ESM](https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules) - This is the modern module format that we normally use in our React applications in which modules are defined using a variety of import and export statements. The main benefit of shipping ES modules is that it [makes your library tree-shakable](https://bitsofco.de/what-is-tree-shaking/). This is supported by tools like Rollup and webpack 2+.
+- [UMD](https://riptutorial.com/javascript/example/16339/universal-module-definition) - This module format is not as popular these days. It is required when the user requires our module using a script tag.
 
 So we would want to support both ESM and CommonJS modules for our component library so that all kinds of support tools can use it in the end application that relies on either of the module types.
 

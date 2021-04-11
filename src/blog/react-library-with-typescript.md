@@ -1,7 +1,7 @@
 ---
 title: How to build a React library using TypeScript
 date: 2020-10-18
-updatedAt: 2020-10-18
+updatedAt: 2021-04-11
 permalink: /react-library-with-typescript/
 templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
@@ -157,8 +157,8 @@ Now run `yarn build` inside your root folder, and you should see a folder called
 
 Although we completed the setup for TypeScript and added a build script in the last step, we're not quite ready yet. To be able to publish our package to NPM, you need to be aware of the different types of modules available in the JavaScript ecosystem -
 
-- [CommonJS](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules) - This the module format used by Node (using the `require` function). Even though we are publishing a React module, we need to consider that it might also be used within an SSR (Server side rendering) environment, which generally uses Node.
-- [ESM](https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules) - This is the modern module format that we normally use in our React applications in which modules are defined using a variety of import and export statements. The main benefit of shipping ES modules is that it [makes your library tree-shakable](https://bitsofco.de/what-is-tree-shaking/).
+- [CommonJS](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules) - This module format is most commonly used with Node using the `require` function. Even though we are publishing a React module (which will be consumed by an application generally written in ESM format, then bundled and compiled by tools like webpack), we need to consider that it might also be used within a Server side rendering environment, which generally uses Node and hence might require a CJS counterpart of the library (ESM modules are supported in Node environment as of [v10 behind an experimental flag](https://nodejs.org/dist./v10.22.0/docs/api/esm.html)).
+- [ESM](https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules) - This is the modern module format that we normally use in our React applications in which modules are defined using a variety of import and export statements. The main benefit of shipping ES modules is that it [makes your library tree-shakable](https://bitsofco.de/what-is-tree-shaking/). This is supported by tools like Rollup and webpack 2+.
 - [UMD](https://riptutorial.com/javascript/example/16339/universal-module-definition) - This module format is not as popular these days. It is required when the user requires our module using a script tag.
 
 So for our package, we will add support for both ESM and CommonJS modules. Currently, if you open the `index.js` file in the `lib/esm` folder, you will find that it's using the ESM format because we specified the module type to `esnext` in the `tsconfig` compiler options. That's the reason why I asked you to send the output to the `lib/esm` folder when setting up TypeScript.
