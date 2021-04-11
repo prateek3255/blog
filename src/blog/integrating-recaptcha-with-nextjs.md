@@ -1,6 +1,7 @@
 ---
 title: Integrating reCAPTCHA with Next.js
 date: 2021-01-17
+updatedAt: 2021-01-17
 permalink: /integrating-recaptcha-with-next/
 templateEngineOverride: njk,md
 description: Check out how you can take advantage of Next.js' API routes to get the most out of CAPTCHA solutions like reCAPTCHA and hCaptcha.

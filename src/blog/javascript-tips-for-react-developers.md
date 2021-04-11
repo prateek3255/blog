@@ -1,6 +1,7 @@
 ---
 title: JavaScript tips for React Developers
 date: 2021-02-28
+updatedAt: 2021-02-28
 permalink: /javascript-tips-for-react-developers/
 templateEngineOverride: njk,md
 description: Check out how you can write more efficient, maintainable and clean React code with these simple tips.

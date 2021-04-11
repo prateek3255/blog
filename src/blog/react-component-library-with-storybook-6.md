@@ -1,6 +1,7 @@
 ---
 title: Creating a React component library using Storybook 6
 date: 2020-12-20
+updatedAt: 2020-12-20
 permalink: /react-component-library-using-storybook-6/
 templateEngineOverride: njk,md
 description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
