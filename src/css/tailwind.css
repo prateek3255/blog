@@ -89,3 +89,8 @@ blockquote::before {
   opacity: 1;
 }
 
+
+pre[class*="language-"] {
+  font-size: 0.8em !important;
+}
+

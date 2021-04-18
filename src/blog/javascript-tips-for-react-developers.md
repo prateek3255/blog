@@ -1,7 +1,7 @@
 ---
 title: JavaScript tips for React Developers
 date: 2021-02-28
-updatedAt: 2021-02-28
+updatedAt: 2021-04-18
 permalink: /javascript-tips-for-react-developers/
 templateEngineOverride: njk,md
 description: Check out how you can write more efficient, maintainable and clean React code with these simple tips.
@@ -254,7 +254,8 @@ const MyForm = () => {
      */
   };
   
-  // ❌ useCallback is unnecessary and can actually be worse for performance
+  // ❌ useCallback is unnecessary and 
+  // can actually be worse for performance
   const handleChange = React.useCallback(event => {
     setFirstName(event.target.value);
   }, []);
@@ -291,7 +292,10 @@ const SomeComponent = () => {
         <span>Header</span>
       </UselessMemoizedHeader>
       Count: {count}
-      <button type="button" onClick={() => setCount(currentCount => currentCount + 1)}>
+      <button 
+        type="button" 
+        onClick={() => setCount(currentCount => currentCount + 1)}
+       >
         Increment count
       </button>
     </div>
@@ -305,7 +309,7 @@ But why? Since memo just does a shallow comparison of the current props and prev
 
 Your code ends up being even worse off because of that unnecessary children prop comparison on every render.
 
-So when do you actually need to memoize? Well Kent C. Dodds [covers all the above things with when you should memoize in great detail](https://kentcdodds.com/blog/usememo-and-usecallback) in his article. I would recommend you give it a read.
+So when do you actually need to memoize? Well I wrote another article that [covers all the above things with when you should memoize in great detail](https://prateeksurana.me/blog/when-should-you-memoize-in-react/).
 
 
 
@@ -364,7 +368,8 @@ So the correct way to do this would be -
 ```jsx
 React.useEffect(() => {
     fetchCats(query, { height, color });
-}, [query, height, color]); // ✅ The effect will now run only when one of these props changes
+}, [query, height, color]); // ✅ The effect will 
+// now run only when one of these props changes
 ```
 
 The same applies for spreading the dependencies like this - 
@@ -374,7 +379,8 @@ React.useEffect(() => {
    /**
     * Ommited for brevity
     */
-}, [...filterArray, query]); // ❌ This effect would also run on every render
+}, [...filterArray, query]); // ❌ This effect 
+// would also run on every render
 ```
 
 > If you are using [ESLint](https://eslint.org/) as your linter then you should definitely install the [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks), it will warn you and even fix issues automatically (if [autofix on save](https://www.digitalocean.com/community/tutorials/workflow-auto-eslinting) is enabled) for most of the mistakes people generally make with these hooks.
