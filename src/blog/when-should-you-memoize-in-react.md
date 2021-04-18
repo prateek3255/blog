@@ -178,7 +178,7 @@ The main purpose of `useCallback` is to maintain **referential equality** of a f
 
 {% headingWithLink "Referential Equality", "h4" %}
 
-irst, let's see how these hooks help us maintain referential equality, take a look at the following example (keep in mind that this is a contrived example to explain the use case of these hooks, actual implementations will vary)
+First, let's see how these hooks help us maintain referential equality, take a look at the following example (keep in mind that this is a contrived example to explain the use case of these hooks, actual implementations will vary)
 
 ```jsx
 const PokemonSearch = ({ weight, power, realtimeStats }) => {
