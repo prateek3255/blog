@@ -1,7 +1,7 @@
 ---
 title: When should you memoize in React
 date: 2021-04-18
-updatedAt: 2021-04-18
+updatedAt: 2021-04-21
 permalink: /when-should-you-memoize-in-react/
 templateEngineOverride: njk,md
 description: Explore why premature optimization can be bad in React and when should you actually use the memoization methods provided by React
@@ -25,16 +25,20 @@ In this article, I'll try my best to explain -
 3. {% slugifiedLink "When should you actually memoize" %}
 
 
+
+
+
+
 {% headingWithLink "Why premature optimization is bad" %}
+
+You might have heard this famous quote by [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth), that "Premature optimization is the root of all evil." Well, the quote might be old, but it still holds its value for software engineers like us trying to eagerly optimize without analyzing its benefits. So let's understand why it is bad to prematurely memoize in React -
+
+
 
 
 
 
 {% headingWithLink "useCallback", "h3" %}
-
-
-
-
 
 Let's start with an example. What do you think about, handleChange in the below code snippet?
 
@@ -120,7 +124,7 @@ The same thing goes with `memo`, if we're not careful enough your memoized compo
 
 Take this sandbox for example, how many times do you think this memoized component will render when you are incrementing the count.
 
-<iframe src="https://codesandbox.io/embed/musing-brahmagupta-chx76?expanddevtools=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/musing-brahmagupta-chx76?expanddevtools=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="musing-brahmagupta-chx76"
@@ -130,7 +134,7 @@ Take this sandbox for example, how many times do you think this memoized compone
 
 But shouldn't it render only once because it takes only one `children` prop which doesn't appear to be changing across renders? 
 
-`memo` does a shallow comparison of the previous props and the new props and re-renders only when the props have changed. So if you've been working with JavaScript for some time then you must be aware of [Referential Equality](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#strict_equality_using) -
+Well `memo` does a shallow comparison of the previous props and the new props and re-renders only when the props have changed. So if you've been working with JavaScript for some time then you must be aware of [Referential Equality](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#strict_equality_using) -
 
 ```jsx
 2 === 2 // true
@@ -151,7 +155,7 @@ And since `typeof children === 'object`, the equality check in memo always retur
 
 In most cases, check if you can split the parts that change from the parts that don't change, this will probably solve most of the problems without needing to use memoization. For example, in the previous React.memo example, if we separate the heavy lifting component from the counting logic, then we can prevent the unnecessary re-renders.
 
-<iframe src="https://codesandbox.io/embed/summer-bird-w6nvm?expanddevtools=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/summer-bird-w6nvm?expanddevtools=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="summer-bird-w6nvm"
@@ -319,7 +323,7 @@ Apart from referential equality, the `useMemo` hook, similar to the `memo` funct
 
 For instance, take the following example, if you try to update the name really fast, you will be able to see a certain lag because the 35th Fibonacci number (which is purposefully slow and blocks the main thread while computing) is getting calculated every time your component re-renders even though the position remains the same.
 
-<iframe src="https://codesandbox.io/embed/expensive-calculation-without-usememo-p393q?fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/expensive-calculation-without-usememo-p393q?fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="expensive-calculation-without-usememo"
@@ -329,7 +333,7 @@ For instance, take the following example, if you try to update the name really f
 
 Now let's try this with `useMemo`.  Try updating the name really fast again and see the difference -
 
-<iframe src="https://codesandbox.io/embed/expensive-calculation-with-usememo-s8hmx?fontsize=14&hidenavigation=1&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/expensive-calculation-with-usememo-s8hmx?fontsize=12&hidenavigation=1&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="expensive-calculation-with-usememo"
@@ -356,7 +360,7 @@ The static details include the name image and abilities of the Pokemon. In contr
 
 These details are rendered by three components `PokemonDetails`  which renders the static details, and `Cravers` and `Owners`, which render the real-time info, respectively.
 
-<iframe src="https://codesandbox.io/embed/pokemon-memo-tdkel?fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/pokemon-memo-tdkel?fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="pokemon-memo"
@@ -382,7 +386,7 @@ Now, if you check the console in the above sandbox, it doesn't look good because
 
 Since, our component satisfies the above conditions, let's memoize it -
 
-<iframe src="https://codesandbox.io/embed/pokemon-memo-forked-1j97f?fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
+<iframe src="https://codesandbox.io/embed/pokemon-memo-forked-1j97f?fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.js&theme=dark&view=split"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      loading="lazy"
      title="pokemon-memo (forked)"
@@ -398,7 +402,7 @@ If you check the console in the above sandbox, you'll see that it gets re-render
 
 If you've reached this far, I assume you get the point I am trying to make here. I'll repeat it **every optimization you do comes with a cost associated with it**, and the optimization is only worth it if the benefits outweigh the cost. In most cases, you might even not need to apply these methods if you can separate the parts that often change from the parts that don't change that much, as we discussed above.
 
-I know it's a bit annoying, and maybe in the future, some really smart compiler could automatically take care of these things for you, but till then, we would have to be mindful while using these optimizations.
+I know it's a bit annoying, and maybe in the future, some really smart compiler could automatically take care of these things for you, but till then, we would have to be careful and [analyze the benefits](https://reactjs.org/docs/profiler.html) while using these optimizations.
 
 
 
@@ -406,4 +410,4 @@ I know it's a bit annoying, and maybe in the future, some really smart compiler 
 
 {% headingWithLink "Have I read this before?" %}
 
-You might have because some parts of it were inspired by [this excellent post](https://kentcdodds.com/blog/usememo-and-usecallback) by Kent C. Dodds. I liked the article, and I wanted to share some more ideas with some examples of situations that I have faced. And I have still seen many blog posts and code snippets that use these methods where they are not needed, so I thought this deserved more attention.
+You might have because some parts of it were inspired by [this excellent post](https://kentcdodds.com/blog/usememo-and-usecallback) by Kent C. Dodds. I really enjoyed the post, and realized that these methods were still often misused and hence deserved more attention, so I decided to write about it with examples from some situations that I have faced.
