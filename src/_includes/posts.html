@@ -53,8 +53,8 @@ prism: true
       I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
       </p>
       <form>
-        <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
-        <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full" type="submit"
+        <input x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
+        <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed" type="submit"
           >
           Subscribe
         </button>
@@ -87,26 +87,32 @@ prism: true
     <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
     </br>
     <form>
-      <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-      <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full" type="submit"
+      <input x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+      <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full disabled:opacity-50 disabled:cursor-not-allowed" type="submit"
         >
         Subscribe
       </button>
     </form>
   </div>
-</div>
+</div> 
 
 <script>
   function newsletter() {
     return {
       showSubscribePopup: false,
+      isSubscribeLoading: false,
+      emailField: "",
       hideSubscribePopup() {
         this.showSubscribePopup = false;
+        localStorage.setItem('has-hidden-subscription-popup', true);
       },
       startTimer() {
-        setTimeout( () => {
-          this.showSubscribePopup = true;
-        }, 2000);
+        var hasHiddenPopup = localStorage.getItem('has-hidden-subscription-popup');
+        if (!hasHiddenPopup) {
+          setTimeout( () => {
+            this.showSubscribePopup = true;
+          }, 5000);
+        }
       }
     }
   }
