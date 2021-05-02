@@ -1,5 +1,5 @@
 <footer
-  class="{{ 'fixed' if path == 'home' }} bottom-0 text-center w-full py-8 px-1 md:px-0"
+  class="{{ 'fixed' if page.url.includes('/confirm/') }} bottom-0 text-center w-full py-8 px-1 md:px-0"
 >
 
   <small class="text-gray-500"
@@ -24,7 +24,7 @@
       rel="noreferrer noopener"
       class="underline"
       >Tailwind CSS</a
-    >, and ❤
+    >, and ❤&nbsp;
     by
     <a
       href="{{settings.url}}"
