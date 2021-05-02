@@ -46,15 +46,51 @@ prism: true
   </div>
 </div>
 
-  <div class="sticky border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
-   <h4 class="text-lg font-bold mb-2">Enjoying the blog</h4>
-   <p class="text-base">I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript.</p>
-   <br/>
-   <p class="text-base">Subscribe to my newletter to get them right to your inbox.</p>
-   </br>
-    <input type="text" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-100 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-    <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full" type="button"
+<div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
+  <div class="text-center">
+    <h4 class="text-lg font-bold mb-2">Subscribe to my Newsletter</h4>
+    <p class="text-base">
+     I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
+    </p>
+    <form>
+      <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-100 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
+      <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full" type="submit"
+        >
+        Subscribe
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
+  <div class=" mb-4 md:mb-0 md:mr-8 md:flex-shrink-0">
+    <img class="h-20 w-20 rounded-full border-indigo-500 border-2" src="{{environment.baseURL}}img/prateek-author.jpg" />
+  </div>
+  <div class="md:text-left text-center">
+    <h4 class="text-lg font-bold mb-2 md:mb-0">About Prateek Surana</h4>
+    <p class="text-base">
+      Prateek is a Frontend Engineer and an iOS developer, currently building 
+      <a href="https://devfolio.co" class="text-indigo-700" target="_blank" rel="noreferrer noopener">Devfolio</a>.
+      Apart from his unconditional love for JavaScript and React, he also enjoys watching Marvel movies and playing quirky games on his phone.
+    </p>
+  </div>
+</div>
+
+<div class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
+  <img src="{{environment.baseURL}}img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
+  <div class="flex w-full justify-between">
+    <h4 class="text-lg font-bold mb-2">Enjoying the blog</h4>
+    <img src="{{environment.baseURL}}img/cross-black.svg" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
+  </div>
+  <p class="text-base">I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. </p>
+  <br/>
+  <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
+  </br>
+  <form>
+    <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-100 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+    <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full" type="submit"
       >
       Subscribe
     </button>
-  </div>
+  </form>
+</div>

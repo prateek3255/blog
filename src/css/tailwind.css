@@ -62,7 +62,7 @@ blockquote::before {
 }
 
 .top-indicator-container {
-  right: calc(50vw - 560px);
+  right: calc(50vw - 500px);
 }
 
 .top-indicator {
