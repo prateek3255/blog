@@ -2,59 +2,93 @@
 layout: default
 prism: true
 ---
+<div x-data="newsletter()" x-init="startTimer()">
+  <div class="container max-w-3xl mt-6 px-6">
+    <div class="pb-5 mb-5 border-b border-gray-100">
+      <h1 class="font-bold text-5xl">{{title}}</h1>
+      <p class="text-center text-base leading-6 font-medium text-gray-500">
+        Last updated on <time> {{ updatedAt | readableDate }}</time> by {{settings.author}} &nbsp; •
+        &nbsp;<span class="read-time"> - min read </span>
+      </p>
+    </div>
+    <article class="prose lg:prose-xl my-4 relative">
+      {{ content | safe }}
+      
+      <a class="fixed bottom-12 bg-white text-accent-blue flex items-center justify-center rounded cursor-pointer z-10 invisible lg:visible top-indicator-container" aria-label="Scroll to top" href="#">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="top-indicator" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"></path>
+        </svg>
+      </a>
+    </article>
+    <hr class=" my-4"/>
+    <div class="text-md mb-3 flex justify-between flex-col md:flex-row">
+      <div>
+          {% for tag in tags %}
+              {% if tag != 'post' %}
+              <a href="{{environment.baseURL}}tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
+                  #{{tagsCase[tag]}}
+              </a>
+              {% endif %}
+          {% endfor %}
+        </div>
+        <div class="mt-2 md:mt-0">
+          <span class="font-bold mr-2">
+            Enjoyed this blog, share it on:
+          </span>
+          <a href="https://twitter.com/intent/tweet?url={{environment.baseURL}}{{permalink.slice(1)}}&via=psuranas&text={{title}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700 mr-1">
+              Twitter
+          </a>
 
-<div class="container max-w-3xl mt-6 px-6">
-  <div class="pb-5 mb-5 border-b border-gray-100">
-    <h1 class="font-bold text-5xl">{{title}}</h1>
-    <p class="text-center text-base leading-6 font-medium text-gray-500">
-      Last updated on <time> {{ updatedAt | readableDate }}</time> by {{settings.author}} &nbsp; •
-      &nbsp;<span class="read-time"> - min read </span>
-    </p>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{environment.baseURL}}{{permalink.slice(1)}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700">
+              LinkedIn
+          </a>
+        </div>
+    </div>
   </div>
-  <article class="prose lg:prose-xl my-4 relative">
-    {{ content | safe }}
-    
-    <a class="fixed bottom-12 bg-white text-accent-blue flex items-center justify-center rounded cursor-pointer z-10 invisible lg:visible top-indicator-container" aria-label="Scroll to top" href="#">
-      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="top-indicator" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-        <path d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"></path>
-      </svg>
-    </a>
-  </article>
-  <hr class=" my-4"/>
-  <div class="text-md mb-3 flex justify-between flex-col md:flex-row">
-     <div>
-        {% for tag in tags %}
-            {% if tag != 'post' %}
-            <a href="{{environment.baseURL}}tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
-                #{{tagsCase[tag]}}
-            </a>
-            {% endif %}
-        {% endfor %}
-      </div>
-      <div class="mt-2 md:mt-0">
-        <span class="font-bold mr-2">
-          Enjoyed this blog, share it on:
-        </span>
-        <a href="https://twitter.com/intent/tweet?url={{environment.baseURL}}{{permalink.slice(1)}}&via=psuranas&text={{title}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700 mr-1">
-            Twitter
-        </a>
 
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{environment.baseURL}}{{permalink.slice(1)}}" target="_blank" rel="noreferrer noopener" class="text-indigo-700">
-            LinkedIn
-        </a>
-      </div>
+  <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
+    <div class="text-center">
+      <h4 class="text-lg font-bold mb-2">Subscribe to my Newsletter</h4>
+      <p class="text-base">
+      I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
+      </p>
+      <form>
+        <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
+        <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full" type="submit"
+          >
+          Subscribe
+        </button>
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
-  <div class="text-center">
-    <h4 class="text-lg font-bold mb-2">Subscribe to my Newsletter</h4>
-    <p class="text-base">
-     I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
-    </p>
+  <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
+    <div class=" mb-4 md:mb-0 md:mr-8 md:flex-shrink-0">
+      <img class="h-20 w-20 rounded-full border-indigo-500 border-2" src="{{environment.baseURL}}img/prateek-author.jpg" />
+    </div>
+    <div class="md:text-left text-center">
+      <h4 class="text-lg font-bold mb-2 md:mb-0">About Prateek Surana</h4>
+      <p class="text-base">
+        Prateek is a Frontend Engineer and an iOS developer, currently building 
+        <a href="https://devfolio.co" class="text-indigo-700" target="_blank" rel="noreferrer noopener">Devfolio</a>.
+        Apart from his unconditional love for JavaScript and React, he also enjoys watching Marvel movies and playing quirky games on his phone.
+      </p>
+    </div>
+  </div>
+
+  <div x-show.transition.duration.300ms="showSubscribePopup" class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
+    <img src="{{environment.baseURL}}img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
+    <div class="flex w-full justify-between">
+      <h4 class="text-lg font-bold mb-2">Enjoying the blog</h4>
+      <img src="{{environment.baseURL}}img/cross-black.svg" x-on:click="hideSubscribePopup" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
+    </div>
+    <p class="text-base">I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. </p>
+    <br/>
+    <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
+    </br>
     <form>
-      <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-100 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
-      <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full" type="submit"
+      <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+      <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full" type="submit"
         >
         Subscribe
       </button>
@@ -62,35 +96,19 @@ prism: true
   </div>
 </div>
 
-<div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
-  <div class=" mb-4 md:mb-0 md:mr-8 md:flex-shrink-0">
-    <img class="h-20 w-20 rounded-full border-indigo-500 border-2" src="{{environment.baseURL}}img/prateek-author.jpg" />
-  </div>
-  <div class="md:text-left text-center">
-    <h4 class="text-lg font-bold mb-2 md:mb-0">About Prateek Surana</h4>
-    <p class="text-base">
-      Prateek is a Frontend Engineer and an iOS developer, currently building 
-      <a href="https://devfolio.co" class="text-indigo-700" target="_blank" rel="noreferrer noopener">Devfolio</a>.
-      Apart from his unconditional love for JavaScript and React, he also enjoys watching Marvel movies and playing quirky games on his phone.
-    </p>
-  </div>
-</div>
+<script>
+  function newsletter() {
+    return {
+      showSubscribePopup: false,
+      hideSubscribePopup() {
+        this.showSubscribePopup = false;
+      },
+      startTimer() {
+        setTimeout( () => {
+          this.showSubscribePopup = true;
+        }, 2000);
+      }
+    }
+  }
+</script>
 
-<div class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
-  <img src="{{environment.baseURL}}img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
-  <div class="flex w-full justify-between">
-    <h4 class="text-lg font-bold mb-2">Enjoying the blog</h4>
-    <img src="{{environment.baseURL}}img/cross-black.svg" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
-  </div>
-  <p class="text-base">I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. </p>
-  <br/>
-  <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
-  </br>
-  <form>
-    <input required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-100 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-    <button class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full" type="submit"
-      >
-      Subscribe
-    </button>
-  </form>
-</div>
