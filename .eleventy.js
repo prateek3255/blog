@@ -79,7 +79,6 @@ module.exports = function (eleventyConfig) {
   // Copy Static Files to /_Site
   eleventyConfig.addPassthroughCopy({
     "./_tmp/css/style.css": "./css/style.css",
-    "./node_modules/alpinejs/dist/alpine.js": "./js/alpine.js",
     "./node_modules/prismjs/themes/prism-tomorrow.css":
       "./css/prism-tomorrow.css",
   });
