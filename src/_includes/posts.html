@@ -54,7 +54,7 @@ prism: true
       </p>
       <form x-on:submit="handleSubscribe">
         <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
-        <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed" type="submit"
+        <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed disabled:opacity-50" type="submit"
           >
           Subscribe
         </button>
@@ -108,6 +108,25 @@ prism: true
       },
       handleSubscribe(event) {
         event.preventDefault();
+        this.isSubscribeLoading = true;
+        fetch('https://api.prateeksurana.me/api/register', {
+          method: 'POST',
+          body: JSON.stringify({ email: this.emailField }),
+        }).then(response => response.json())
+        .then(response => {
+          this.isSubscribeLoading = false;
+          this.emailField = "";
+          if (response.success) {
+            window.open("{{environment.baseURL}}confirm");
+            this.showSubscribePopup = false;
+            localStorage.setItem('has-hidden-subscription-popup', true);
+          } else {
+            alert(response.message);
+          }
+        }).catch(error => {
+          this.isSubscribeLoading = false;
+          alert("Something went wrong, please refresh the page and try again!");
+        })
       },
       startTimer() {
         clearTimeout(window.currentTimer);
@@ -115,7 +134,13 @@ prism: true
         if (!hasHiddenPopup) {
           window.currentTimer = setTimeout( () => {
             this.showSubscribePopup = true;
-          }, 2000);
+          }, 20000);
+
+          window.onscroll = () => {
+            if ( (document.body.offsetHeight - (window.innerHeight + window.scrollY)) <= 550 ) {
+              this.showSubscribePopup = false;
+            }
+          }
         }
       }
     }
