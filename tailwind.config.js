@@ -12,16 +12,16 @@ module.exports = {
     },
     extend: {
       colors: {
-        'accent-blue': '#46CBE8'
+        "accent-blue": "#46CBE8",
       },
     },
   },
   variants: {
     extend: {
-      backgroundColor: ['active'],
-      opacity: ['disabled'],
-      cursor: ['disabled'],
-    }
+      backgroundColor: ["active"],
+      opacity: ["disabled"],
+      cursor: ["disabled"],
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 };

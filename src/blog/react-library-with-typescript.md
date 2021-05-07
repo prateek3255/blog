@@ -1,7 +1,7 @@
 ---
 title: How to build a React library using TypeScript
 date: 2020-10-18
-updatedAt: 2021-04-11
+updatedAt: 2021-05-07
 permalink: /react-library-with-typescript/
 templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
@@ -88,7 +88,7 @@ While you're at it, don't forget to set up git in your folder and regularly comm
 
 {% headingWithLink "Setting up TypeScript config" %}
 
-To compile TypeScript and enforce/ignore certain rules, we will need to create a config file called `tsconfig.json` in the root directory. Also, at the time of writing this tutorial, I'm using [TypeScript version 4.0.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html). So if any somethings are not working for you, it might be because some keys might have been updated or deprecated. I would recommend you to consult the [release notes](https://www.typescriptlang.org/docs/handbook/release-notes/overview.html) for that.
+To compile TypeScript and enforce/ignore certain rules, we will need to create a config file called `tsconfig.json` in the root directory. At the time of writing this tutorial, I'm using [TypeScript version 4.0.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html). So if something is not working for you, it might be because some keys might have been updated or deprecated. I would recommend you to consult the [release notes](https://www.typescriptlang.org/docs/handbook/release-notes/overview.html) for that.
 
 ```json
 {
@@ -126,7 +126,7 @@ Some of the important parameters we are using here are -
 
 TypeScript offers [a lot of flags for type checking and compiling](https://www.typescriptlang.org/tsconfig).
 
-It's time to test our setup now, create a file `src/index.js` and add the following snippet to it - 
+It's time to test our setup now, create a file `src/index.ts` and add the following snippet to it - 
 
 ```jsx
 export function sayHello(name: string) {
