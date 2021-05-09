@@ -46,17 +46,17 @@ prism: true
     </div>
   </div>
 
-  <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
+  <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8 bg-blue-100">
     <div class="text-center">
       <h4 class="text-lg font-bold mb-2">Subscribe to my Newsletter</h4>
       <p class="text-base">
-      I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
+      I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to my newsletter to get them straight to your inbox.
       </p>
       <form x-on:submit="handleSubscribe" name="subscribeCard">
         <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
         <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed disabled:opacity-50" type="submit"
           >
-          Subscribe
+          Count me in
         </button>
       </form>
     </div>
@@ -84,7 +84,7 @@ prism: true
     </div>
     <p class="text-base">I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. </p>
     <br/>
-    <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
+    <p class="text-base">Subscribe to my newsletter to get them straight to your inbox.</p>
     </br>
     <form x-on:submit="handleSubscribe" name="subscribePopup">
       <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
