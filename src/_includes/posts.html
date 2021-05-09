@@ -52,7 +52,7 @@ prism: true
       <p class="text-base">
       I regularly publish posts like this, containing best practices, tips and tutorials on React, JavaScript and TypeScript. Subscribe to get them directly to your inbox.
       </p>
-      <form x-on:submit="handleSubscribe">
+      <form x-on:submit="handleSubscribe" name="subscribeCard">
         <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
         <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed disabled:opacity-50" type="submit"
           >
@@ -86,7 +86,7 @@ prism: true
     <br/>
     <p class="text-base">Subscribe to my newsletter to get them right to your inbox.</p>
     </br>
-    <form x-on:submit="handleSubscribe">
+    <form x-on:submit="handleSubscribe" name="subscribePopup">
       <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
       <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-3 w-full disabled:opacity-50 disabled:cursor-not-allowed" type="submit"
         >
@@ -102,20 +102,28 @@ prism: true
       showSubscribePopup: false,
       isSubscribeLoading: false,
       emailField: "",
+
       hideSubscribePopup() {
+        trackEvent('closed_subscribe_popup', 'subscribe');
         this.showSubscribePopup = false;
         localStorage.setItem('has-hidden-subscription-popup', true);
       },
+
       handleSubscribe(event) {
         event.preventDefault();
+        trackEvent('clicked_on_subscribe', 'subscribe', event.target.name);
         this.isSubscribeLoading = true;
-        fetch('https://api.prateeksurana.me/api/register', {
+
+        var registerEndpoint = "{{environment.nodeEnv}}" === "production" ? 'https://api.prateeksurana.me/' : 'http://localhost:3000/';
+ 
+        fetch(`${registerEndpoint}api/register`, {
           method: 'POST',
           body: JSON.stringify({ email: this.emailField }),
         }).then(response => response.json())
         .then(response => {
           this.isSubscribeLoading = false;
           this.emailField = "";
+
           if (response.success) {
             window.open("{{environment.baseURL}}confirm");
             this.showSubscribePopup = false;
@@ -123,20 +131,24 @@ prism: true
           } else {
             alert(response.message);
           }
+
         }).catch(error => {
           this.isSubscribeLoading = false;
           alert("Something went wrong, please refresh the page and try again!");
         })
       },
+
       startTimer() {
         clearTimeout(window.currentTimer);
         var hasHiddenPopup = localStorage.getItem('has-hidden-subscription-popup');
+
         if (!hasHiddenPopup) {
           window.currentTimer = setTimeout( () => {
             this.showSubscribePopup = true;
-          }, 20000);
+          }, 5000);
 
           window.onscroll = () => {
+
             if ( (document.body.offsetHeight - (window.innerHeight + window.scrollY)) <= 550 ) {
               this.showSubscribePopup = false;
             }

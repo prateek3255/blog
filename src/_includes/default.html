@@ -89,11 +89,17 @@
     {% endif %}
     <script>
       function trackTagClick(tag) {
+        trackEvent('tag_clicked', 'tags', tag)
+      }
+
+      function trackEvent(name, category, label) {
         if("{{environment.nodeEnv}}" === "production") {
-          gtag('event', 'tag_clicked', {
-            'event_category' : 'Tags',
-            'event_label' : tag
+          gtag('event', name, {
+            'event_category' : category,
+            'event_label' : label
           });
+        } else {
+          console.log('Event', { name, category, label })
         }
       }
     </script>
