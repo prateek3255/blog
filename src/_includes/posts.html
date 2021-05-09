@@ -96,6 +96,18 @@ prism: true
   </div>
 </div> 
 
+{% if environment.nodeEnv == "production" %}
+<div class="container">
+  <script src="https://utteranc.es/client.js"
+        repo="prateek3255/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
+{% endif %}
+
 <script>
   function newsletter() {
     return {
