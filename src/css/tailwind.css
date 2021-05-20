@@ -31,6 +31,8 @@ body pre[class*="language-"] {
 
 .article-img {
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 blockquote {
