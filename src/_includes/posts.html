@@ -48,9 +48,9 @@ prism: true
 
   <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8 bg-blue-100">
     <div class="text-center">
-      <h4 class="text-lg font-bold mb-2">Receive my best React, JavaScript, and TypeScript tips</h4>
+      <h4 class="text-lg font-bold mb-2">Want to get better at React, JavaScript, and TypeScript?</h4>
       <p class="text-base">
-        I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript. Subscribe to my newsletter to get them straight to your inbox.
+        I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript. Subscribe to my newsletter to get them straight to your inbox. No spam ever. Unsubscribe at any time.
       </p>
       <form x-on:submit="handleSubscribe" name="subscribeCard">
         <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
@@ -79,14 +79,12 @@ prism: true
   <div x-show.transition.duration.300ms="showSubscribePopup" class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
     <img src="{{environment.baseURL}}img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
     <div class="flex w-full justify-between mb-2">
-      <h4 class="text-lg font-bold mb-2">Receive my best React, JavaScript, and TypeScript tips</h4>
+      <h4 class="text-lg font-bold mb-2">Want to get better at React, JavaScript, and TypeScript?</h4>
       <img src="{{environment.baseURL}}img/cross-black.svg" x-on:click="hideSubscribePopup" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
     </div>
-    <p class="text-base">Hope you're enjoying this post :)</p>
-    <br/>
     <p class="text-base">I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript.</p>
     <br/>
-    <p class="text-base">Subscribe to my newsletter to get them straight to your inbox.</p>
+    <p class="text-base">Subscribe to my newsletter to get them straight to your inbox. No spam ever. Unsubscribe at any time.</p>
     </br>
     <form x-on:submit="handleSubscribe" name="subscribePopup">
       <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
@@ -159,7 +157,7 @@ prism: true
         if (!hasHiddenPopup) {
           window.currentTimer = setTimeout( () => {
             this.showSubscribePopup = true;
-          }, 5000);
+          }, 15000);
 
           window.onscroll = () => {
 
