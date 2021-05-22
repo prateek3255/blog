@@ -16,9 +16,8 @@ In this post on integrating reCAPTCHA with Next.js, we will be looking at what i
 
 So you must've probably seen this before, but have you ever wondered what it does?
 
-<p style="text-align:center;">
-  <img src="../img/captcha-intro.jpg" style="max-width: 300px;margin-left:auto;margin-right:auto;" alt="A regular reCAPTCHA"/>
-</p>
+{% image "captcha-intro.jpg", "A regular reCAPTCHA", "max-w-full lg:max-w-md mx-auto" %}
+
 
 A CAPTCHA is a [Turing test](https://en.wikipedia.org/wiki/Turing_test) designed to tell humans and bots apart and is generally used by websites to prevent spam and abuse. It uses a challenge that is easy for humans but hard for bots. 
 
@@ -54,7 +53,7 @@ The way it works is as soon as the user submits the form, you execute the reCAPT
 
 Now this will prevent your frontend from malicious attacks. However, your backend APIs might still be insecure (assuming you are not using any other kind of protection, e.g., [CSRF tokens](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)) because anyone can open the network tab to check the APIs getting pinged and run a script to ping the API with spam data. Thankfully reCAPTCHA provides a solution for that as well. When a user successfully clears the reCAPTCHA, you are provided with a token that is valid for 2 minutes. You can now validate this token in your backend with a secret key to verify the request's authenticity.
 
-<img class="article-img" src="../img/recaptcha-working.jpg" alt="Working of reCAPTCHA" />
+{% image "recaptcha-working.jpg", "Working of reCAPTCHA" %}
 
 
 
@@ -65,7 +64,7 @@ Now this will prevent your frontend from malicious attacks. However, your backen
 
 I will be using a plain starter built using [`create-next-app`](https://www.npmjs.com/package/create-next-app) with a simple form. If you want to follow along, you can get the initial state from [this commit](https://github.com/prateek3255/recaptch-with-next/tree/4be05a0163a2629b88b6bf8dc6863c9bb29da2a2). The initial setup looks like this, and it just shows your email in an alert when you click on register
 
-<img class="article-img" src="../img/initial-recaptcha-app.jpg" alt="Inital Next.js app" />
+{% image "initial-recaptcha-app.jpg", "Inital Next.js app" %}
 
 
 Let's register a new project on reCAPTCHA and get the required keys. For that, you can go to the [reCAPTCHA admin console](https://www.google.com/recaptcha/admin/create), fill in the required details as mentioned below, and click on submit.
@@ -75,13 +74,13 @@ Let's register a new project on reCAPTCHA and get the required keys. For that, y
 > 
 > v3 reCAPTCHA, though, is more advanced and doesn't require users to solve any challenge, but only provides a score between 0 and 1, requiring you to take action in the context of your site: for instance, requiring additional factors of authentication, sending a post to moderation, or throttling bots that may be scraping content.
 
-<img class="article-img" src="../img/recaptcha-registration.jpg" alt="Registering your reCAPTCHA site" style="margin-top:20px;" />
+{% image "recaptcha-registration.jpg", "Registering your reCAPTCHA site", "mt-5" %}
 
 > Notice how I added the only localhost to the list of domains. That's because we would only be using these keys for development purposes. reCAPTCHA also does a domain validation for the site it is being executed on, so we would be creating a separate set of keys for the production environment to only be used on the production domain and not be misused.
 
 After clicking submit, you should be able to see the public and secret keys. 
 
-<img class="article-img" src="../img/recaptcha-keys.jpg" alt="reCAPTCHA keys" />
+{% image "recaptcha-keys.jpg", "reCAPTCHA keys" %}
 
 To have separate keys for production and development environments and avoid pushing these keys to version control, we would store these keys in the environment variables. Unlike typical react app setups where you would need to manually [setup environment variables manually via Webpack plugins](https://prateeksurana.me/blog/using-environment-variables-with-webpack/), Next.js comes with [built-in support for environment variables](https://nextjs.org/docs/basic-features/environment-variables). For the development environment, create a file called `.env.local` and add the following to it, and paste the keys you copied from the reCAPTCHA dashboard here appropriately.
 
@@ -176,12 +175,12 @@ When you restart the server with `yarn dev`, if the integration was successful y
 
 Note that if a challenge is not being shown to you, it doesn't necessarily mean that there is something wrong with the integration. As I mentioned earlier, reCAPTCHA only shows a challenge if you fail its behavior or cookie analysis.  If you still want to see the challenge anyways, you can open the tab in incognito and update the security preference to most secure from the reCAPTCHA admin dashboard.
 
-<img class="article-img" src="../img/recaptcha-security-preference.jpg" alt="reCAPTCHA security preference" />
+{% image "recaptcha-security-preference.jpg", "reCAPTCHA security preference" %}
 
 
 You should be able to see the challenge after submitting a form couple of times in a row.
 
-<img class="article-img" src="../img/recaptcha-in-action.gif" alt="reCAPTCHA in action" />
+{% image "recaptcha-in-action.gif", "reCAPTCHA in action" %}
 
 [👨🏻‍💻 Code till this step](https://github.com/prateek3255/recaptch-with-next/tree/14f229c3a9567938c2be1181517c48b29fc101cc)
 
@@ -316,7 +315,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
 
 To test if the integration is proper, you can replace the captcha code sent to the API with a random string, and you should see this when you click on register.
 
-<img class="article-img" src="../img/invalid-response-code.jpg" alt="Invalid response code" />
+{% image "invalid-response-code.jpg", "Invalid response code" %}
 
 If you followed along till here, then pat yourself on the back. Your frontend and backend database are now fully secure from any spam or bots.
 
@@ -376,7 +375,7 @@ Although hCaptcha doesn't work on localhost URLs so you would need to add a [hos
 
 After that you can just run `yarn dev`, and visit the URL you added the host entry for localhost to to see hCaptcha in action
 
-<img class="article-img" src="../img/hcaptcha-in-action.gif" alt="hCaptcha in action" />
+{% image "hcaptcha-in-action.gif", "hCaptcha in action" %}
 
  
 

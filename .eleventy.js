@@ -2,28 +2,93 @@ const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
+const Image = require("@11ty/eleventy-img");
 
 /**
  * Converts strings to slugs
  * @reference https://gist.github.com/codeguy/6684588
  * @param {string} str The string to be slugified
  */
-function stringtoSlug (str) {
-  str = str.replace(/^\s+|\s+$/g, ''); // trim
+function stringtoSlug(str) {
+  str = str.replace(/^\s+|\s+$/g, ""); // trim
   str = str.toLowerCase();
 
   // remove accents, swap ñ for n, etc
   var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-  var to   = "aaaaeeeeiiiioooouuuunc------";
-  for (var i=0, l=from.length ; i<l ; i++) {
-      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  var to = "aaaaeeeeiiiioooouuuunc------";
+  for (var i = 0, l = from.length; i < l; i++) {
+    str = str.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
   }
 
-  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-      .replace(/\s+/g, '-') // collapse whitespace and replace by -
-      .replace(/-+/g, '-'); // collapse dashes
+  str = str
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
 
   return str;
+}
+
+async function imageShortcode(
+  img,
+  alt,
+  classes = "",
+  sizes = "(max-width: 600px) 480px, (max-width: 1024px) 768px, 1200px"
+) {
+  if (alt === undefined) {
+    // You bet we throw an error on missing alt (alt="" works okay)
+    throw new Error(`Missing \`alt\` on responsiveimage from: ${img}`);
+  }
+
+  let metadata = await Image(`./src/img/${img}`, {
+    widths: [480, 768, 1200],
+    formats: ["webp", "jpeg"],
+    outputDir: "./_site/img/",
+    filenameFormat: function (id, src, width, format) {
+      // Get file name from path
+      // ex - ./src/img/hello.png -> hello
+      const path = src.split('/');
+      const fileName = path[path.length - 1].split('.')[0];
+
+      return `${fileName}-${width}.${format}`
+    }
+  });
+
+  let lowsrc = metadata.jpeg[1] || metadata.jpeg[0];
+
+  const allClasses = classes.length > 0 ? classes : "article-img";
+
+  // Directly return the simple img tag for gif file
+  // Can be updated in future to video tag for better performance
+  if (img.endsWith("gif")) {
+    return `<img
+        src="../img/${img}"
+        width="${lowsrc.width}"
+        height="${lowsrc.height}"
+        alt="${alt}"
+        class="${allClasses}"
+        loading="lazy"
+        decoding="async"></img>`;
+  }
+
+  return `<picture>
+    ${Object.values(metadata)
+      .map((imageFormat) => {
+        return `  <source type="${
+          imageFormat[0].sourceType
+        }" srcset="${imageFormat
+          .map((entry) => `..${entry.srcset}`)
+          .join(", ")}" sizes="${sizes}">`;
+      })
+      .join("\n")}
+      <img
+        src="..${lowsrc.url}"
+        width="${lowsrc.width}"
+        height="${lowsrc.height}"
+        alt="${alt}"
+        class="${allClasses}"
+        loading="lazy"
+        decoding="async">
+    </picture>`;
 }
 
 module.exports = function (eleventyConfig) {
@@ -36,7 +101,7 @@ module.exports = function (eleventyConfig) {
   // Add shortcode for rendering heading with link
   eleventyConfig.addNunjucksShortcode(
     "headingWithLink",
-    function (heading, type="h2") {
+    function (heading, type = "h2") {
       const slug = stringtoSlug(heading);
       return `<${type} class="relative">
       <a id="${slug}" href="#${slug}" class="header-anchor">
@@ -47,15 +112,15 @@ module.exports = function (eleventyConfig) {
       </${type}>`;
     }
   );
-  
+
+  // Shortcode for generating image
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+
   // Creates a link from the slugified string
-  eleventyConfig.addNunjucksShortcode(
-    "slugifiedLink",
-    function (text) {
-      const slug = stringtoSlug(text);
-      return `[${text}](#${slug})`;
-    }
-  );
+  eleventyConfig.addNunjucksShortcode("slugifiedLink", function (text) {
+    const slug = stringtoSlug(text);
+    return `[${text}](#${slug})`;
+  });
 
   // human readable date
   eleventyConfig.addFilter("readableDate", (dateObj) => {

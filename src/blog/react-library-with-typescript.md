@@ -268,9 +268,7 @@ To use our library in the example project, just add the following to your `packa
 
 This would install the package as a local dependency for our example project. If you're curious and want to know how it works and you're using VSCode, you can expand the `node_modules` folder in your example project, and you should be able to see the package with a ↪ symbol next to it.
 
-<p style="text-align:center;">
-  <img src="../img/vs-code-node-modules.png" alt="VSCode node_modules for our package" style="margin-left:auto;margin-right:auto;"/>
-</p>
+{% image "vs-code-node-modules.png", "VSCode node_modules for our package" %}
 
 You can now add your component to the `App.tsx` to try it out.
 

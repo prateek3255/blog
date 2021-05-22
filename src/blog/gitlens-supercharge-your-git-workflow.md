@@ -31,17 +31,17 @@ So here are some of my favorite GitLens features that I use regularly. You can f
 
 This is probably the first feature you will notice when you install the extension. As soon as you hover over any line in the code (in a project using git and has some commits), you will be able to see this popover.
 
-<img class="article-img" src="../img/gitlens-line-blame-default.jpg" alt="GitLens line blame default view" />
+{% image "gitlens-line-blame-default.jpg", "GitLens line blame default view" %}
 
 This popover gives you almost all the information that you might need for the current line like, what did the line looked like before the most recent commit that affected it, the commit hash that introduced the change, the PR that introduced the change (would need to connect to GitHub for this one), etc.
 
 If you click on the open changes button, you will be able to view all the changes introduced by that commit in the current file.
 
-<img class="article-img" src="../img/gitlens-open-changes-line-blame.gif" alt="GitLens line blame open changes" />
+{% image "gitlens-open-changes-line-blame.gif", "GitLens line blame open changes" %}
 
 Clicking on the commit hash in the popup gives you many options for that commit, like resetting, switching, or creating a branch from the commit, etc.
 
-<img class="article-img" src="../img/gitlens-commit-options.jpg" alt="GitLens commit options" />
+{% image "gitlens-commit-options.jpg", "GitLens commit options" %}
 
 
 
@@ -53,7 +53,7 @@ This is also a neat feature that allows you to view which lines were intrduced b
 
 To toggle file blame, you can either use the [VSCode command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (Cmd + Shift + P) and search for "GitLens: Toggle file blame" or use the keyboard shortcut (Option + Cmd + G  B) to open it.
 
-<img class="article-img" src="../img/gitlens-file-blame.gif" alt="GitLens file blame" />
+{% image "gitlens-file-blame.gif", "GitLens file blame" %}
 
 Once you are in the file blame mode, you can select the commits from the sidebar that appears next to the gutter to explore the changes introduced by that commit.
 
@@ -69,11 +69,11 @@ Although there are many sections in its sidebar menu, like repositories, file hi
 
 It shows you all the commits of the current branch and again allows you to do a bunch of stuff like exploring the changed files in the commit, the PR that introduced the commit, etc.
 
-<img class="article-img" src="../img/gitlens-commit-view.gif" alt="GitLens commits view" />
+{% image "gitlens-commit-view.gif", "GitLens commits view" %}
 
 If you right-click on a particular commit, you can take some actions over the commit like reset the commit, compare it with head, and, the one I use most often, switch to commit, which checks out the commit so you can explore the project in that commit state
 
-<img class="article-img" src="../img/gitlens-switch-to-commit.jpg" alt="GitLens switch to commit" />
+{% image "gitlens-switch-to-commit.jpg", "GitLens switch to commit" %}
 
 
 
@@ -85,7 +85,7 @@ The usefulness of this feature might be arguable, but it is pretty cool, so I th
 
 File heatmap shows you the spots in the file that have been changed most recently by adding a heatmap on the edge of the gutter. To enable it, search for "GitLens: Toggle File heatmap" via the  [VSCode command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (Cmd + Shift + P).
 
-<img class="article-img" src="../img/gitlens-file-heatmap.jpg" alt="GitLens file heatmap" />
+{% image "gitlens-file-heatmap.jpg", "GitLens file heatmap" %}
 
 Redder color means changes were made very recently in that area. Again you can fully customize age thresholds, locations, the color of the most recent and least recent changes, etc., [from the settings](https://github.com/eamodio/vscode-gitlens#gutter-heatmap-settings-).
 
@@ -99,7 +99,7 @@ Last but not least, GitLens also comes with a user-friendly interactive rebase e
 
 This is an excellent tool for interactive rebases if you, like me, hate the vi editor that appears during interactive rebase with git.
 
-<img class="article-img" src="../img/gitlens-interactive-rebase.gif" alt="GitLens interactive rebase" />
+{% image "gitlens-interactive-rebase.gif", "GitLens interactive rebase" %}
 
 To use this directly from your terminal (e.g., when you use `git rebase -i` ), run the following command to set VS Code as your git rebase editor - 
 

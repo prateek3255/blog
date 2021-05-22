@@ -18,7 +18,7 @@ If you have multiple projects that are using the same design system (inputs, but
 
 Another benefit is that you can develop UI components easily in isolation and render their different states directly, without needing to mess with the business logic in your dev stack, with the help of [Storybook](https://storybook.js.org/).
 
-<img class="article-img" src="../img/storybook-working.png" alt="storybook-working" />
+{% image "storybook-working.png", "Storybook working" %}
 
 In this tutorial, I would be covering the steps for creating and publishing a React component library ([Storybook supports countless other frontend frameworks](https://storybook.js.org/)), with the following steps -
 
@@ -230,7 +230,7 @@ Secondary.args = { ...Primary.args, primary: false, label: "Secondary 😇" };
 
 If you haven't already, you can restart the Storybook server by rerunning `yarn storybook`, and you should see the following. 
 
-<img class="article-img" src="../img/initial-story-setup.jpg" alt="initial-story-setup" />
+{% image "initial-story-setup.jpg", "Initial Story Setup" %}
 
 Notice that Storybook automatically generated the controls, according to the component props, for us. This is thanks to [react-docgen-typescript, which is used by Storybook to infer the argTypes for a component](https://storybook.js.org/docs/react/api/argtypes#automatic-argtype-inference). One more reason to use TypeScript.
 
@@ -250,7 +250,7 @@ The current story preview also looks a bit weird with the button in one corner o
 
 If you followed the above steps, your final story preview would look something like this -
 
-<img class="article-img" src="../img/final-story-setup.jpg" alt="final-story-setup" />
+{% image "final-story-setup.jpg", "Final story setup" %}
 
 [GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a)
 

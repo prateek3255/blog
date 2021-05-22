@@ -32,6 +32,7 @@
     "url": "https://github.com/prateek3255/blog/issues"
   },
   "dependencies": {
+    "@11ty/eleventy-img": "^0.9.0",
     "autoprefixer": "10.1.0",
     "postcss": "8.2.1"
   }

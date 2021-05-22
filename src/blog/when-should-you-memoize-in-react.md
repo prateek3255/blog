@@ -351,7 +351,7 @@ If your component re-renders the same result given the same props, `React.memo` 
 
 Dmitri created a really nice illustration in his article [Use React.memo() Wisely](https://dmitripavlutin.com/use-react-memo-wisely/) which you should use a general rule of thumb when you're thinking about memoizing a component.
 
-<img class="article-img" src="../img/when-to-use-react-memo.png" alt="When should you use React.memo" />
+{% image "when-to-use-react-memo.png", "When should you use React.memo" %}
 
 
 Enough with the concepts, let's try to understand this with an example on when `React.memo` can be handy. In the below sandbox, we have a `usePokemon` hook that returns some static and real-time data for a pokemon.
