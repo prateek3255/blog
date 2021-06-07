@@ -1,7 +1,7 @@
 ---
 title: How to build a React library using TypeScript
 date: 2020-10-18
-updatedAt: 2021-05-07
+updatedAt: 2021-06-08
 permalink: /react-library-with-typescript/
 templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
@@ -239,6 +239,13 @@ export default SayHello;
 
 {% headingWithLink "Setting up the demo" %}
 
+First let's build our library so that it can be consumed. Run the build command that we created in the last step -
+
+```bash
+yarn build
+```
+
+
 To be able to use and test our library, we would need an example project. We will be using [`create-react-app` with the TypeScript template](https://create-react-app.dev/docs/adding-typescript/) for creating an example app to test our library. Run the following in the root folder -
 
 ```bash
@@ -263,7 +270,13 @@ Now add the following to your root project's `.gitignore` file to exclude the `b
 To use our library in the example project, just add the following to your `package.json` dependencies, and run `yarn` **in the example directory.**
 
 ```json
-"typescript-react-test": "link:.."
+{
+  ...
+  dependencies: {
+    ...
+    "typescript-react-test": "link:.."
+  }
+}
 ```
 
 This would install the package as a local dependency for our example project. If you're curious and want to know how it works and you're using VSCode, you can expand the `node_modules` folder in your example project, and you should be able to see the package with a ↪ symbol next to it.
