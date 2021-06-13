@@ -96,3 +96,5 @@ pre[class*="language-"] {
   font-size: 0.8em !important;
 }
 
+
+[x-cloak] { display: none !important; }
