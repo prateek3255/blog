@@ -1,6 +1,7 @@
 const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const pluginRss = require("@11ty/eleventy-plugin-rss");
 const htmlmin = require("html-minifier");
 const Image = require("@11ty/eleventy-img");
 
@@ -129,6 +130,9 @@ module.exports = function (eleventyConfig) {
     );
   });
 
+  // Plugin for generating RSS feed
+  eleventyConfig.addPlugin(pluginRss);
+
   // Syntax Highlighting for Code blocks
   eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -196,6 +200,7 @@ module.exports = function (eleventyConfig) {
     dir: {
       input: "src",
     },
+    pathPrefix: "/blog/",
     htmlTemplateEngine: "njk",
   };
 };
