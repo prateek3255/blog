@@ -25,7 +25,7 @@ prism: true
       <div>
           {% for tag in tags %}
               {% if tag != 'post' %}
-              <a href="{{environment.baseURL}}tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
+              <a href="/blog/tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
                   #{{tagsCase[tag]}}
               </a>
               {% endif %}
@@ -50,7 +50,7 @@ prism: true
     <div class="text-center">
       <h4 class="text-lg font-bold mb-2">Want to get better at React, JavaScript, and TypeScript?</h4>
       <p class="text-base">
-        I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript. Subscribe to my newsletter to get them straight to your inbox. No spam ever. Unsubscribe at any time.
+        I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript. Subscribe to my newsletter to get them straight to your inbox. No spam ever. Unsubscribe at any time. You can also <a target="_blank" rel="noreferrer noopener" class=" underline" href="/blog/feed.xml">subscribe via RSS</a>.
       </p>
       <form x-on:submit="handleSubscribe" name="subscribe_card">
         <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full mt-6"/>
@@ -64,7 +64,7 @@ prism: true
 
   <div class="container max-w-3xl border-gray-100 border-2 p-8 shadow rounded flex flex-col items-center md:flex-row mb-6 mt-8">
     <div class=" mb-4 md:mb-0 md:mr-8 md:flex-shrink-0">
-      <img class="h-20 w-20 rounded-full border-indigo-500 border-2" src="{{environment.baseURL}}img/prateek-author.jpg" />
+      <img alt="Prateek Surana" height="20" width="20" class="h-20 w-20 rounded-full border-indigo-500 border-2" src="/blog/img/prateek-author.jpg" />
     </div>
     <div class="md:text-left text-center">
       <h4 class="text-lg font-bold mb-2 md:mb-0">About Prateek Surana</h4>
@@ -77,10 +77,10 @@ prism: true
   </div>
 
   <div x-cloak x-show.transition.duration.300ms="showSubscribePopup" class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
-    <img src="{{environment.baseURL}}img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
+    <img src="/blog/img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
     <div class="flex w-full justify-between mb-2">
       <h4 class="text-lg font-bold mb-2">Want to get better at React, JavaScript, and TypeScript?</h4>
-      <img src="{{environment.baseURL}}img/cross-black.svg" x-on:click="hideSubscribePopup" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
+      <img src="/blog/img/cross-black.svg" x-on:click="hideSubscribePopup" alt="Close the banner" class="h-5 mt-1 cursor-pointer" />
     </div>
     <p class="text-base">I regularly publish posts like this one, containing best practices, tips, and tutorials on React, JavaScript, and TypeScript.</p>
     <br/>
