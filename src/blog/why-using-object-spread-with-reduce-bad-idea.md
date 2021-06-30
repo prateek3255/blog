@@ -214,7 +214,7 @@ users
 
 {% headingWithLink "Wait, isn't this premature optimization?" %}
 
-As much as I want to say it is, it's probably not. Since the reduce with spread technique is exponentially worse than the rest of the methods, it gets gruesome with just a little increase in data.
+As much as I want to say it is, it's probably not. Since the reduce with spread technique is exponential in nature, it gets gruesome with just a little increase in data.
 
 Take [this repl running on Node 12](https://replit.com/@prateek3255/reduce-timings#index.js), for example. You can see how the time taken goes from just a couple of milliseconds for 10 times to a few 100 ms for 100 items and a staggering 1-2 seconds for 1000 items. Meanwhile, the difference between the rest of O(n) methods stays under 10ms for all the cases.
 
