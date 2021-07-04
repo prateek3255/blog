@@ -1,7 +1,7 @@
 ---
 title: Using environment variables with Webpack
 date: 2020-11-09
-updatedAt: 2020-11-09
+updatedAt: 2021-07-04
 permalink: /using-environment-variables-with-webpack/
 templateEngineOverride: njk,md
 description: A guide for setting up and using environment variables with Webpack and handling different values for Production and Development environments.
@@ -60,7 +60,7 @@ SOME_IMPORTANT_API_KEY=
 
 This way, someone new cloning your repo can create `.env` and add all the required variables accordingly.
 
-
+> If you, like me, don't want the mental burden of keeping the `.env` and `.env.example` files in sync you can use a tool like [sync-dotenv](https://github.com/codeshifu/sync-dotenv#examples) which syncs the envs with a simple command, that you can run before every commit automatically using [husky](https://github.com/typicode/husky).
 
 
 
