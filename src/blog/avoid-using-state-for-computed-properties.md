@@ -105,7 +105,7 @@ But what if there's something even better? As you can see, the `hasError` state 
 const hasError = name.length < 1 || age < 18 || age > 100;
 ```
 
-This way, we wouldn't need to worry about `hasError` getting out of sync by introducing a new dependency. Also, it is a lot easier to understand and saves us an additional render.
+This way, we wouldn't need to worry about `hasError` getting out of sync by introducing a new dependency. Also, it is a lot easier to understand and saves us an additional render. ([Try it out on codesandbox)](https://codesandbox.io/s/simple-name-with-gender-state-final-8znyv?file=/src/App.js)
 
 One thing you might argue about is performance. Since we calculate this computed state property on every render wouldn't it be less performant than calculating it only when one of the dependent variables changes as we did previously?
 
