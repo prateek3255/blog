@@ -20,12 +20,12 @@ Let's try to understand with an example of what I meant in the above paragraph. 
 ```jsx
 function App() {
   const [name, setName] = React.useState("");
-  const [hasError, setHasError] = React.useState(false);
+  const [hasError, setHasError] = React.useState(true);
 
   const handleNameChange = (event) => {
     const value = event.target.value;
     setName(value);
-    setHasError(value.length > 0 ? false : true);
+    setHasError(value.trim().length < 1);
   };
 
   return (
@@ -51,7 +51,7 @@ function App() {
   const [hasError, setHasError] = React.useState(true);
 
   const handleErrorUpdate = ({ currentName, currentAge }) => {
-    setHasError(currentName.length < 1 
+    setHasError(currentName.trim().length < 1 
       || currentAge < 18 
       || currentAge > 100);
   };
@@ -93,7 +93,7 @@ Now instead of doing it like this, we can calculate the error in a `useEffect` a
 
 ```jsx
 React.useEffect(() => {
-  setHasError(name.length < 1 || age < 18 || age > 100);
+  setHasError(name.trim().length < 1 || age < 18 || age > 100);
 }, [name, age]);
 ```
 
@@ -102,7 +102,7 @@ And yes, this does simplify the code by removing the unnecessary code for callin
 But what if there's something even better? As you can see, the `hasError` state is just being derived from the existing state that we already have in our component. So instead of maintaining a separate state for it, we can calculate it on the fly with every render like this -
 
 ```jsx
-const hasError = name.length < 1 || age < 18 || age > 100;
+const hasError = name.trim().length < 1 || age < 18 || age > 100;
 ```
 
 This way, we wouldn't need to worry about `hasError` getting out of sync by introducing a new dependency. Also, it is a lot easier to understand and saves us an additional render. ([Try it out on codesandbox)](https://codesandbox.io/s/simple-name-with-gender-state-final-8znyv?file=/src/App.js)
@@ -125,7 +125,7 @@ For props as well, you can rely on the same pattern of directly deriving the des
 ```jsx
 function App ({ name, age }) {
   ...
-  const hasError = name.length < 1 || age < 18 || age > 100;
+  const hasError = name.trim().length < 1 || age < 18 || age > 100;
   ...
 } 
 ```
