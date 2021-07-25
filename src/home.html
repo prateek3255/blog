@@ -27,7 +27,7 @@ home: true
           leading-loose
         "
       >
-        Prateek is a <span id="frontend-engineer">Frontend Engineer</span>,
+        Prateek is a <span id="frontend-engineer">Frontend Engineer,</span>
         currently
         <span id="devfolio"
           >building
@@ -48,6 +48,24 @@ home: true
         <span id="games">quirky games</span> on his phone.
       </p>
     </div>
+  </div>
+  <div class="h-32 w-full justify-center items-end" x-data="chevronDown()" x-init="startTimer()">
+      <svg
+        x-cloak
+        x-show="isVisible"
+        xmlns="http://www.w3.org/2000/svg"
+        width="64"
+        height="64"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-down self-end m-auto animate-bounce sm:h-16 sm:w-16 h-8 w-8 mt-5 sm:mt-0"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
   </div>
 </div>
 
@@ -96,7 +114,19 @@ home: true
   });
 
   const ag = RoughNotation.annotationGroup([a1, a2, a3, a4, a5, a6, a7]);
+  window.annotationGroup = ag;
   setTimeout(() => {
     ag.show();
   }, 1500);
+
+  function chevronDown() {
+    return {
+      isVisible: false,
+      startTimer() {
+        setTimeout(() => {
+          this.isVisible = true;
+        }, 10000)
+      }
+    }
+  }
 </script>
