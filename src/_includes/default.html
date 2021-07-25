@@ -77,6 +77,14 @@
       href="{{environment.baseURL}}css/prism-tomorrow.css"
     />
     {% endif %}
+
+    {% if home == true %}
+    <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    {% endif %}
+
     {% if environment.nodeEnv == "production" %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHRSMP3QE5"></script>
     <script>

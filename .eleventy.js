@@ -47,11 +47,11 @@ async function imageShortcode(
     filenameFormat: function (id, src, width, format) {
       // Get file name from path
       // ex - ./src/img/hello.png -> hello
-      const path = src.split('/');
-      const fileName = path[path.length - 1].split('.')[0];
+      const path = src.split("/");
+      const fileName = path[path.length - 1].split(".")[0];
 
-      return `${fileName}-${width}.${format}`
-    }
+      return `${fileName}-${width}.${format}`;
+    },
   });
 
   let lowsrc = metadata.jpeg[1] || metadata.jpeg[0];
