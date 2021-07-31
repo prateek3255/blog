@@ -6,27 +6,20 @@ thumbnail: headshot.png
 home: true
 ---
 
-<div class="container max-w-5xl px-6">
+<div class="container max-w-5xl px-6 font-nunito">
   <div class="h-full text-center flex items-center hero">
     <div>
       <div class="flex w-full justify-center items-center">
-        <h1 class="text-4xl sm:text-7xl font-black font-nunito mb-1 sm:mb-3">
+        <h1 class="text-4xl sm:text-7xl font-black mb-1 sm:mb-3">
           Hey There! <span class="wave">👋</span>
         </h1>
       </div>
       <div class="mb-12">
-        <h3 class="text-lg sm:text-3xl font-nunito">
+        <h3 class="text-lg sm:text-3xl">
           Weclome to Prateek's digital home 🏡
         </h3>
       </div>
-      <p
-        class="
-          font-bold font-nunito
-          sm:text-3xl sm:leading-normal
-          text-lg
-          leading-loose
-        "
-      >
+      <p class="font-bold sm:text-3xl sm:leading-normal text-lg leading-loose">
         Prateek is a <span id="frontend-engineer">Frontend Engineer,</span>
         currently
         <span id="devfolio"
@@ -49,23 +42,130 @@ home: true
       </p>
     </div>
   </div>
-  <div class="h-32 w-full justify-center items-end" x-data="chevronDown()" x-init="startTimer()">
-      <svg
-        x-cloak
-        x-show="isVisible"
-        xmlns="http://www.w3.org/2000/svg"
-        width="64"
-        height="64"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-chevron-down self-end m-auto animate-bounce sm:h-16 sm:w-16 h-8 w-8 mt-5 sm:mt-0"
+  <div
+    class="h-32 w-full justify-center items-end"
+    x-data="chevronDown()"
+    x-init="startTimer()"
+  >
+    <svg
+      x-cloak
+      x-show="isVisible"
+      xmlns="http://www.w3.org/2000/svg"
+      width="64"
+      height="64"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="
+        feather feather-chevron-down
+        self-end
+        m-auto
+        animate-bounce
+        sm:h-16 sm:w-16
+        h-8
+        w-8
+        mt-5
+        sm:mt-0
+      "
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+
+  <div class="text-center w-full">
+    <h2 class="text-3xl sm:text-5xl font-bold">Projects</h2>
+    <p class="text-lg sm:text-xl mt-6 max-w-2xl mx-auto">
+      Although Prateek has worked on a bunch of projects but these are some that he is
+      really proud of and/or is actively maintaining.
+    </p>
+    <!-- component -->
+    <div class="flex items-center justify-center mt-12">
+      <div
+        class="
+          grid grid-cols-1
+          w-full
+          gap-10
+          sm:grid-cols-1
+          md:grid-cols-1
+          lg:grid-cols-2
+          xl:grid-cols-2
+        "
       >
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
+        <!-- 1 card -->
+        <div
+          class="
+            relative bg-gray-50
+            py-6
+            px-6
+            rounded-3xl
+            w-full
+            my-4
+            shadow-xl
+            flex flex-col
+            items-center
+          "
+        >
+          <img
+            src="../img/scriptified.png"
+            alt="Scriptified Logo"
+            height="100"
+            width="100"
+            class="rounded-full"
+          />
+          <div class="mt-8">
+            <h4 class="text-2xl font-semibold my-2">Scriptified</h4>
+            <p class="text-lg mt-4 max-w-xs">
+              A weekly newsletter with insightful tips, tools and resources on
+              React and JavaScript. Built with Next.js and TailwindCSS.
+            </p>
+            <div class="my-10 w-full flex justify-center">
+              <a
+                title="View web app"
+                href="https://tailwindcomponents.com/components/cards?page=4"
+                rel="prev"
+                class="
+                  px-4
+                  py-2
+                  text-center text-gray-600
+                  transition-colors
+                  duration-200
+                  transform
+                  border
+                  rounded-lg
+                  mr-4
+                  hover:bg-gray-100
+                  dark:hover:bg-gray-700
+                  focus:outline-none
+                "
+                >Check it out &nbsp;<i class="fas fa-external-link-alt"></i></a
+              >
+              <a
+                title="View web app"
+                href="https://tailwindcomponents.com/components/cards?page=4"
+                rel="prev"
+                class="
+                  px-4
+                  py-2
+                  text-center text-gray-600
+                  transition-colors
+                  duration-200
+                  transform
+                  border
+                  rounded-lg
+                  hover:bg-gray-100
+                  dark:hover:bg-gray-700
+                  focus:outline-none
+                "
+                >View it on <i class="fab fa-github"></i></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -125,8 +225,8 @@ home: true
       startTimer() {
         setTimeout(() => {
           this.isVisible = true;
-        }, 10000)
-      }
-    }
+        }, 10000);
+      },
+    };
   }
 </script>
