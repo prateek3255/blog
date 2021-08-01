@@ -1,5 +1,5 @@
 {% for post in postslist | reverse %}
-    <article class="my-8">
+    <article {% if home %}  {% else %} class="my-8" {% endif %}>
         <h2 class="font-bold text-3xl text-gray-900 mb-2">
             <a href="/blog{{post.url}}">
                 {% if post.data.title %}
@@ -12,9 +12,6 @@
         <p class="text-base leading-6 text-gray-500 mb-3">
             <time>
                 {{ post.date | readableDate }}
-                by
-                {{ post.data.author }}
-
             </time>
         </p>
         {% if post.data.description %}

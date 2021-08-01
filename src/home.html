@@ -78,13 +78,11 @@ home: true
   </div>
 
   <div class="text-center w-full">
-    <h2 class="text-3xl sm:text-5xl font-bold">Projects</h2>
-    <p class="text-lg sm:text-xl mt-6 max-w-2xl mx-auto">
-      Although Prateek has worked on a bunch of projects but these are some that
-      he is really proud of and/or is actively maintaining.
-    </p>
-    <!-- component -->
-    <div class="flex items-center justify-center mt-12">
+    <!-- projects -->
+    {% sectionHeader "Projects" %} Although Prateek has worked on a bunch of
+    projects but these are some that he is really proud of and/or is actively
+    maintaining. {% endsectionHeader %}
+    <div class="flex items-center justify-center mt-12 mb-32">
       <div
         class="
           grid grid-cols-1
@@ -97,51 +95,73 @@ home: true
         "
       >
         <!-- 1 card -->
-        {% projectCard 
-          "scriptified.png", 
-          "Scriptified", 
-          [{ 
-              title: 'Check it out &nbsp;<i class="fas fa-external-link-alt"></i>',
-              link: "https://scriptified.dev"
-            },
-            { 
-              title: 'View it on &nbsp;<i class="fab fa-github"></i>',
-              link: "https://github.com/scriptified/scriptified"
-            }
-          ]%} 
-        A weekly newsletter with insightful tips, tools and
-        resources on React and JavaScript. Built with Next.js and TailwindCSS.
-        {% endprojectCard %}
+        {% projectCard "scriptified.png", "Scriptified", [{ title: 'Check it out
+        &nbsp;<i class="fas fa-external-link-alt"></i>', link:
+        "https://scriptified.dev" }, { title: 'View it on &nbsp;<i
+          class="fab fa-github"
+        ></i
+        >', link: "https://github.com/scriptified/scriptified" } ]%} A weekly
+        newsletter with insightful tips, tools and resources on React and
+        JavaScript. Built with Next.js and TailwindCSS. {% endprojectCard %}
 
-        {% projectCard 
-          "scrroll-in.png", 
-          "Scrroll In", 
-          [{ 
-              title: 'Check it out &nbsp;<i class="fab fa-chrome"></i>',
-              link: "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom"
-            },
-            { 
-              title: 'View it on &nbsp;<i class="fab fa-github"></i>',
-              link: "https://github.com/devfolioco/scrroll-in"
-            }
-          ]%}
-        A chrome extension that lets you save multiple scroll positions on a webpage
-        and allow you to access them whenever you come back to the page.
-        {% endprojectCard %}
+        <!-- 2 card -->
+        {%projectCard "scrroll-in.png", "Scrroll In", [{ title: 'Check it out
+        &nbsp;<i class="fab fa-chrome"></i>', link:
+        "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom"
+        }, { title: 'View it on &nbsp;<i class="fab fa-github"></i>', link:
+        "https://github.com/devfolioco/scrroll-in" } ]%} A chrome extension that
+        lets you save multiple scroll positions on a webpage and allow you to
+        access them whenever you come back to the page. {% endprojectCard %}
 
-        {% projectCard 
-          "smart-apart.webp", 
-          "Smart Apart", 
-          [{ 
-              title: 'Check it out &nbsp;<i class="fab fa-google-play"></i>',
-              link: "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
-            }
-          ]%} 
-        An android app that provides you a daily curated feed in various categories. 
-        This is the project with which Prateek started his development journey.
-        {% endprojectCard %}
+        <!-- 3 card -->
+        {% projectCard "smart-apart.webp", "Smart Apart", [{ title: 'Check it
+        out &nbsp;<i class="fab fa-google-play"></i>', link:
+        "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
+        } ]%} An android app that provides you a daily curated feed in various
+        categories. This is the project with which Prateek started his
+        development journey. {% endprojectCard %}
       </div>
     </div>
+
+    <!-- blog -->
+    {% sectionHeader "Blog" %} Prateek has written in past for publications like
+    {% homeLink "Better Programming",
+    "https://betterprogramming.pub/the-ultimate-guide-to-building-a-chrome-extension-4c01834c63ec"
+    %} and {% homeLink "Hackernoon,",
+    "https://hackernoon.com/u/prateeksurana3255" %} has and also got featured in
+    the {% homeLink "JavaScript Weekly newsletter.",
+    "https://twitter.com/psuranas/status/1406620587372343311" %} Here are some
+    of the recent posts he has written recently. {% endsectionHeader %}
+
+    <div
+      class="
+        mt-20
+        px-6
+        text-left
+        mx-auto
+        mb-20
+        grid grid-cols-1
+        lg:grid-cols-2
+        gap-20
+      "
+    >
+      {% set postslist = collections.post.slice(-4) %} {% include
+      "partials/postslist.html" %}
+    </div>
+
+    <div x-data="newsletter()" class="p-6 sm:px-20 bg-gray-50 my-4 rounded-2xl shadow-xl w-full max-w-3xl mx-auto">  
+      <h4 class="text-2xl font-semibold my-2">Like the stuff he writes?</h4>
+      <p class="text-lg mt-4">Subscribe to Prateek's newsletter to get the all the new posts like these straight to your inbox. No spam ever. Unsubscribe at any time. 
+      If emails are not your thing then you can also {% homeLink "subscribe via RSS.", "/blog/feed.xml" %}</p>
+       <form x-on:submit="handleSubscribe" class="mb-2" name="subscribe_home">
+        <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="px-3 py-3 placeholder-indigo-200 text-black relative bg-white rounded text-sm border-0 shadow-md outline-none focus:outline-none focus:ring w-full mt-6"/>
+        <button x-bind:disabled="isSubscribeLoading" class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed disabled:opacity-50" type="submit"
+          >
+          Count me in
+        </button>
+      </form>
+    </div>
+
   </div>
 </div>
 
@@ -207,9 +227,11 @@ home: true
         window.scrollTo({
           top: window.innerHeight,
           left: 0,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
-      }
+      },
     };
   }
 </script>
+
+{% include "partials/newsletterScript.html" %}

@@ -30,7 +30,6 @@ function stringtoSlug(str) {
 }
 
 function projectCard(content, logo, title, buttons) {
-  console.log(buttons[0].title);
   return `
         <div
           class="
@@ -85,6 +84,21 @@ function projectCard(content, logo, title, buttons) {
           </div>
         </div>
   `;
+}
+
+function sectionHeader(content, title) {
+  return `
+    <h2 class="text-5xl font-bold">${title}</h2>
+    <p class="text-lg sm:text-xl mt-6 max-w-2xl mx-auto">
+      ${content}
+    </p>
+  `;
+}
+
+function homeLink(title, link) {
+  return `<a href="${link}" target=“_blank” class="text-blue-500" rel=“noreferrer noopener”>
+    ${title}
+  </a>`;
 }
 
 async function imageShortcode(
@@ -161,6 +175,8 @@ module.exports = function (eleventyConfig) {
   // -------------------------
 
   eleventyConfig.addPairedNunjucksShortcode("projectCard", projectCard);
+  eleventyConfig.addPairedNunjucksShortcode("sectionHeader", sectionHeader);
+  eleventyConfig.addNunjucksShortcode("homeLink", homeLink);
 
   // Add shortcode for rendering heading with link
   eleventyConfig.addNunjucksShortcode(
