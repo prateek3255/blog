@@ -29,6 +29,64 @@ function stringtoSlug(str) {
   return str;
 }
 
+function projectCard(content, logo, title, buttons) {
+  console.log(buttons[0].title);
+  return `
+        <div
+          class="
+            relative bg-gray-50
+            py-6
+            px-6
+            rounded-3xl
+            w-full
+            my-4
+            shadow-xl
+            flex flex-col
+            items-center
+          "
+          >
+          <img
+            src="../img/${logo}"
+            alt="${title} Logo"
+            height="100"
+            width="100"
+            style="height:100px; width: auto;"
+            class="rounded-full"
+          />
+          <div class="mt-8">
+            <h4 class="text-2xl font-semibold my-2">${title}</h4>
+            <p class="text-lg mt-4 max-w-xs">
+              ${content}
+            </p>
+            <div class="my-10 w-full flex justify-center">
+              ${buttons.map((button, index) => {
+                return `
+                  <a
+                  href="${button.link}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="
+                    px-4
+                    py-2
+                    text-center text-gray-600
+                    transition-colors
+                    duration-200
+                    transform
+                    border
+                    rounded-lg
+                    hover:bg-gray-100
+                    dark:hover:bg-gray-700
+                    focus:outline-none
+                    ${buttons.length === index + 1 ? "" : "mr-4"}">${button.title}
+                  </a>
+                `;
+              }).join("\n")}
+            </div>
+          </div>
+        </div>
+  `;
+}
+
 async function imageShortcode(
   img,
   alt,
@@ -98,6 +156,11 @@ module.exports = function (eleventyConfig) {
 
   // Merge data instead of overriding
   eleventyConfig.setDataDeepMerge(true);
+
+  // Landing page shortcodes
+  // -------------------------
+
+  eleventyConfig.addPairedNunjucksShortcode("projectCard", projectCard);
 
   // Add shortcode for rendering heading with link
   eleventyConfig.addNunjucksShortcode(

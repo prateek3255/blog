@@ -49,6 +49,8 @@ home: true
   >
     <svg
       x-cloak
+      role="button"
+      x-on:click="handleClick"
       x-show="isVisible"
       xmlns="http://www.w3.org/2000/svg"
       width="64"
@@ -78,8 +80,8 @@ home: true
   <div class="text-center w-full">
     <h2 class="text-3xl sm:text-5xl font-bold">Projects</h2>
     <p class="text-lg sm:text-xl mt-6 max-w-2xl mx-auto">
-      Although Prateek has worked on a bunch of projects but these are some that he is
-      really proud of and/or is actively maintaining.
+      Although Prateek has worked on a bunch of projects but these are some that
+      he is really proud of and/or is actively maintaining.
     </p>
     <!-- component -->
     <div class="flex items-center justify-center mt-12">
@@ -95,75 +97,49 @@ home: true
         "
       >
         <!-- 1 card -->
-        <div
-          class="
-            relative bg-gray-50
-            py-6
-            px-6
-            rounded-3xl
-            w-full
-            my-4
-            shadow-xl
-            flex flex-col
-            items-center
-          "
-        >
-          <img
-            src="../img/scriptified.png"
-            alt="Scriptified Logo"
-            height="100"
-            width="100"
-            class="rounded-full"
-          />
-          <div class="mt-8">
-            <h4 class="text-2xl font-semibold my-2">Scriptified</h4>
-            <p class="text-lg mt-4 max-w-xs">
-              A weekly newsletter with insightful tips, tools and resources on
-              React and JavaScript. Built with Next.js and TailwindCSS.
-            </p>
-            <div class="my-10 w-full flex justify-center">
-              <a
-                title="View web app"
-                href="https://tailwindcomponents.com/components/cards?page=4"
-                rel="prev"
-                class="
-                  px-4
-                  py-2
-                  text-center text-gray-600
-                  transition-colors
-                  duration-200
-                  transform
-                  border
-                  rounded-lg
-                  mr-4
-                  hover:bg-gray-100
-                  dark:hover:bg-gray-700
-                  focus:outline-none
-                "
-                >Check it out &nbsp;<i class="fas fa-external-link-alt"></i></a
-              >
-              <a
-                title="View web app"
-                href="https://tailwindcomponents.com/components/cards?page=4"
-                rel="prev"
-                class="
-                  px-4
-                  py-2
-                  text-center text-gray-600
-                  transition-colors
-                  duration-200
-                  transform
-                  border
-                  rounded-lg
-                  hover:bg-gray-100
-                  dark:hover:bg-gray-700
-                  focus:outline-none
-                "
-                >View it on <i class="fab fa-github"></i></a
-              >
-            </div>
-          </div>
-        </div>
+        {% projectCard 
+          "scriptified.png", 
+          "Scriptified", 
+          [{ 
+              title: 'Check it out &nbsp;<i class="fas fa-external-link-alt"></i>',
+              link: "https://scriptified.dev"
+            },
+            { 
+              title: 'View it on &nbsp;<i class="fab fa-github"></i>',
+              link: "https://github.com/scriptified/scriptified"
+            }
+          ]%} 
+        A weekly newsletter with insightful tips, tools and
+        resources on React and JavaScript. Built with Next.js and TailwindCSS.
+        {% endprojectCard %}
+
+        {% projectCard 
+          "scrroll-in.png", 
+          "Scrroll In", 
+          [{ 
+              title: 'Check it out &nbsp;<i class="fab fa-chrome"></i>',
+              link: "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom"
+            },
+            { 
+              title: 'View it on &nbsp;<i class="fab fa-github"></i>',
+              link: "https://github.com/devfolioco/scrroll-in"
+            }
+          ]%}
+        A chrome extension that lets you save multiple scroll positions on a webpage
+        and allow you to access them whenever you come back to the page.
+        {% endprojectCard %}
+
+        {% projectCard 
+          "smart-apart.webp", 
+          "Smart Apart", 
+          [{ 
+              title: 'Check it out &nbsp;<i class="fab fa-google-play"></i>',
+              link: "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
+            }
+          ]%} 
+        An android app that provides you a daily curated feed in various categories. 
+        This is the project with which Prateek started his development journey.
+        {% endprojectCard %}
       </div>
     </div>
   </div>
@@ -217,7 +193,7 @@ home: true
   window.annotationGroup = ag;
   setTimeout(() => {
     ag.show();
-  }, 1500);
+  }, 1000);
 
   function chevronDown() {
     return {
@@ -225,8 +201,15 @@ home: true
       startTimer() {
         setTimeout(() => {
           this.isVisible = true;
-        }, 10000);
+        }, 8000);
       },
+      handleClick() {
+        window.scrollTo({
+          top: window.innerHeight,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
     };
   }
 </script>
