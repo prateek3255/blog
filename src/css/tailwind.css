@@ -132,3 +132,11 @@ pre[class*="language-"] {
    60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
   100% { transform: rotate( 0.0deg) }
 }
+
+.btn-primary {
+  @apply bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150 mt-4 w-full disabled:cursor-not-allowed disabled:opacity-50
+}
+
+.input-primary {
+  @apply px-3 py-3 placeholder-indigo-300 text-black relative rounded text-sm border-0 shadow-md outline-none focus:outline-none focus:ring w-full mt-6
+}

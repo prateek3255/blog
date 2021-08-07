@@ -79,10 +79,10 @@ home: true
 
   <div class="text-center w-full">
     <!-- projects -->
-    {% sectionHeader "Projects" %} Although Prateek has worked on a bunch of
-    projects but these are some that he is really proud of and/or is actively
+    {% sectionHeader "Projects", false %} Although Prateek has worked on a bunch
+    of projects but these are some that he is really proud of and/or is actively
     maintaining. {% endsectionHeader %}
-    <div class="flex items-center justify-center mt-12 mb-32">
+    <div class="flex items-center justify-center mt-12">
       <div
         class="
           grid grid-cols-1
@@ -160,7 +160,6 @@ home: true
         w-full
         max-w-3xl
         mx-auto
-        mb-32
       "
     >
       <h4 class="text-2xl font-semibold my-2">Like the stuff he writes?</h4>
@@ -177,48 +176,11 @@ home: true
           required
           type="email"
           placeholder="john@doe.com"
-          class="
-            px-3
-            py-3
-            placeholder-indigo-200
-            text-black
-            relative
-            bg-white
-            rounded
-            text-sm
-            border-0
-            shadow-md
-            outline-none
-            focus:outline-none focus:ring
-            w-full
-            mt-6
-          "
+          class="input-primary"
         />
         <button
           x-bind:disabled="isSubscribeLoading"
-          class="
-            bg-indigo-500
-            text-white
-            active:bg-indigo-600
-            font-bold
-            uppercase
-            text-sm
-            px-6
-            py-3
-            rounded
-            shadow
-            hover:shadow-lg
-            outline-none
-            focus:outline-none
-            mr-1
-            mb-1
-            ease-linear
-            transition-all
-            duration-150
-            mt-4
-            w-full
-            disabled:cursor-not-allowed disabled:opacity-50
-          "
+          class="btn-primary"
           type="submit"
         >
           Count me in
@@ -239,6 +201,44 @@ home: true
     %} and {% homeLink "many others.",
     "https://github.com/search?q=is%3Apr+author%3Aprateek3255+archived%3Afalse+repo%3A%22freeCodeCamp%2FfreeCodeCamp%22+repo%3A%22react-syntax-highlighter%2Freact-syntax-highlighter%22+repo%3A%22zulip%2Fzulip-mobile%22+repo%3A%22react-tags%2Freact-tags%22"
     %}{% endsectionHeader %}
+
+    <!-- Contact -->
+    {% sectionHeader "Get in Touch" %} Prateek is pretty active on Twitter and
+    keeps his DMs open, feel free to drop him a message there. Not a Twitter
+    person? You can also contact him by sending a message to him via the form below.
+    {% endsectionHeader %}
+      <form
+        method="POST"
+        class="flex flex-col max-w-3xl mx-auto"
+        action="https://formspree.io/prateeksurana3255@gmail.com"
+      >
+        <input
+          type="hidden"
+          name="_subject"
+          value="Contact request from personal website"
+        />
+        <input
+          aria-label="Email"
+          type="email"
+          name="_replyto"
+          placeholder="Your email"
+          required
+          class="input-primary bg-indigo-50"
+        />
+        <textarea
+          aria-label="Message"
+          name="message"
+          placeholder="Your message"
+          required
+          class="input-primary h-32 bg-indigo-50"
+        ></textarea>
+        <button
+          type="submit"
+          class="btn-primary"
+        >
+          Send
+        </button>
+      </form>
   </div>
 </div>
 

@@ -86,9 +86,9 @@ function projectCard(content, logo, title, buttons) {
   `;
 }
 
-function sectionHeader(content, title) {
+function sectionHeader(content, title, addTopMargin = true) {
   return `
-    <h2 class="text-5xl font-bold">${title}</h2>
+    <h2 class="text-5xl font-bold ${addTopMargin ? 'mt-32' : ''}">${title}</h2>
     <p class="text-lg sm:text-xl mt-6 max-w-3xl mx-auto">
       ${content}
     </p>
