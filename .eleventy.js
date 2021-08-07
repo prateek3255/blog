@@ -33,7 +33,9 @@ function projectCard(content, logo, title, buttons) {
   return `
         <div
           class="
-            relative bg-gray-50
+           transform 
+            relative 
+            bg-gradient-to-b from-gray-50 to-gray-100
             py-6
             px-6
             rounded-3xl
@@ -42,6 +44,10 @@ function projectCard(content, logo, title, buttons) {
             shadow-xl
             flex flex-col
             items-center
+            hover:shadow-2xl 
+            hover:scale-105 
+            transition 
+            duration-500
           "
           >
           <img

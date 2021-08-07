@@ -138,7 +138,7 @@ pre[class*="language-"] {
 }
 
 .btn-secondary {
-  @apply px-4 py-2 text-center text-gray-600 transition-colors duration-200 transform border rounded-lg hover:bg-gray-100 focus:outline-none
+  @apply px-4 py-2 text-center text-gray-600 transition-colors duration-200 transform border rounded-lg hover:bg-gray-200 focus:outline-none
 }
 
 .input {

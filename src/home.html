@@ -147,7 +147,7 @@ home: true
       {% set postslist = collections.post.slice(-4) %} {% include
       "partials/postslist.html" %}
     </div>
-   
+
     <div class="mx-auto mb-16">
       <a href="/blog" class="btn-secondary">View all posts</a>
     </div>
@@ -166,7 +166,9 @@ home: true
         mx-auto
       "
     >
-      <h4 class="text-xl sm:text-2xl font-semibold my-2">Like the stuff he writes?</h4>
+      <h4 class="text-xl sm:text-2xl font-semibold my-2">
+        Like the stuff he writes?
+      </h4>
       <p class="text-base sm:text-lg mt-4">
         Subscribe to Prateek's newsletter to get the all the new posts like
         these straight to your inbox. No spam ever. Unsubscribe at any time. If
@@ -207,10 +209,10 @@ home: true
     %}{% endsectionHeader %}
 
     <!-- Contact -->
-    {% sectionHeader "Get in Touch" %} Prateek is pretty active on {%homeLink "Twitter", "https://twitter.com/@psuranas" %} and
-    keeps his DMs open, feel free to drop him a message there. Not a Twitter
-    person? You can also contact him by sending a message to him via the form below.
-    {% endsectionHeader %}
+    {% sectionHeader "Get in Touch" %} Prateek is pretty active on {%homeLink
+    "Twitter", "https://twitter.com/@psuranas" %} and keeps his DMs open, feel
+    free to drop him a message there. Not a Twitter person? You can also contact
+    him by sending a message to him via the form below. {% endsectionHeader %}
     <div
       class="
         p-6
@@ -249,12 +251,7 @@ home: true
           required
           class="input-primary mt-6 h-32"
         ></textarea>
-        <button
-          type="submit"
-          class="btn-primary"
-        >
-          Send
-        </button>
+        <button type="submit" class="btn-primary">Send</button>
       </form>
     </div>
   </div>
