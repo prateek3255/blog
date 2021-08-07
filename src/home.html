@@ -138,7 +138,7 @@ home: true
         mt-12
         text-left
         mx-auto
-        mb-20
+        mb-16
         grid grid-cols-1
         lg:grid-cols-2
         gap-10
@@ -146,6 +146,10 @@ home: true
     >
       {% set postslist = collections.post.slice(-4) %} {% include
       "partials/postslist.html" %}
+    </div>
+   
+    <div class="mx-auto mb-16">
+      <a href="/blog" class="btn-secondary">View all blogs</a>
     </div>
 
     <div
@@ -203,13 +207,13 @@ home: true
     %}{% endsectionHeader %}
 
     <!-- Contact -->
-    {% sectionHeader "Get in Touch" %} Prateek is pretty active on Twitter and
+    {% sectionHeader "Get in Touch" %} Prateek is pretty active on {%homeLink "Twitter", "https://twitter.com/@psuranas" %} and
     keeps his DMs open, feel free to drop him a message there. Not a Twitter
     person? You can also contact him by sending a message to him via the form below.
     {% endsectionHeader %}
       <form
         method="POST"
-        class="flex flex-col max-w-3xl mx-auto"
+        class="flex flex-col max-w-3xl mx-auto mb-12"
         action="https://formspree.io/prateeksurana3255@gmail.com"
       >
         <input
@@ -223,14 +227,14 @@ home: true
           name="_replyto"
           placeholder="Your email"
           required
-          class="input-primary bg-indigo-50"
+          class="input-secondary"
         />
         <textarea
           aria-label="Message"
           name="message"
           placeholder="Your message"
           required
-          class="input-primary h-32 bg-indigo-50"
+          class="input-secondary h-32"
         ></textarea>
         <button
           type="submit"

@@ -64,19 +64,7 @@ function projectCard(content, logo, title, buttons) {
                   href="${button.link}"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="
-                    px-4
-                    py-2
-                    text-center text-gray-600
-                    transition-colors
-                    duration-200
-                    transform
-                    border
-                    rounded-lg
-                    hover:bg-gray-100
-                    dark:hover:bg-gray-700
-                    focus:outline-none
-                    ${buttons.length === index + 1 ? "" : "mr-4"}">${button.title}
+                  class="btn-secondary ${buttons.length === index + 1 ? "" : "mr-4"}">${button.title}
                   </a>
                 `;
               }).join("\n")}
