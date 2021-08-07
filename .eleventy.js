@@ -89,7 +89,7 @@ function projectCard(content, logo, title, buttons) {
 function sectionHeader(content, title) {
   return `
     <h2 class="text-5xl font-bold">${title}</h2>
-    <p class="text-lg sm:text-xl mt-6 max-w-2xl mx-auto">
+    <p class="text-lg sm:text-xl mt-6 max-w-3xl mx-auto">
       ${content}
     </p>
   `;
