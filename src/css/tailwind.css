@@ -142,7 +142,7 @@ pre[class*="language-"] {
 }
 
 .input {
-  @apply px-3 py-3 text-black relative rounded text-sm border-0 shadow-md outline-none focus:outline-none focus:ring w-full mt-6
+  @apply px-3 py-3 text-black relative rounded text-sm border-0 shadow-md outline-none focus:outline-none focus:ring w-full
 }
 
 .input-primary {

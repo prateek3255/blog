@@ -53,8 +53,8 @@ function projectCard(content, logo, title, buttons) {
             class="rounded-full"
           />
           <div class="mt-8">
-            <h4 class="text-2xl font-semibold my-2">${title}</h4>
-            <p class="text-lg mt-4 max-w-xs">
+            <h4 class="text-xl sm:text-2xl font-semibold my-2">${title}</h4>
+            <p class="text-base sm:text-lg mt-4 max-w-xs">
               ${content}
             </p>
             <div class="my-10 w-full flex justify-center">
@@ -76,8 +76,8 @@ function projectCard(content, logo, title, buttons) {
 
 function sectionHeader(content, title, addTopMargin = true) {
   return `
-    <h2 class="text-5xl font-bold ${addTopMargin ? 'mt-32' : ''}">${title}</h2>
-    <p class="text-lg sm:text-xl mt-6 max-w-3xl mx-auto">
+    <h2 class="text-3xl sm:text-5xl font-bold ${addTopMargin ? 'mt-32' : ''}">${title}</h2>
+    <p class="text-base sm:text-xl mt-6 max-w-3xl mx-auto">
       ${content}
     </p>
   `;

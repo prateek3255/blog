@@ -149,7 +149,7 @@ home: true
     </div>
    
     <div class="mx-auto mb-16">
-      <a href="/blog" class="btn-secondary">View all blogs</a>
+      <a href="/blog" class="btn-secondary">View all posts</a>
     </div>
 
     <div
@@ -166,8 +166,8 @@ home: true
         mx-auto
       "
     >
-      <h4 class="text-2xl font-semibold my-2">Like the stuff he writes?</h4>
-      <p class="text-lg mt-4">
+      <h4 class="text-xl sm:text-2xl font-semibold my-2">Like the stuff he writes?</h4>
+      <p class="text-base sm:text-lg mt-4">
         Subscribe to Prateek's newsletter to get the all the new posts like
         these straight to your inbox. No spam ever. Unsubscribe at any time. If
         emails are not your thing then you can also {% homeLink "subscribe via
@@ -180,7 +180,7 @@ home: true
           required
           type="email"
           placeholder="john@doe.com"
-          class="input-primary"
+          class="input-primary mt-6"
         />
         <button
           x-bind:disabled="isSubscribeLoading"
@@ -211,9 +211,22 @@ home: true
     keeps his DMs open, feel free to drop him a message there. Not a Twitter
     person? You can also contact him by sending a message to him via the form below.
     {% endsectionHeader %}
+    <div
+      class="
+        p-6
+        sm:px-10
+        bg-gray-50
+        my-8
+        rounded-2xl
+        shadow-xl
+        w-full
+        max-w-3xl
+        mx-auto
+      "
+    >
       <form
         method="POST"
-        class="flex flex-col max-w-3xl mx-auto mb-12"
+        class="flex flex-col mx-auto"
         action="https://formspree.io/prateeksurana3255@gmail.com"
       >
         <input
@@ -227,14 +240,14 @@ home: true
           name="_replyto"
           placeholder="Your email"
           required
-          class="input-secondary"
+          class="input-primary"
         />
         <textarea
           aria-label="Message"
           name="message"
           placeholder="Your message"
           required
-          class="input-secondary h-32"
+          class="input-primary mt-6 h-32"
         ></textarea>
         <button
           type="submit"
@@ -243,6 +256,7 @@ home: true
           Send
         </button>
       </form>
+    </div>
   </div>
 </div>
 

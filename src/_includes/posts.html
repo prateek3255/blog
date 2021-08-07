@@ -85,7 +85,7 @@ prism: true
     <br/>
     <p class="text-base">Subscribe to my newsletter to get them straight to your inbox. No spam ever. Unsubscribe at any time.</p>
     <form x-on:submit="handleSubscribe" name="subscribe_popup">
-      <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="input-primary"/>
+      <input name="email" x-model="emailField" required type="email" placeholder="john@doe.com" class="input-primary mt-6"/>
       <button x-bind:disabled="isSubscribeLoading" class="btn-primary" type="submit">
         Count me in
       </button>
