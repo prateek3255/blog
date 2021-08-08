@@ -2,7 +2,7 @@
 title: Why using object spread with reduce probably a bad idea
 date: 2021-06-13
 updatedAt: 2021-06-13
-permalink: /why-using-object-spread-with-reduce-bad-idea/
+permalink: /blog/why-using-object-spread-with-reduce-bad-idea/
 templateEngineOverride: njk,md
 description: Explore why using object spread with .reduce() can sometimes significantly affect the performance of your JavaScript apps and libraries.
 thumbnail: why-using-object-spread-with-reduce-bad-idea.png

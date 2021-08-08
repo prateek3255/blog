@@ -2,7 +2,7 @@
 title: Using environment variables with Webpack
 date: 2020-11-09
 updatedAt: 2021-07-04
-permalink: /using-environment-variables-with-webpack/
+permalink: /blog/using-environment-variables-with-webpack/
 templateEngineOverride: njk,md
 description: A guide for setting up and using environment variables with Webpack and handling different values for Production and Development environments.
 thumbnail: using-environment-variables-with-webpack.png

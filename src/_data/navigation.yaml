@@ -1,7 +1,7 @@
 ---
 items:
   - text: About
-    url: "/blog/home"
+    url: "/"
   - text: Blog
     url: "/blog"
   - text: Twitter
@@ -11,7 +11,7 @@ items:
     url: "https://github.com/prateek3255"
     icon: "fab fa-github"
   - text: StackOverflow
-    url: "/blog/feed.xml"
+    url: "https://stackoverflow.com/users/8252081/prateek-surana"
     icon: "fab fa-stack-overflow"
   - text: RSS
     url: "/blog/feed.xml"

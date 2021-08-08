@@ -2,7 +2,7 @@
 title: How to build a React library using TypeScript
 date: 2020-10-18
 updatedAt: 2021-06-08
-permalink: /react-library-with-typescript/
+permalink: /blog/react-library-with-typescript/
 templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
 thumbnail: react-library-with-typescript.png

@@ -2,7 +2,7 @@
 title: Supercharge your git workflow with GitLens
 date: 2021-05-20
 updatedAt: 2021-05-20
-permalink: /supercharge-git-workflow-with-gitlens/
+permalink: /blog/supercharge-git-workflow-with-gitlens/
 templateEngineOverride: njk,md
 description: Some of my favorite features of the GitLens VSCode extension that can help you optimize your git workflow in VSCode.
 thumbnail: supercharge-git-workflow-with-gitlens.png

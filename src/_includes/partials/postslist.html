@@ -4,7 +4,7 @@
         <div class="transform relative bg-gradient-to-b from-gray-50 to-gray-100 p-10 rounded-3xl w-full shadow-xl flex flex-col h-full hover:shadow-2xl hover:scale-105 transition duration-500">
         {% endif %}
             <h2 class="font-bold text-2xl sm:text-3xl text-gray-900 mb-2">
-                <a href="/blog{{ post.url }}">
+                <a href="{{ post.url }}">
                     {% if post.data.title %}
                         {{ post.data.title }}
                     {% else %}
@@ -32,7 +32,7 @@
                 {% endfor %}
             </p>
             <p>
-                <a href="/blog{{ post.url }}" class="text-indigo-700 font-bold text-base sm:text-lg">
+                <a href="{{ post.url }}" class="text-indigo-700 font-bold text-base sm:text-lg">
                     Read more →
                 </a>
             </p>

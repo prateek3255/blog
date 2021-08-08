@@ -2,7 +2,7 @@
 title: When should you memoize in React
 date: 2021-04-18
 updatedAt: 2021-04-21
-permalink: /when-should-you-memoize-in-react/
+permalink: /blog/when-should-you-memoize-in-react/
 templateEngineOverride: njk,md
 description: Explore why premature optimization can be bad in React and when should you actually use the memoization methods provided by React
 thumbnail: when-should-you-memoize-in-react.png

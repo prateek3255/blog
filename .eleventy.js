@@ -51,7 +51,7 @@ function projectCard(content, logo, title, buttons) {
           "
           >
           <img
-            src="../img/${logo}"
+            src="/img/${logo}"
             alt="${title} Logo"
             height="100"
             width="100"
@@ -128,7 +128,7 @@ async function imageShortcode(
   // Can be updated in future to video tag for better performance
   if (img.endsWith("gif")) {
     return `<img
-        src="../img/${img}"
+        src="/img/${img}"
         width="${lowsrc.width}"
         height="${lowsrc.height}"
         alt="${alt}"
@@ -143,7 +143,7 @@ async function imageShortcode(
         return `  <source type="${
           imageFormat[0].sourceType
         }" srcset="${imageFormat
-          .map((entry) => `..${entry.srcset}`)
+          .map((entry) => `${entry.srcset}`)
           .join(", ")}" sizes="${sizes}">`;
       })
       .join("\n")}
@@ -235,6 +235,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
   eleventyConfig.addPassthroughCopy("./src/favicons");
 
+  // Copy sitemap and robots.txt to route of /_site
+  eleventyConfig.addPassthroughCopy("./src/sitemap.xml");
+  eleventyConfig.addPassthroughCopy("./src/robots.txt");
+
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
@@ -277,7 +281,6 @@ module.exports = function (eleventyConfig) {
     dir: {
       input: "src",
     },
-    pathPrefix: "/blog/",
     htmlTemplateEngine: "njk",
   };
 };
