@@ -22,8 +22,14 @@
 
                 <ul class="pt-6 lg:pt-0 list-reset lg:flex justify-end flex-1 items-center">
                     {% for item in navigation.items %}
-                        <li class="nav__item mr-3">
-                            <a @click="isOpen = false" target="_blank" rel="noreferrer noopener" class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" href="{{ item.url }}">{{ item.text }}</a>
+                        <li class="nav__item mr-1">
+                            <a @click="isOpen = false" target="_blank" rel="noreferrer noopener" class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" href="{{ item.url }}">
+                                {% if item.icon %}
+                                <i class="{{ item.icon }}"></i> 
+                                {% else %}
+                                {{ item.text }}
+                                {% endif %}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
