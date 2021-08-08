@@ -59,7 +59,7 @@ function projectCard(content, logo, title, buttons) {
             class="rounded-full"
           />
           <div class="mt-8">
-            <h4 class="text-xl sm:text-2xl font-semibold my-2">${title}</h4>
+            <h3 class="text-xl sm:text-2xl font-semibold my-2">${title}</h3>
             <p class="text-base sm:text-lg mt-4 max-w-xs">
               ${content}
             </p>
@@ -90,7 +90,7 @@ function sectionHeader(content, title, addTopMargin = true) {
 }
 
 function homeLink(title, link) {
-  return `<a href="${link}" target=“_blank” class="text-blue-500" rel=“noreferrer noopener”>
+  return `<a href="${link}" target=“_blank” class="text-blue-600" rel=“noreferrer noopener”>
     ${title}
   </a>`;
 }

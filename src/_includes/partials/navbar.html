@@ -23,7 +23,8 @@
                 <ul class="pt-6 lg:pt-0 list-reset lg:flex justify-end flex-1 items-center">
                     {% for item in navigation.items %}
                         <li class="nav__item mr-1">
-                            <a 
+                            <a
+                             aria-label="{{ item.text }}" 
                              @click="isOpen = false"
                              {% if item.icon%}
                              target="_blank" 
