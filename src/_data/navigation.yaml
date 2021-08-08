@@ -1,10 +1,18 @@
 ---
 items:
-  - text: Twitter
-    url: "https://twitter.com/psuranas"
-  - text: GitHub
-    url: "https://github.com/prateek3255"
+  - text: About
+    url: "/"
   - text: Blog
     url: "/blog"
+  - text: Twitter
+    url: "https://twitter.com/psuranas"
+    icon: "fab fa-twitter"
+  - text: GitHub
+    url: "https://github.com/prateek3255"
+    icon: "fab fa-github"
+  - text: StackOverflow
+    url: "https://stackoverflow.com/users/8252081/prateek-surana"
+    icon: "fab fa-stack-overflow"
   - text: RSS
     url: "/blog/feed.xml"
+    icon: "fas fa-rss"

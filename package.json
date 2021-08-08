@@ -1,12 +1,10 @@
 {
   "scripts": {
-    "start": "BASE_URL=http://localhost:8080/blog/ NODE_ENV=development npm-run-all --parallel css eleventy",
+    "start": "BASE_URL=http://localhost:8080/ NODE_ENV=development npm-run-all --parallel css eleventy",
     "eleventy": "eleventy --serve",
     "debug": "set DEBUG=* & eleventy",
     "css": "postcss src/css/tailwind.css --o _tmp/css/style.css --watch",
-    "build": "cross-env NODE_ENV=production BASE_URL=https://prateeksurana.me/blog/ eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css",
-    "build:netlify": "cross-env NODE_ENV=development BASE_URL=https://prateek-blog-demo.netlify.com/blog/ eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css && echo 'User-agent: *\nDisallow: /' > _site/robots.txt && yarn move",
-    "move": "cd _site && mkdir blog | mv * blog"
+    "build": "eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css"
   },
   "devDependencies": {
     "@11ty/eleventy": "0.11.0",

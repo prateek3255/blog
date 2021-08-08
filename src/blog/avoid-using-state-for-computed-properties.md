@@ -2,7 +2,7 @@
 title: Why you should avoid using state for computed properties
 date: 2021-07-18
 updatedAt: 2021-07-18
-permalink: /why-you-should-avoid-using-state-for-computed-properties/
+permalink: /blog/why-you-should-avoid-using-state-for-computed-properties/
 templateEngineOverride: njk,md
 description: Understand why creating state variables for properties that can be computed is a bad idea, and how you can handle some edge cases when you need to derive your state from props.
 thumbnail: why-you-should-avoid-using-state-for-computed-properties.png

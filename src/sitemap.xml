@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+<url>
+  <loc>https://prateeksurana.me/</loc>
+  <lastmod>2020-12-06T16:21:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/</loc>
+  <lastmod>2020-12-20T09:53:58+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/javascript-tips-for-react-developers/</loc>
+  <lastmod>2021-04-18T18:15:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/integrating-recaptcha-with-next/</loc>
+  <lastmod>2021-01-17T08:00:58+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/react-component-library-using-storybook-6/</loc>
+  <lastmod>2021-04-11T18:15:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/using-environment-variables-with-webpack/</loc>
+  <lastmod>2021-07-04T05:03:58+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/react-library-with-typescript/</loc>
+  <lastmod>2021-06-07T07:00:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/when-should-you-memoize-in-react/</loc>
+  <lastmod>2021-04-21T12:15:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/supercharge-git-workflow-with-gitlens/</loc>
+  <lastmod>2021-05-20T18:50:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/why-using-object-spread-with-reduce-bad-idea/</loc>
+  <lastmod>2021-06-13T05:50:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/why-you-should-avoid-using-state-for-computed-properties/</loc>
+  <lastmod>2021-07-18T06:30:54+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+</urlset>

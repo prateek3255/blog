@@ -1,14 +1,14 @@
 <div class="{{ 'lg:fixed' if path == 'home' }} w-full">
-    <nav class="flex items-center justify-center lg:justify-between flex-wrap p-6 lg:px-0 container mx-auto" x-data="{ isOpen: false }" @keydown.escape="isOpen = false">
+    <nav class="flex items-center justify-center lg:justify-between flex-wrap p-6 lg:px-0 container mx-auto" x-data="navbarData()" @keydown.escape="isOpen = false">
         <!--Logo etc-->
         <div class="flex items-center">
-            <a href="/blog" aria-label="logo" >
-                <img src="/blog/img/prateek-bitmoji.png" alt="Logo" height="80" width="63.2" class="h-20" />
+            <a href="/" aria-label="logo" >
+                <img src="/img/prateek-bitmoji.png" alt="Logo" height="80" width="63.2" class="h-20" />
             </a>
         </div>
 
         <!--Toggle button (hidden on large screens)-->
-        <button @click="isOpen = !isOpen" type="button" class="ml-auto block lg:hidden px-2 text-primary-500 hover:text-primary-500 focus:outline-none focus:text-primary-500" :class="{ 'transition transform-180': isOpen }" aria-label="Menu">
+        <button x-on:click="handleToggle" type="button" class="ml-auto block lg:hidden px-2 text-primary-500 hover:text-primary-500 focus:outline-none focus:text-primary-500" :class="{ 'transition transform-180': isOpen }" aria-label="Menu">
             <svg class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
                 <path x-show="isOpen" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/>
                 <path x-show="!isOpen" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
@@ -22,8 +22,21 @@
 
                 <ul class="pt-6 lg:pt-0 list-reset lg:flex justify-end flex-1 items-center">
                     {% for item in navigation.items %}
-                        <li class="nav__item mr-3">
-                            <a @click="isOpen = false" target="_blank" rel="noreferrer noopener" class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" href="{{ item.url }}">{{ item.text }}</a>
+                        <li class="nav__item mr-1">
+                            <a 
+                             @click="isOpen = false"
+                             {% if item.icon%}
+                             target="_blank" 
+                             rel="noreferrer noopener"
+                             {% endif %} 
+                             class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" 
+                             href="{{ item.url }}">
+                                {% if item.icon %}
+                                <i class="{{ item.icon }}"></i> 
+                                {% else %}
+                                {{ item.text }}
+                                {% endif %}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -32,3 +45,26 @@
         </div>
     </nav>
 </div>
+
+<script>
+    function navbarData() {
+        return {
+            isOpen: false,
+            handleToggle() {
+                this.isOpen = !this.isOpen;
+                // Re-animate annotations to cover for the moving UI
+                if(typeof window.annotationGroup !== 'undefined') {
+                    // Hide the annotation and then show them once
+                    // the animation is complete
+                    window.annotationGroup.hide();
+                    setTimeout(
+                        () => {
+                            window.annotationGroup.show();
+                        }, 
+                        800
+                    );
+                }
+            }
+        }
+    }
+</script>

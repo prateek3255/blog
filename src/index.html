@@ -1,9 +1,329 @@
 ---
-layout: blog
+title: Prateek Surana
+description: Prateek is a Frontend Engineer currently building Devfolio. He loves creating awesome stuff and writing things he learns along the way, usually about JavaScript, React, and TypeScript.
+layout: default
+thumbnail: home.png
+home: true
 ---
 
-<section class="mt-15">
-    {% set postslist = collections.post %}
+<div class="container max-w-5xl px-6 font-nunito">
+  <div class="h-full text-center flex items-center hero">
+    <div>
+      <div class="flex w-full justify-center items-center">
+        <h1 class="text-4xl sm:text-7xl font-black mb-1 sm:mb-3">
+          Hey There! <span class="wave">👋</span>
+        </h1>
+      </div>
+      <div class="mb-12">
+        <h3 class="text-lg sm:text-3xl">
+          Weclome to Prateek's digital home 🏡
+        </h3>
+      </div>
+      <p class="font-bold sm:text-3xl sm:leading-normal text-lg leading-loose">
+        Prateek is a <span id="frontend-engineer">Frontend Engineer</span>
+        currently
+        <span id="devfolio"
+          >building
+          <a
+            href="https://devfolio.co"
+            class="text-blue-400"
+            target="_blank"
+            rel="noreferrer noopener"
+            >Devfolio.</a
+          >
+        </span>
+        &nbsp; He loves
+        <span id="awesome-stuff">creating awesome stuff</span> and
+        <span id="writing">writing</span> things he learns along the way, usually
+        about <span id="tech-stack">JavaScript, React, and TypeScript</span>.
+        Apart from his unconditional love for technology he enjoys watching
+        <span id="marvel">Marvel movies</span> and playing
+        <span id="games">quirky games</span> on his phone.
+      </p>
+    </div>
+  </div>
+  <div
+    class="h-32 w-full justify-center items-end"
+    x-data="chevronDown()"
+    x-init="startTimer()"
+  >
+    <svg
+      x-cloak
+      role="button"
+      x-on:click="handleClick"
+      x-show="isVisible"
+      xmlns="http://www.w3.org/2000/svg"
+      width="64"
+      height="64"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="
+        feather feather-chevron-down
+        self-end
+        m-auto
+        animate-bounce
+        sm:h-16 sm:w-16
+        h-8
+        w-8
+        mt-5
+        sm:mt-0
+      "
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
 
-    {% include "partials/postslist.html" %}
-</section>
+  <div class="text-center w-full">
+    <!-- projects -->
+    {% sectionHeader "Projects", false %} Although Prateek has worked on a bunch
+    of projects but these are some that he is really proud of and/or is actively
+    maintaining. {% endsectionHeader %}
+    <div class="flex items-center justify-center mt-12">
+      <div
+        class="
+          grid grid-cols-1
+          w-full
+          gap-10
+          sm:grid-cols-1
+          md:grid-cols-1
+          lg:grid-cols-2
+          xl:grid-cols-2
+        "
+      >
+        <!-- 1 card -->
+        {% projectCard "scriptified.png", "Scriptified", [{ title: 'Check it out
+        &nbsp;<i class="fas fa-external-link-alt"></i>', link:
+        "https://scriptified.dev" }, { title: 'View it on &nbsp;<i
+          class="fab fa-github"
+        ></i
+        >', link: "https://github.com/scriptified/scriptified" } ]%} A weekly
+        newsletter with insightful tips, tools and resources on React and
+        JavaScript. Built with Next.js and TailwindCSS. {% endprojectCard %}
+
+        <!-- 2 card -->
+        {%projectCard "scrroll-in.png", "Scrroll In", [{ title: 'Check it out
+        &nbsp;<i class="fab fa-chrome"></i>', link:
+        "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom"
+        }, { title: 'View it on &nbsp;<i class="fab fa-github"></i>', link:
+        "https://github.com/devfolioco/scrroll-in" } ]%} A chrome extension that
+        lets you save multiple scroll positions on a webpage and allow you to
+        access them whenever you come back to the page. {% endprojectCard %}
+
+        <!-- 3 card -->
+        {% projectCard "smart-apart.webp", "Smart Apart", [{ title: 'Check it
+        out &nbsp;<i class="fab fa-google-play"></i>', link:
+        "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
+        } ]%} An android app that provides you a daily curated feed in various
+        categories. This is the project with which Prateek started his
+        development journey. {% endprojectCard %}
+      </div>
+    </div>
+
+    <!-- blog -->
+    {% sectionHeader "Blog" %} Prateek has written in past for publications like
+    {% homeLink "Better Programming",
+    "https://betterprogramming.pub/the-ultimate-guide-to-building-a-chrome-extension-4c01834c63ec"
+    %} and {% homeLink "Hackernoon,",
+    "https://hackernoon.com/u/prateeksurana3255" %} and has also got featured in
+    the {% homeLink "JavaScript Weekly newsletter.",
+    "https://twitter.com/psuranas/status/1406620587372343311" %} Here are some
+    of the posts he has written recently. {% endsectionHeader %}
+
+    <div
+      class="
+        mt-12
+        text-left
+        mx-auto
+        mb-16
+        grid grid-cols-1
+        lg:grid-cols-2
+        gap-10
+      "
+    >
+      {% set postslist = collections.post.slice(-4) %} {% include
+      "partials/postslist.html" %}
+    </div>
+
+    <div class="mx-auto mb-16">
+      <a href="/blog" class="btn-secondary">View all posts</a>
+    </div>
+
+    <div
+      x-data="newsletter()"
+      class="
+        p-6
+        sm:px-20
+        bg-gray-50
+        my-4
+        rounded-2xl
+        shadow-xl
+        w-full
+        max-w-3xl
+        mx-auto
+      "
+    >
+      <h4 class="text-xl sm:text-2xl font-semibold my-2">
+        Like the stuff he writes?
+      </h4>
+      <p class="text-base sm:text-lg mt-4">
+        Subscribe to Prateek's newsletter to get the all the new posts like
+        these straight to your inbox. No spam ever. Unsubscribe at any time. If
+        emails are not your thing then you can also {% homeLink "subscribe via
+        RSS.", "/blog/feed.xml" %}
+      </p>
+      <form x-on:submit="handleSubscribe" class="mb-2" name="subscribe_home">
+        <input
+          name="email"
+          x-model="emailField"
+          required
+          type="email"
+          placeholder="john@doe.com"
+          class="input-primary mt-6"
+        />
+        <button
+          x-bind:disabled="isSubscribeLoading"
+          class="btn-primary"
+          type="submit"
+        >
+          Count me in
+        </button>
+      </form>
+    </div>
+
+    <!-- Open Source -->
+    {% sectionHeader "Open Source" %} Prateek 💞 Open source, apart from making
+    all his projects fully open sourced he also like to contribute to other
+    projects that he actively uses. He has so far contributed to {% homeLink
+    "react-query",
+    "https://github.com/tannerlinsley/react-query/pulls?q=is%3Apr+author%3Aprateek3255"
+    %}, {% homeLink "daily.dev",
+    "https://github.com/dailydotdev/daily/issues/142"%}, {% homeLink
+    "brahmosjs",
+    "https://github.com/brahmosjs/brahmos/pulls?q=is%3Apr+author%3Aprateek3255"
+    %} and {% homeLink "many others.",
+    "https://github.com/search?q=is%3Apr+author%3Aprateek3255+archived%3Afalse+repo%3A%22freeCodeCamp%2FfreeCodeCamp%22+repo%3A%22react-syntax-highlighter%2Freact-syntax-highlighter%22+repo%3A%22zulip%2Fzulip-mobile%22+repo%3A%22react-tags%2Freact-tags%22"
+    %}{% endsectionHeader %}
+
+    <!-- Contact -->
+    {% sectionHeader "Get in Touch" %} Prateek is pretty active on {%homeLink
+    "Twitter", "https://twitter.com/@psuranas" %} and keeps his DMs open, feel
+    free to drop him a message there. Not a Twitter person? You can also contact
+    him by sending a message to him via the form below. {% endsectionHeader %}
+    <div
+      class="
+        p-6
+        sm:px-10
+        bg-gray-50
+        my-8
+        rounded-2xl
+        shadow-xl
+        w-full
+        max-w-3xl
+        mx-auto
+      "
+    >
+      <form
+        method="POST"
+        class="flex flex-col mx-auto"
+        action="https://formspree.io/prateeksurana3255@gmail.com"
+      >
+        <input
+          type="hidden"
+          name="_subject"
+          value="Contact request from personal website"
+        />
+        <input
+          aria-label="Email"
+          type="email"
+          name="_replyto"
+          placeholder="Your email"
+          required
+          class="input-primary"
+        />
+        <textarea
+          aria-label="Message"
+          name="message"
+          placeholder="Your message"
+          required
+          class="input-primary mt-6 h-32"
+        ></textarea>
+        <button type="submit" class="btn-primary">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const engineer = document.querySelector("#frontend-engineer");
+  const devfolio = document.querySelector("#devfolio");
+  const stuff = document.querySelector("#awesome-stuff");
+  const writing = document.querySelector("#writing");
+  const stack = document.querySelector("#tech-stack");
+  const marvel = document.querySelector("#marvel");
+  const games = document.querySelector("#games");
+
+  const a1 = RoughNotation.annotate(engineer, {
+    type: "highlight",
+    color: "#A2E8FA",
+    multiline: true,
+  });
+  const a2 = RoughNotation.annotate(devfolio, {
+    type: "highlight",
+    color: "#E2CBEF",
+    multiline: true,
+  });
+  const a3 = RoughNotation.annotate(stuff, {
+    type: "highlight",
+    color: "#7DF0DF",
+    multiline: true,
+  });
+  const a4 = RoughNotation.annotate(writing, {
+    type: "circle",
+    color: "#FAC791",
+  });
+  const a5 = RoughNotation.annotate(stack, {
+    type: "underline",
+    color: "#E0908B",
+    multiline: true,
+  });
+  const a6 = RoughNotation.annotate(marvel, {
+    type: "underline",
+    color: "#90F0BE",
+    multiline: true,
+  });
+  const a7 = RoughNotation.annotate(games, {
+    type: "box",
+    color: "#BCEDF0",
+    multiline: true,
+  });
+
+  const ag = RoughNotation.annotationGroup([a1, a2, a3, a4, a5, a6, a7]);
+  window.annotationGroup = ag;
+  setTimeout(() => {
+    ag.show();
+  }, 1000);
+
+  function chevronDown() {
+    return {
+      isVisible: false,
+      startTimer() {
+        setTimeout(() => {
+          this.isVisible = true;
+        }, 8000);
+      },
+      handleClick() {
+        window.scrollTo({
+          top: window.innerHeight,
+          left: 0,
+          behavior: "smooth",
+        });
+      },
+    };
+  }
+</script>
+
+{% include "partials/newsletterScript.html" %}

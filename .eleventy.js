@@ -29,6 +29,72 @@ function stringtoSlug(str) {
   return str;
 }
 
+function projectCard(content, logo, title, buttons) {
+  return `
+        <div
+          class="
+           transform 
+            relative 
+            bg-gradient-to-b from-gray-50 to-gray-100
+            py-6
+            px-6
+            rounded-3xl
+            w-full
+            my-4
+            shadow-xl
+            flex flex-col
+            items-center
+            hover:shadow-2xl 
+            hover:scale-105 
+            transition 
+            duration-500
+          "
+          >
+          <img
+            src="/img/${logo}"
+            alt="${title} Logo"
+            height="100"
+            width="100"
+            style="height:100px; width: auto;"
+            class="rounded-full"
+          />
+          <div class="mt-8">
+            <h4 class="text-xl sm:text-2xl font-semibold my-2">${title}</h4>
+            <p class="text-base sm:text-lg mt-4 max-w-xs">
+              ${content}
+            </p>
+            <div class="my-10 w-full flex justify-center">
+              ${buttons.map((button, index) => {
+                return `
+                  <a
+                  href="${button.link}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary ${buttons.length === index + 1 ? "" : "mr-4"}">${button.title}
+                  </a>
+                `;
+              }).join("\n")}
+            </div>
+          </div>
+        </div>
+  `;
+}
+
+function sectionHeader(content, title, addTopMargin = true) {
+  return `
+    <h2 class="text-3xl sm:text-5xl font-bold ${addTopMargin ? 'mt-32' : ''}">${title}</h2>
+    <p class="text-base sm:text-xl mt-6 max-w-3xl mx-auto">
+      ${content}
+    </p>
+  `;
+}
+
+function homeLink(title, link) {
+  return `<a href="${link}" target=“_blank” class="text-blue-500" rel=“noreferrer noopener”>
+    ${title}
+  </a>`;
+}
+
 async function imageShortcode(
   img,
   alt,
@@ -47,11 +113,11 @@ async function imageShortcode(
     filenameFormat: function (id, src, width, format) {
       // Get file name from path
       // ex - ./src/img/hello.png -> hello
-      const path = src.split('/');
-      const fileName = path[path.length - 1].split('.')[0];
+      const path = src.split("/");
+      const fileName = path[path.length - 1].split(".")[0];
 
-      return `${fileName}-${width}.${format}`
-    }
+      return `${fileName}-${width}.${format}`;
+    },
   });
 
   let lowsrc = metadata.jpeg[1] || metadata.jpeg[0];
@@ -62,7 +128,7 @@ async function imageShortcode(
   // Can be updated in future to video tag for better performance
   if (img.endsWith("gif")) {
     return `<img
-        src="../img/${img}"
+        src="/img/${img}"
         width="${lowsrc.width}"
         height="${lowsrc.height}"
         alt="${alt}"
@@ -77,7 +143,7 @@ async function imageShortcode(
         return `  <source type="${
           imageFormat[0].sourceType
         }" srcset="${imageFormat
-          .map((entry) => `..${entry.srcset}`)
+          .map((entry) => `${entry.srcset}`)
           .join(", ")}" sizes="${sizes}">`;
       })
       .join("\n")}
@@ -98,6 +164,13 @@ module.exports = function (eleventyConfig) {
 
   // Merge data instead of overriding
   eleventyConfig.setDataDeepMerge(true);
+
+  // Landing page shortcodes
+  // -------------------------
+
+  eleventyConfig.addPairedNunjucksShortcode("projectCard", projectCard);
+  eleventyConfig.addPairedNunjucksShortcode("sectionHeader", sectionHeader);
+  eleventyConfig.addNunjucksShortcode("homeLink", homeLink);
 
   // Add shortcode for rendering heading with link
   eleventyConfig.addNunjucksShortcode(
@@ -162,6 +235,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
   eleventyConfig.addPassthroughCopy("./src/favicons");
 
+  // Copy sitemap and robots.txt to route of /_site
+  eleventyConfig.addPassthroughCopy("./src/sitemap.xml");
+  eleventyConfig.addPassthroughCopy("./src/robots.txt");
+
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
@@ -170,6 +247,7 @@ module.exports = function (eleventyConfig) {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true,
+        minifyJS: true,
       });
       return minified;
     }
@@ -203,7 +281,6 @@ module.exports = function (eleventyConfig) {
     dir: {
       input: "src",
     },
-    pathPrefix: "/blog/",
     htmlTemplateEngine: "njk",
   };
 };

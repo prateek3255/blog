@@ -14,6 +14,9 @@ module.exports = {
       colors: {
         "accent-blue": "#46CBE8",
       },
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"],
+      }
     },
   },
   variants: {

@@ -1,44 +1,43 @@
 {% for post in postslist | reverse %}
-    <article class="my-8">
-        <h2 class="font-bold text-3xl text-gray-900 mb-2">
-            <a href="/blog{{post.url}}">
-                {% if post.data.title %}
-                    {{ post.data.title }}
-                {% else %}
-                    Untitled
-                {% endif %}
-            </a>
-        </h2>
-        <p class="text-base leading-6 text-gray-500 mb-3">
-            <time>
-                {{ post.date | readableDate }}
-                by
-                {{ post.data.author }}
-
-            </time>
-        </p>
-        {% if post.data.description %}
-            <p class="text-lg text-gray-500 mb-2">
-                {{ post.data.description }}
-            </p>
+    <article {% if home %} {% else %} class="my-8" {% endif %}>
+        {% if home %}
+        <div class="transform relative bg-gradient-to-b from-gray-50 to-gray-100 p-10 rounded-3xl w-full shadow-xl flex flex-col h-full hover:shadow-2xl hover:scale-105 transition duration-500">
         {% endif %}
-        
-        <p class=" text-md mb-3">
-            {% for tag in post.data.tags %}
-                {% if tag != 'post' %}
-                <a href="/blog/tags/{{tag}}" onClick="trackTagClick('{{tag}}')" class="text-indigo-700 mr-1">
-                    #{{tagsCase[tag]}}
+            <h3 class="font-bold text-2xl sm:text-3xl text-gray-900 mb-2">
+                <a href="{{ post.url }}">
+                    {% if post.data.title %}
+                        {{ post.data.title }}
+                    {% else %}
+                        Untitled
+                    {% endif %}
                 </a>
-                {% endif %}
-            {% endfor %}
-        </p>
-    
-
-        <p>
-            <a href="/blog{{post.url}}" class="text-indigo-700 font-bold text-lg">
-                Read more →
-            </a>
-        </p>
-
+            </h3>
+            <p class="text-sm sm:text-base leading-6 text-gray-500 mb-3">
+                <time>
+                    {{ post.date | readableDate }}
+                </time>
+            </p>
+            {% if post.data.description %}
+                <p class="text-base sm:text-lg text-gray-500 mb-2">
+                    {{ post.data.description }}
+                </p>
+            {% endif %}
+            <p class="text-sm sm:text-base mb-3">
+                {% for tag in post.data.tags %}
+                    {% if tag != 'post' %}
+                        <a href="/blog/tags/{{ tag }}" onClick="trackTagClick('{{ tag }}')" class="text-indigo-700 mr-1">
+                            #{{ tagsCase[tag] }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </p>
+            <p>
+                <a href="{{ post.url }}" class="text-indigo-700 font-bold text-base sm:text-lg">
+                    Read more →
+                </a>
+            </p>
+        {% if home %}
+        </div>
+        {% endif %}
     </article>
 {% endfor %}
