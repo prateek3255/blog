@@ -5,8 +5,7 @@
     "debug": "set DEBUG=* & eleventy",
     "css": "postcss src/css/tailwind.css --o _tmp/css/style.css --watch",
     "build": "cross-env NODE_ENV=production BASE_URL=https://prateeksurana.me/ eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css",
-    "build:netlify": "cross-env NODE_ENV=development BASE_URL=https://prateek-blog-demo.netlify.com/ eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css && echo 'User-agent: *\nDisallow: /' > _site/robots.txt && yarn move",
-    "move": "cd _site && mkdir blog | mv * blog"
+    "build:netlify": "eleventy && cross-env NODE_ENV=production postcss src/css/tailwind.css --o _site/css/style.css && echo 'User-agent: *\nDisallow: /' > _site/robots.txt"
   },
   "devDependencies": {
     "@11ty/eleventy": "0.11.0",
