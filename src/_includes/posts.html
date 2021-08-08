@@ -5,8 +5,8 @@ prism: true
 <div x-data="newsletter()" x-init="startTimer()">
   <div class="container max-w-3xl mt-6 px-6">
     <div class="pb-5 mb-5 border-b border-gray-100">
-      <h1 class="font-bold text-5xl">{{title}}</h1>
-      <p class="text-center text-base leading-6 font-medium text-gray-500">
+      <h1 class="font-bold text-4xl sm:text-5xl">{{title}}</h1>
+      <p class="text-center text-sm sm:text-base leading-6 font-medium text-gray-500">
         Last updated on <time> {{ updatedAt | readableDate }}</time> by {{settings.author}} &nbsp; •
         &nbsp;<span class="read-time"> - min read </span>
       </p>

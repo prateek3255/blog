@@ -16,7 +16,7 @@
         </button>
 
         <!--Menu-->
-        <div x-cloak class="w-full flex-grow lg:flex lg:items-center lg:w-auto text-center transition-all duration-700 ease-in-out opacity-0 lg:opacity-100" :class="{ 'max-h-80 opacity-100': isOpen, 'max-h-0 opacity-0': !isOpen }" x-show.transition="true">
+        <div x-cloak class="w-full flex-grow lg:flex lg:items-center lg:w-auto text-center transition-all duration-700 ease-in-out opacity-0 lg:opacity-100" :class="{ 'max-h-80 opacity-100 visible': isOpen, 'max-h-0 opacity-0 invisible lg:visible': !isOpen }" x-show.transition="true">
 
             {% if navigation.items %}
 
