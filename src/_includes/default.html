@@ -3,7 +3,7 @@
   <head>
     {# If the page is a tags page set the URL to blogs tagged {tagName} we need to slice here to ge the tag
     bevuase the URL will be like /tags/typescript/. If its not the tags page then use the title property  #}
-    {% set currentTitle = "Blogs tagged " + tagsCase[page.url.slice(6, -1)] if page.url.includes('/tags/') else title %}
+    {% set currentTitle = "Blogs tagged " + tagsCase[page.url.slice(11, -1)] if page.url.includes('/tags/') else title %}
     <!-- Essentials -->
     <meta charset="UTF-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
