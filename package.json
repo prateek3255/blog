@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "URL=http://localhost:8080/ NODE_ENV=development npm-run-all --parallel css eleventy",
+    "start": "BASE_URL=http://localhost:8080/ NODE_ENV=development npm-run-all --parallel css eleventy",
     "eleventy": "eleventy --serve",
     "debug": "set DEBUG=* & eleventy",
     "css": "postcss src/css/tailwind.css --o _tmp/css/style.css --watch",
