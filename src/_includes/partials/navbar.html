@@ -54,16 +54,8 @@
             handleToggle() {
                 this.isOpen = !this.isOpen;
                 // Re-animate annotations to cover for the moving UI
-                if(typeof window.annotationGroup !== 'undefined') {
-                    // Hide the annotation and then show them once
-                    // the animation is complete
-                    window.annotationGroup.hide();
-                    setTimeout(
-                        () => {
-                            window.annotationGroup.show();
-                        }, 
-                        800
-                    );
+                if(typeof window.adjustAnnotations === 'function') {
+                    window.adjustAnnotations()
                 }
             }
         }

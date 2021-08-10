@@ -111,13 +111,13 @@ pre[class*="language-"] {
 }
 
 .hero {
-  height: calc(100vh - 200px);
+  height: calc(var(--vh, 1vh) * 100 - 200px);
 }
 
 .wave {
   animation-name: wave-animation;  
   animation-duration: 2.0s;        
-  animation-iteration-count: 5;  
+  animation-iteration-count: 3;  
   transform-origin: 70% 70%;    
   display: inline-block;
 }

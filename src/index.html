@@ -34,9 +34,10 @@ home: true
         </span>
         &nbsp; He loves
         <span id="awesome-stuff">creating awesome stuff</span> and
-        <span id="writing">writing</span> things he learns along the way, usually
-        about <span id="tech-stack">JavaScript, React, and TypeScript</span>.
-        Apart from his unconditional love for technology he enjoys watching
+        <span id="writing">writing</span> things he learns along the way,
+        usually about
+        <span id="tech-stack">JavaScript, React, and TypeScript</span>. Apart
+        from his unconditional love for technology he enjoys watching
         <span id="marvel">Marvel movies</span> and playing
         <span id="games">quirky games</span> on his phone.
       </p>
@@ -258,6 +259,13 @@ home: true
 </div>
 
 <script>
+  // This is for getting the correct height of viewport on mobile devices.
+  // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+  // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+  let vh = window.innerHeight * 0.01;
+  // Then we set the value in the --vh custom property to the root of the document
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+
   const engineer = document.querySelector("#frontend-engineer");
   const devfolio = document.querySelector("#devfolio");
   const stuff = document.querySelector("#awesome-stuff");
@@ -301,11 +309,42 @@ home: true
     multiline: true,
   });
 
-  const ag = RoughNotation.annotationGroup([a1, a2, a3, a4, a5, a6, a7]);
-  window.annotationGroup = ag;
-  setTimeout(() => {
-    ag.show();
-  }, 1500);
+  const timings = [
+    { annotation: a1, time: 3500 },
+    { annotation: a2, time: 1300 },
+    { annotation: a3, time: 1800 },
+    { annotation: a4, time: 1200 },
+    { annotation: a5, time: 3000 },
+    { annotation: a6, time: 4500 },
+    { annotation: a7, time: 1800 },
+  ];
+
+  let currentTime = 0;
+
+  timings.forEach(item => {
+    currentTime += item.time;
+    setTimeout(() => {
+      item.annotation.show();
+    }, currentTime);
+  });
+
+  function hideAndShowAnnotationsWithoutAnimation() {
+    timings.forEach(item => {
+      item.annotation.hide();
+      item.annotation.animate = false;
+    });
+
+    setTimeout(
+      () => {
+        timings.forEach(item => {
+          item.annotation.show();
+        });
+      }, 
+      800
+    );
+  }
+
+  window.adjustAnnotations = hideAndShowAnnotationsWithoutAnimation;
 
   function chevronDown() {
     return {
@@ -313,7 +352,7 @@ home: true
       startTimer() {
         setTimeout(() => {
           this.isVisible = true;
-        }, 8000);
+        }, 15000);
       },
       handleClick() {
         window.scrollTo({
@@ -325,6 +364,5 @@ home: true
     };
   }
 </script>
-
 
 {% include "partials/newsletterScript.html" %}
