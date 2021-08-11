@@ -231,7 +231,7 @@ Well, as it turns out, there are a few ways of fixing it. One is that you can ad
 ...
 ```
 
-This should suffice for most situations. If your component tree is expensive, then the above method can slightly affect performance because your component gets unmounted and remounted again. So what the [React docs recommend](https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops) is that you update the state during rendering, and React will re-run the component with updated state immediately after the current render. So in our case, this is what it would look like this - 
+This should suffice for most situations. If your component tree is expensive, then the above method can slightly affect performance because your component gets unmounted and remounted again. So what the [React docs recommend](https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops) is that you update the state during rendering, and React will re-run the component with updated state immediately after the current render. So in our case, this is what it would look like - 
 
 ```jsx/3-9
 const StatefulEditor = (props) => {
