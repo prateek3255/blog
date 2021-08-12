@@ -14,7 +14,7 @@ tags:
 
 This tweet regarding a simplified way to use reduce got a lot of attention recently in the JavaScript community.
 
-<div style="width:100%; display:flex; justify-content:center;">
+<div style="display:flex; justify-content:center;">
 <blockquote class="twitter-tweet" style="margin-left:auto; margin-right:auto;" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Simplify your .reduce calls by doing as much work as possible in .filter and .map instead. Compare these two snippets. Which is more readable? Notice that when map arranges data exactly how we want, our .reduce can be just Object.assign.<a href="https://twitter.com/hashtag/typescript?src=hash&amp;ref_src=twsrc%5Etfw">#typescript</a> <a href="https://twitter.com/hashtag/javascript?src=hash&amp;ref_src=twsrc%5Etfw">#javascript</a> <a href="https://t.co/3TW57kaCar">pic.twitter.com/3TW57kaCar</a></p>&mdash; Rupert Foggo McKay (@maxfmckay) <a href="https://twitter.com/maxfmckay/status/1396252890721918979?ref_src=twsrc%5Etfw">May 22, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 
