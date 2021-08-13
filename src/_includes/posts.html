@@ -12,7 +12,6 @@ prism: true
       </p>
     </div>
     <div id="carbon">
-      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CESI427E&placement=prateeksuraname" id="_carbonads_js"></script>
     </div>
     <article class="prose lg:prose-xl my-4 relative">
       {{ content | safe }}
@@ -194,3 +193,13 @@ prism: true
 {% endif %}
 
 {% include "partials/newsletterScript.html" %}
+
+<script>
+  setTimeout( () => {
+      script=document.createElement('script');
+      script.type='text/javascript';
+      script.src='//cdn.carbonads.com/carbon.js?serve=CESI427E&placement=prateeksuraname';
+      script.id="_carbonads_js"
+      document.querySelector('#carbon').appendChild(script);
+  }, 200);
+</script>
