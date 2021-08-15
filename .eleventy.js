@@ -35,7 +35,7 @@ function projectCard(content, logo, title, buttons) {
           class="
            transform 
             relative 
-            bg-gradient-to-b from-gray-50 to-gray-100
+            bg-white
             py-6
             px-6
             rounded-3xl
@@ -50,16 +50,26 @@ function projectCard(content, logo, title, buttons) {
             duration-500
           "
           >
-          <img
-            src="/img/${logo}"
-            alt="${title} Logo"
-            height="100"
-            width="100"
-            style="height:100px; width: auto;"
-            class="rounded-full"
-          />
+          <a
+          href="${buttons[0].link}"
+          target="_blank"
+          rel="noopener noreferrer">
+              <img
+                src="/img/${logo}"
+                alt="${title} Logo"
+                height="100"
+                width="100"
+                style="height:100px; width: auto;"
+                class="rounded-full"
+              />
+          </a>
           <div class="mt-8">
-            <h3 class="text-xl sm:text-2xl font-semibold my-2">${title}</h3>
+            <a
+            href="${buttons[0].link}"
+            target="_blank"
+            rel="noopener noreferrer">
+              <h3 class="text-xl sm:text-2xl font-semibold my-2">${title}</h3>
+            </a>
             <p class="text-base sm:text-lg mt-4 max-w-xs">
               ${content}
             </p>
