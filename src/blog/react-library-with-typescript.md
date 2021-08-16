@@ -1,7 +1,7 @@
 ---
 title: How to build a React library using TypeScript
 date: 2020-10-18
-updatedAt: 2021-06-08
+updatedAt: 2021-08-16
 permalink: /blog/react-library-with-typescript/
 templateEngineOverride: njk,md
 description: A step by step guide to setup a React Library from scratch using TypeScript, and publish it to NPM.
@@ -191,7 +191,7 @@ As one last step, we need to specify the entry points for different types of mod
 "types": "./lib/esm/index.d.ts",
 ```
 
-> If your library has some external dependencies or some other assets, I would recommend using module bundlers like [Rollup to compile your library](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396).
+> If your library has some external dependencies or some other assets, I would recommend using module bundlers like [Rollup to compile your library](https://prateeksurana.me/blog/react-component-library-using-storybook-6/#compiling-the-library-using-rollup).
 
 
 
