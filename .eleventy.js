@@ -248,6 +248,7 @@ module.exports = function (eleventyConfig) {
   // Copy sitemap and robots.txt to route of /_site
   eleventyConfig.addPassthroughCopy("./src/sitemap.xml");
   eleventyConfig.addPassthroughCopy("./src/robots.txt");
+  eleventyConfig.addPassthroughCopy("./src/_redirects");
 
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
