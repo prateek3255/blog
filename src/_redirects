@@ -1,2 +1,2 @@
-/game-of-life/*  https://game-of-life-navy.vercel.app/:splat  200
-/game-of-life/   https://game-of-life-navy.vercel.app/        200 
+/game-of-life/*  https://game-of-life-navy.vercel.app/game-of-life/:splat  200
+/game-of-life/   https://game-of-life-navy.vercel.app/game-of-life/        200 
