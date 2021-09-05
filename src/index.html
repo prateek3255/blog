@@ -46,7 +46,6 @@ home: true
   <div
     class="h-32 w-full justify-center items-end"
     x-data="chevronDown()"
-    x-init="startTimer()"
   >
     <svg
       x-cloak
@@ -357,7 +356,7 @@ home: true
   function chevronDown() {
     return {
       isVisible: false,
-      startTimer() {
+      init() {
         setTimeout(() => {
           this.isVisible = true;
         }, 8000);

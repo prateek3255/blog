@@ -2,7 +2,7 @@
 layout: default
 prism: true
 ---
-<div x-data="newsletter()" x-init="startTimer()">
+<div x-data="newsletter()">
   <div class="container max-w-3xl mt-6 px-6">
     <div class="pb-5 mb-5 border-b border-gray-100">
       <h1 class="font-bold text-4xl sm:text-5xl">{{title}}</h1>
@@ -75,7 +75,7 @@ prism: true
     </div>
   </div>
 
-  <div x-cloak x-show.transition.duration.300ms="showSubscribePopup" class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
+  <div x-cloak x-show="showSubscribePopup" x-transition.duration.300ms class="fixed border-gray-100 border-2 p-6 shadow rounded bottom-7 right-7 w-72 ml-auto xl:block hidden bg-blue-100 z-20">
     <img src="/img/subscribe-banner-image.png" alt="Subscribe to newsletter" style="top:-130px; right:79px;" class="absolute h-32"/>
     <div class="flex w-full justify-between mb-2">
       <h4 class="text-lg font-bold mb-2">Want to get better at React, JavaScript, and TypeScript?</h4>
