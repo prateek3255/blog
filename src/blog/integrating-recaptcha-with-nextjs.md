@@ -25,7 +25,9 @@ A CAPTCHA is a [Turing test](https://en.wikipedia.org/wiki/Turing_test) designed
 
 To get the full benefits of reCAPTCHA, you need to verify the captcha response code in the server to verify its validity. With Next.js, this could have never been easier since it easily lets you spin up a serverless function (if you're deploying it via Vercel) just by adding an [API route in the `/pages/api/` folder](https://nextjs.org/docs/api-routes/introduction).
 
-> This post assumes you are familiar with the basics of React and Next.js. If not, I would recommend checking out the [Intro to React Tutorial by the React team](https://reactjs.org/tutorial/tutorial.html) and the [Next.js tutorial from the docs](https://nextjs.org/learn/basics/create-nextjs-app).
+{% callout %}
+This post assumes you are familiar with the basics of React and Next.js. If not, I would recommend checking out the [Intro to React Tutorial by the React team](https://reactjs.org/tutorial/tutorial.html) and the [Next.js tutorial from the docs](https://nextjs.org/learn/basics/create-nextjs-app).
+{% endcallout %}
 
 reCAPTCHA, though more famous than any other solutions out there but is [infamous for its privacy-related concerns](https://www.fastcompany.com/90369697/googles-new-recaptcha-has-a-dark-side). So if you are concerned about your user's privacy, we will also be looking at a privacy-friendly alternative to reCAPTCHA called [hCaptcha](https://hcaptcha.com) later in this post.
 
@@ -69,14 +71,17 @@ I will be using a plain starter built using [`create-next-app`](https://www.npmj
 
 Let's register a new project on reCAPTCHA and get the required keys. For that, you can go to the [reCAPTCHA admin console](https://www.google.com/recaptcha/admin/create), fill in the required details as mentioned below, and click on submit.
   
+{% callout %}
+For this post's scope, we will be focusing on the [v2 Invisible reCAPTCHA](https://developers.google.com/recaptcha/docs/versions#recaptcha_v2_invisible_recaptcha_badge) which does not involves the reCAPTCHA checkbox. It invokes the prompt to solve captcha for most suspicious traffic via a JavaScript API call and will directly tell us if the user has passed or not. 
 
-> For this post's scope, we will be focusing on the [v2 Invisible reCAPTCHA](https://developers.google.com/recaptcha/docs/versions#recaptcha_v2_invisible_recaptcha_badge) which does not involves the reCAPTCHA checkbox. It invokes the prompt to solve captcha for most suspicious traffic via a JavaScript API call and will directly tell us if the user has passed or not. 
-> 
-> v3 reCAPTCHA, though, is more advanced and doesn't require users to solve any challenge, but only provides a score between 0 and 1, requiring you to take action in the context of your site: for instance, requiring additional factors of authentication, sending a post to moderation, or throttling bots that may be scraping content.
+v3 reCAPTCHA, though, is more advanced and doesn't require users to solve any challenge, but only provides a score between 0 and 1, requiring you to take action in the context of your site: for instance, requiring additional factors of authentication, sending a post to moderation, or throttling bots that may be scraping content.
+{% endcallout %}
 
 {% image "recaptcha-registration.jpg", "Registering your reCAPTCHA site", "mt-5" %}
 
-> Notice how I added the only localhost to the list of domains. That's because we would only be using these keys for development purposes. reCAPTCHA also does a domain validation for the site it is being executed on, so we would be creating a separate set of keys for the production environment to only be used on the production domain and not be misused.
+{% callout %}
+Notice how I added the only localhost to the list of domains. That's because we would only be using these keys for development purposes. reCAPTCHA also does a domain validation for the site it is being executed on, so we would be creating a separate set of keys for the production environment to only be used on the production domain and not be misused.
+{% endcallout %}
 
 After clicking submit, you should be able to see the public and secret keys. 
 

@@ -83,7 +83,9 @@ acc -> { ironman: 'Tony Stark', hulk: 'Bruce Banner' }
 
 So even though the inner loop doesn't exactly run n times on every iteration, it's safe to say that it's in the same class of solutions that execute n<sup>2</sup> times, so we can say its O(n<sup>2</sup>).
 
- > I am assuming here that no duplicate keys are generated in the target object because the time complexity would still be classified as O(n<sup>2</sup>), but the actual run time will vary depending upon the number of duplicate keys since the size of the accumulator would vary accordingly with every iteration.
+{% callout %}
+I am assuming here that no duplicate keys are generated in the target object because the time complexity would still be classified as O(n<sup>2</sup>), but the actual run time will vary depending upon the number of duplicate keys since the size of the accumulator would vary accordingly with every iteration.
+{% endcallout %}
 
 But what if you're using some transpiler like [Babel](https://babeljs.io/) or [TypeScript's transpiler](https://www.typescriptlang.org/play) and targeting ES5 (which we generally do to support older browsers).
 
@@ -148,11 +150,11 @@ users
   .reduce(Object.assign, {});
 ```
 
-<button x-show.transition.opacity.duration.100ms="!showMore" x-on:click="showMore = !showMore" class="flex gap-1 m-0 p-0 border-none bg-transparent items-center font-bold mb-3 mt-4">
+<button x-show="!showMore" x-transition.opacity.duration.100ms x-on:click="showMore = !showMore" class="flex gap-1 m-0 p-0 border-none bg-transparent items-center font-bold mb-3 mt-4">
 Show more <span> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg> </span>
 </button>
 
-<div x-cloak x-show.transition.opacity.duration.300ms="showMore">
+<div x-cloak x-show="showMore" x-transition.opacity.duration.300ms>
 
 The problem here is in the `reduce` call where we directly pass `Object.assign` to it. If you check the documentation for `reduce` you'll find that it passes the [following arguments to the callback function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#how_reduce_works) -
 

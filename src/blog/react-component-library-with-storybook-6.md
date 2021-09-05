@@ -37,7 +37,9 @@ In this tutorial, I would be covering the steps for creating and publishing a Re
 
 Since we are building a component library that would be published to a package manager like NPM, we would be better off if we setup React from scratch instead of using something like create-react-app, which is better suited for web applications.
 
-> If you have a component library using React already setup, then you can directly move forward to the next step. We just need a basic React setup before we can install Storybook.
+{% callout %}
+If you have a component library using React already setup, then you can directly move forward to the next step. We just need a basic React setup before we can install Storybook.
+{% endcallout %}
 
 For that, create a new folder with whatever name you want for your component library. I would be calling mine my-awesome-component-library. 
 
@@ -149,7 +151,7 @@ But first of all what are stories anyways?
 
 Glad you asked, [from the docs](https://storybook.js.org/docs/react/get-started/whats-a-story) -
 
-"A story captures the rendered state of a UI component. Developers write multiple stories per component that describe all the “interesting” states a component can support."
+> A story captures the rendered state of a UI component. Developers write multiple stories per component that describe all the “interesting” states a component can support.
 
 In short, Stories let you render the different states of your UI component and lets you play with the different states with something called [Storybook Controls](https://storybook.js.org/docs/react/essentials/controls), which we will get to in a minute. These are development only files and hence won't be included in our final library bundle.
 

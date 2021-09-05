@@ -60,7 +60,9 @@ SOME_IMPORTANT_API_KEY=
 
 This way, someone new cloning your repo can create `.env` and add all the required variables accordingly.
 
-> If you, like me, don't want the mental burden of keeping the `.env` and `.env.example` files in sync you can use a tool like [sync-dotenv](https://github.com/codeshifu/sync-dotenv#examples) which syncs the envs with a simple command, that you can run before every commit automatically using [husky](https://github.com/typicode/husky).
+{% callout %}
+If you, like me, don't want the mental burden of keeping the `.env` and `.env.example` files in sync you can use a tool like [sync-dotenv](https://github.com/codeshifu/sync-dotenv#examples) which syncs the envs with a simple command, that you can run before every commit automatically using [husky](https://github.com/typicode/husky).
+{% endcallout %}
 
 
 
@@ -98,7 +100,9 @@ module.exports = {
 
 Now you can use the variables in your code using the `process.env` syntax anywhere in your code and then webpack will replace them with the corresponding values in the `.env` file.
 
-> Use [`systemVars: true` flag](https://www.npmjs.com/package/dotenv-webpack#properties) in the Dotenv plugin to load the system variables as well, which comes in handy when deploying to Netlify or any other CI where you can't add the `.env` file due to source control restrictions. 
+{% callout %}
+Use [`systemVars: true` flag](https://www.npmjs.com/package/dotenv-webpack#properties) in the Dotenv plugin to load the system variables as well, which comes in handy when deploying to Netlify or any other CI where you can't add the `.env` file due to source control restrictions. 
+{% endcallout %}
 
 For example -
 
