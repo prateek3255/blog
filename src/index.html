@@ -43,10 +43,7 @@ home: true
       </p>
     </div>
   </div>
-  <div
-    class="h-32 w-full justify-center items-end"
-    x-data="chevronDown()"
-  >
+  <div class="h-32 w-full justify-center items-end" x-data="chevronDown()">
     <svg
       x-cloak
       role="button"
@@ -94,40 +91,66 @@ home: true
           xl:grid-cols-2
         "
       >
-        <!-- 1 card -->
-        {% projectCard "scriptified.png", "Scriptified", [{ title: 'Check it out
-        &nbsp;<i class="fas fa-external-link-alt"></i>', link:
-        "https://scriptified.dev" }, { title: 'View it on &nbsp;<i
-          class="fab fa-github"
-        ></i
-        >', link: "https://github.com/scriptified/scriptified" } ]%} A weekly
-        newsletter with insightful tips, tools and resources on React and
-        JavaScript. Built with Next.js and TailwindCSS. {% endprojectCard %}
-
-        <!-- 2 card -->
-        {%projectCard "scrroll-in.png", "Scrroll In", [{ title: 'Check it out
-        &nbsp;<i class="fab fa-chrome"></i>', link:
-        "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom"
-        }, { title: 'View it on &nbsp;<i class="fab fa-github"></i>', link:
-        "https://github.com/devfolioco/scrroll-in" } ]%} A chrome extension that
-        lets you save multiple scroll positions on a webpage and allow you to
-        access them whenever you come back to the page. {% endprojectCard %}
-
-        <!-- 3 card -->
-        {%projectCard "game-of-life.png", "Game of life", [{ title: 'Check it out
-        &nbsp;<i class="fas fa-external-link-alt"></i>', link:
-        "https://prateeksurana.me/game-of-life"
-        }, { title: 'View it on &nbsp;<i class="fab fa-github"></i>', link:
-        "https://github.com/prateek3255/game-of-life" } ]%} An interactive game demonstrating and explaining
-         John Conway's Game of Life. Also built with Next.js and TailwindCSS. {% endprojectCard %}
-
-        <!-- 4 card -->
-        {% projectCard "smart-apart.webp", "Smart Apart", [{ title: 'Check it
-        out &nbsp;<i class="fab fa-google-play"></i>', link:
-        "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
-        } ]%} An android app that provides you a daily curated feed in various
-        categories. This is the project with which Prateek started his
-        development journey. {% endprojectCard %}
+        {% for item in projects.items %}
+          <div
+            class="
+              transform
+              relative
+              bg-white
+              py-6
+              px-6
+              rounded-3xl
+              w-full
+              my-4
+              shadow-xl
+              flex flex-col
+              items-center
+              hover:shadow-2xl hover:scale-105
+              transition
+              duration-500
+            "
+          >
+            <a
+              href="{{ item.buttons[0].link }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/img/{{ item.logo }}"
+                alt="{{ item.name }} Logo"
+                height="100"
+                width="100"
+                style="height: 100px; width: auto"
+                class="rounded-full"
+              />
+            </a>
+            <div class="mt-8">
+              <a
+                href="{{ item.buttons[0].link }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 class="text-xl sm:text-2xl font-semibold my-2">
+                  {{ item.name }}
+                </h3>
+              </a>
+              <p class="text-base sm:text-lg mt-4 max-w-xs">
+                {{ item.description }}
+              </p>
+              <div class="my-10 w-full flex justify-center">
+                {% for button in item.buttons %}
+                <a
+                  href="{{ button.link }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary mr-4 last:mr-0"
+                  >{{ button.title }} &nbsp;<i class="{{ button.icon }}"></i
+                ></a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     </div>
 
@@ -165,7 +188,9 @@ home: true
       class="
         p-6
         sm:px-20
-        bg-gradient-to-b from-white to-gray-100
+        bg-gradient-to-b
+        from-white
+        to-gray-100
         my-4
         rounded-2xl
         shadow-xl
@@ -225,7 +250,9 @@ home: true
       class="
         p-6
         sm:px-10
-        bg-gradient-to-b from-white to-gray-100
+        bg-gradient-to-b
+        from-white
+        to-gray-100
         my-8
         rounded-2xl
         shadow-xl
@@ -328,7 +355,7 @@ home: true
 
   let currentTime = 0;
 
-  timings.forEach(item => {
+  timings.forEach((item) => {
     currentTime += item.time;
     setTimeout(() => {
       item.annotation.show();
@@ -336,19 +363,16 @@ home: true
   });
 
   function hideAndShowAnnotationsWithoutAnimation() {
-    timings.forEach(item => {
+    timings.forEach((item) => {
       item.annotation.hide();
       item.annotation.animate = false;
     });
 
-    setTimeout(
-      () => {
-        timings.forEach(item => {
-          item.annotation.show();
-        });
-      }, 
-      800
-    );
+    setTimeout(() => {
+      timings.forEach((item) => {
+        item.annotation.show();
+      });
+    }, 800);
   }
 
   window.adjustAnnotations = hideAndShowAnnotationsWithoutAnimation;

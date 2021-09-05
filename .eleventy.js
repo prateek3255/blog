@@ -29,67 +29,6 @@ function stringtoSlug(str) {
   return str;
 }
 
-function projectCard(content, logo, title, buttons) {
-  return `
-        <div
-          class="
-           transform 
-            relative 
-            bg-white
-            py-6
-            px-6
-            rounded-3xl
-            w-full
-            my-4
-            shadow-xl
-            flex flex-col
-            items-center
-            hover:shadow-2xl 
-            hover:scale-105 
-            transition 
-            duration-500
-          "
-          >
-          <a
-          href="${buttons[0].link}"
-          target="_blank"
-          rel="noopener noreferrer">
-              <img
-                src="/img/${logo}"
-                alt="${title} Logo"
-                height="100"
-                width="100"
-                style="height:100px; width: auto;"
-                class="rounded-full"
-              />
-          </a>
-          <div class="mt-8">
-            <a
-            href="${buttons[0].link}"
-            target="_blank"
-            rel="noopener noreferrer">
-              <h3 class="text-xl sm:text-2xl font-semibold my-2">${title}</h3>
-            </a>
-            <p class="text-base sm:text-lg mt-4 max-w-xs">
-              ${content}
-            </p>
-            <div class="my-10 w-full flex justify-center">
-              ${buttons.map((button, index) => {
-                return `
-                  <a
-                  href="${button.link}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-secondary ${buttons.length === index + 1 ? "" : "mr-4"}">${button.title}
-                  </a>
-                `;
-              }).join("\n")}
-            </div>
-          </div>
-        </div>
-  `;
-}
-
 function sectionHeader(content, title, addTopMargin = true) {
   return `
     <h2 class="text-3xl sm:text-5xl font-bold ${addTopMargin ? 'mt-32' : ''}">${title}</h2>
@@ -177,8 +116,6 @@ module.exports = function (eleventyConfig) {
 
   // Landing page shortcodes
   // -------------------------
-
-  eleventyConfig.addPairedNunjucksShortcode("projectCard", projectCard);
   eleventyConfig.addPairedNunjucksShortcode("sectionHeader", sectionHeader);
   eleventyConfig.addNunjucksShortcode("homeLink", homeLink);
 
