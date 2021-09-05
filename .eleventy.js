@@ -44,6 +44,12 @@ function homeLink(title, link) {
   </a>`;
 }
 
+function callout(content) {
+  return `<div class="bg-gray-200 text-black sm:text-xl text-base relative mt-7 callout sm:px-8 sm:py-2 px-6 py-1">
+    ${content}
+  </div>`
+}
+
 async function imageShortcode(
   img,
   alt,
@@ -136,6 +142,9 @@ module.exports = function (eleventyConfig) {
 
   // Shortcode for generating image
   eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+
+  // Shortcode for generating callout
+  eleventyConfig.addPairedNunjucksShortcode("callout", callout);
 
   // Creates a link from the slugified string
   eleventyConfig.addNunjucksShortcode("slugifiedLink", function (text) {

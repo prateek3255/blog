@@ -83,7 +83,9 @@ acc -> { ironman: 'Tony Stark', hulk: 'Bruce Banner' }
 
 So even though the inner loop doesn't exactly run n times on every iteration, it's safe to say that it's in the same class of solutions that execute n<sup>2</sup> times, so we can say its O(n<sup>2</sup>).
 
- > I am assuming here that no duplicate keys are generated in the target object because the time complexity would still be classified as O(n<sup>2</sup>), but the actual run time will vary depending upon the number of duplicate keys since the size of the accumulator would vary accordingly with every iteration.
+{% callout %}
+I am assuming here that no duplicate keys are generated in the target object because the time complexity would still be classified as O(n<sup>2</sup>), but the actual run time will vary depending upon the number of duplicate keys since the size of the accumulator would vary accordingly with every iteration.
+{% endcallout %}
 
 But what if you're using some transpiler like [Babel](https://babeljs.io/) or [TypeScript's transpiler](https://www.typescriptlang.org/play) and targeting ES5 (which we generally do to support older browsers).
 

@@ -53,7 +53,9 @@ We'll be building a small library with a `create-react-app` demo to help you und
 
 {% headingWithLink "Initializing a project and adding TypeScript" %}
 
-> A small heads up that I'll be using [yarn](https://yarnpkg.com/) as the package manager throughout this guide since it is [much better than npm.](https://www.cubui.com/blog/javascript/why-yarn-is-better-than-npm/)
+{% callout %}
+A small heads up that I'll be using [yarn](https://yarnpkg.com/) as the package manager throughout this guide since it is [much better than npm.](https://www.cubui.com/blog/javascript/why-yarn-is-better-than-npm/)
+{% endcallout %}
 
 We'll start by going through the setup of a plain JavaScript module using `yarn init` in a fresh folder and answering the prompts accordingly
 
@@ -191,7 +193,9 @@ As one last step, we need to specify the entry points for different types of mod
 "types": "./lib/esm/index.d.ts",
 ```
 
-> If your library has some external dependencies or some other assets, I would recommend using module bundlers like [Rollup to compile your library](https://prateeksurana.me/blog/react-component-library-using-storybook-6/#compiling-the-library-using-rollup).
+{% callout %}
+If your library has some external dependencies or some other assets, I would recommend using module bundlers like [Rollup to compile your library](https://prateeksurana.me/blog/react-component-library-using-storybook-6/#compiling-the-library-using-rollup).
+{% endcallout %}
 
 
 

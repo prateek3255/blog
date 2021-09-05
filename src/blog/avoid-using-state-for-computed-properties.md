@@ -111,8 +111,9 @@ One thing you might argue about is performance. Since we calculate this computed
 
 The answer is yes, it depends. It could be if it's some computationally expensive calculation and variable that the calculation relies on don't change that often with every render, but guess what the [`React.useMemo`](https://reactjs.org/docs/hooks-reference.html#usememo) hook is built exactly for these kinds of situations.
 
-> Although for most cases like the example we are working on, using `React.useMemo` would be a case of premature optimization because the variables depend on all the variables that cause a re-render, and it's not that expensive. You can also check out my article on [when you should memoize](https://prateeksurana.me/blog/when-should-you-memoize-in-react/) if you are interested in exploring this topic further.
-
+{% callout %}
+Although for most cases like the example we are working on, using `React.useMemo` would be a case of premature optimization because the variables depend on all the variables that cause a re-render, and it's not that expensive. You can also check out my article on [when you should memoize](https://prateeksurana.me/blog/when-should-you-memoize-in-react/) if you are interested in exploring this topic further.
+{% endcallout %}
 
 
 

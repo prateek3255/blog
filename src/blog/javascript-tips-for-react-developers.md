@@ -151,7 +151,9 @@ if (someVar !== null) {
 }
 ```
 
-> If you're sure that the variable being passed is a boolean then you can use the former approach. 
+{% callout %}
+If you're sure that the variable being passed is a boolean then you can use the former approach. 
+{% endcallout %}
 
 This also applies when doing conditional rendering with the Logical and operator that we saw in the previous tip.
 
@@ -214,7 +216,9 @@ const ownerName = pet?.owner?.first_name;
 const ownerFamily = pet?.owner?.family?.name;
 ```
 
-> Optional chaining can also be used with function calls on properties you are not really sure to exist. For instance, you can do this with an array `friends?.join(",")` , this won't result in an error if friends is anything other than an array, even `undefined`.
+{% callout %}
+Optional chaining can also be used with function calls on properties you are not really sure to exist. For instance, you can do this with an array `friends?.join(",")` , this won't result in an error if friends is anything other than an array, even `undefined`.
+{% endcallout %}
 
 Now, this would avoid errors but you still wouldn't want your users to show `undefined` in case it is not available. This is where Nullish Coalescing comes in -
 
@@ -226,11 +230,13 @@ The [Nullish Coalescing operator](https://developer.mozilla.org/en-US/docs/Web/J
 
 You might think here that the [Logical Or operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR) (`||`) would also have done the same thing. Well in that case I hope you haven't forgotten the truthy and falsy hell of JavaScript that we just covered. Since this operator would return the right hand side operand for all falsy values and can cause hard to debug errors as mentioned in the previous section.
 
-> Since these methods were recently released with [ECMAScript 2020 spec](https://auth0.com/blog/javascript-whats-new-es2020/) browser compatibility for these methods is still in the preliminary stages and only the modern browsers support it right now.
->
-> But don't worry most setups we use to compile our apps have already got us covered. If you're using TypeScript ≥ 3.7 then [these methods are supported out of the box](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html).
->
-> Else if you're using a typical Webpack + babel setup then you can include the [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining) and [`@babel/plugin-proposal-nullish-coalescing-operator`](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator) plugins in your babel config to support these methods.
+{% callout %}
+Since these methods were recently released with [ECMAScript 2020 spec](https://auth0.com/blog/javascript-whats-new-es2020/) browser compatibility for these methods is still in the preliminary stages and only the modern browsers support it right now.
+
+But don't worry most setups we use to compile our apps have already got us covered. If you're using TypeScript ≥ 3.7 then [these methods are supported out of the box](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html).
+
+Else if you're using a typical Webpack + babel setup then you can include the [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining) and [`@babel/plugin-proposal-nullish-coalescing-operator`](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator) plugins in your babel config to support these methods.
+{% endcallout %}
 
 
 
@@ -383,6 +389,8 @@ React.useEffect(() => {
 // would also run on every render
 ```
 
-> If you are using [ESLint](https://eslint.org/) as your linter then you should definitely install the [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks), it will warn you and even fix issues automatically (if [autofix on save](https://www.digitalocean.com/community/tutorials/workflow-auto-eslinting) is enabled) for most of the mistakes people generally make with these hooks.
+{% callout %}
+If you are using [ESLint](https://eslint.org/) as your linter then you should definitely install the [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks), it will warn you and even fix issues automatically (if [autofix on save](https://www.digitalocean.com/community/tutorials/workflow-auto-eslinting) is enabled) for most of the mistakes people generally make with these hooks.
+{% endcallout %}
 
 Also if you're more interested in how `useEffect` works and how the dependency array affects the effect, then you should definitely check out [A Complete Guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/) by [Dan Abramov](https://twitter.com/dan_abramov).
