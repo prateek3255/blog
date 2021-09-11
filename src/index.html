@@ -92,77 +92,78 @@ home: true
         "
       >
         {% for item in projects.items %}
-          <div
-            class="
-              transform
-              relative
-              bg-white
-              py-6
-              px-6
-              rounded-3xl
-              w-full
-              my-4
-              shadow-xl
-              flex flex-col
-              items-center
-              hover:shadow-2xl hover:scale-105
-              transition
-              duration-500
-            "
+        <div
+          class="
+            transform
+            relative
+            bg-white
+            py-6
+            px-6
+            rounded-3xl
+            w-full
+            my-4
+            shadow-xl
+            flex flex-col
+            items-center
+            hover:shadow-2xl hover:scale-105
+            transition
+            duration-500
+          "
+        >
+          <a
+            href="{{ item.buttons[0].link }}"
+            target="_blank"
+            rel="noopener noreferrer"
           >
+            <img
+              src="/img/{{ item.logo }}"
+              alt="{{ item.name }} Logo"
+              height="100"
+              width="100"
+              style="height: 100px; width: auto"
+              class="rounded-full"
+            />
+          </a>
+          <div class="mt-8">
             <a
               href="{{ item.buttons[0].link }}"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/img/{{ item.logo }}"
-                alt="{{ item.name }} Logo"
-                height="100"
-                width="100"
-                style="height: 100px; width: auto"
-                class="rounded-full"
-              />
+              <h3 class="text-xl sm:text-2xl font-semibold my-2">
+                {{ item.name }}
+              </h3>
             </a>
-            <div class="mt-8">
+            <p class="text-base sm:text-lg mt-4 max-w-xs">
+              {{ item.description }}
+            </p>
+            <div class="my-10 w-full flex justify-center">
+              {% for button in item.buttons %}
               <a
-                href="{{ item.buttons[0].link }}"
+                href="{{ button.link }}"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
-                <h3 class="text-xl sm:text-2xl font-semibold my-2">
-                  {{ item.name }}
-                </h3>
-              </a>
-              <p class="text-base sm:text-lg mt-4 max-w-xs">
-                {{ item.description }}
-              </p>
-              <div class="my-10 w-full flex justify-center">
-                {% for button in item.buttons %}
-                <a
-                  href="{{ button.link }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-secondary mr-4 last:mr-0"
-                  >{{ button.title }} &nbsp;<i class="{{ button.icon }}"></i
-                ></a>
-                {% endfor %}
-              </div>
+                class="btn-secondary mr-4 last:mr-0"
+                >{{ button.title }} &nbsp;<i class="{{ button.icon }}"></i
+              ></a>
+              {% endfor %}
             </div>
           </div>
+        </div>
         {% endfor %}
       </div>
     </div>
 
     <!-- blog -->
-    {% sectionHeader "Blog" %} Prateek has written in past for publications like
+    {% sectionHeader "Blog" %} Prateek has written for publications like
     {% homeLink "Better Programming",
     "https://betterprogramming.pub/the-ultimate-guide-to-building-a-chrome-extension-4c01834c63ec"
     %} and {% homeLink "Hackernoon,",
-    "https://hackernoon.com/u/prateeksurana3255" %} and has also got featured in
-    the {% homeLink "JavaScript Weekly newsletter.",
-    "https://twitter.com/psuranas/status/1406620587372343311" %} Here are some
-    of the posts he has written recently. {% endsectionHeader %}
+    "https://hackernoon.com/u/prateeksurana3255" %} and his posts have also got featured in
+    newsletters like {% homeLink "JavaScript Weekly",
+    "https://twitter.com/psuranas/status/1406620587372343311" %} and {% homeLink
+    "React Digest", "https://reactdigest.net/digests/314" %}. Here are some of
+    the posts he has written recently. {% endsectionHeader %}
 
     <div
       class="
