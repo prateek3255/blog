@@ -103,7 +103,7 @@ async function imageShortcode(
       })
       .join("\n")}
       <img
-        src="..${lowsrc.url}"
+        src="${lowsrc.url}"
         width="${lowsrc.width}"
         height="${lowsrc.height}"
         alt="${alt}"

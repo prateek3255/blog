@@ -10,7 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{currentTitle}}</title>
     <meta name="description" content="{{description}}" />
-    <link rel="canonical" href="{{environment.baseURL}}{{page.url.slice(1)}}" />
+
+    {% if canonical %}
+      <link rel="canonical" href="{{canonical}}" />
+    {% else %}
+      <link rel="canonical" href="{{environment.baseURL}}{{page.url.slice(1)}}" />
+    {% endif %}
 
     <!-- Favicon -->
     <link
