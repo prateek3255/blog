@@ -26,7 +26,7 @@ Cookies are generally used for session management, personalization (themes or si
 
 There was a time when cookies were used for all kinds of client-side storage. But there's was an issue with this approach; since all the cookies for a domain are sent with every request to the server on that domain, they could significantly affect performance, especially with low bandwidth mobile data connections. For the same reason, browsers also typically set limits for the size of the cookie and the number of cookies allowed for a particular domain (Typically 4kb and 20 per domain).
 
-With the modern web, we got the new [Web Storage APIs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API) (`localStorage` and `sessionStorage`) for client-side storage, which allow browsers to store client-side data in the form of key-value pairs. So if you want to persist data only on the client-side, then using these APIs would be a much better way to do it because they are much more intuitive and easy to use than cookies and can store much more data (usually up to 5MB).
+With the modern web, we got the [Web Storage APIs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API) (`localStorage` and `sessionStorage`) for client-side storage, which allow browsers to store client-side data in the form of key-value pairs. So if you want to persist data only on the client-side, then using these APIs would be a much better way to do it because they are much more intuitive and easy to use than cookies and can store much more data (usually up to 5MB).
 
 
 
