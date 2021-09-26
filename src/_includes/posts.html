@@ -197,8 +197,9 @@ prism: true
   setTimeout( () => {
       script=document.createElement('script');
       script.type='text/javascript';
+      script.async = true;
       script.src='//cdn.carbonads.com/carbon.js?serve=CESI427E&placement=prateeksuraname';
       script.id="_carbonads_js"
       document.querySelector('#carbon').appendChild(script);
-  }, 500);
+  }, 200);
 </script>
