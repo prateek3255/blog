@@ -13,7 +13,7 @@ tags:
 ---
 
 
-If you're a JavaScript developer and you want to learn about browser cookies and what you can do with them, then you're at the right place. This article will cover how browser cookies work, how you can access them and manipulate them both from the client and server, and how to control their visibility in the browser using their attributes.
+So you've heard about browser cookies, but you're not sure how they work, when you should use them, or what ways you can securely access and manipulate them, then this article is for you. This article will cover all the things mentioned in the previous sentence by explaining how browser cookies work, how you can access them and manipulate them both from the client and server, and how to control their visibility in the browser using their attributes. We'll also take a brief look at privacy concerns related to third-party cookies at the end.
 
 
 
