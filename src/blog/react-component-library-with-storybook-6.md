@@ -1,7 +1,7 @@
 ---
 title: Creating a React component library using Storybook 6
 date: 2020-12-20
-updatedAt: 2021-04-11
+updatedAt: 2021-09-26
 permalink: /blog/react-component-library-using-storybook-6/
 templateEngineOverride: njk,md
 description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
@@ -425,4 +425,4 @@ Then you can directly access it from any other package in your workspace by just
 
 - Integrate [Netlify](https://www.netlify.com/) or some other service to automatically deploy the Storybook whenever a PR is merged into master and to generate pull previews whenever a new PR is opened.
 - Setup test cases [using React Testing library and Jest](https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript).
-- Add [code-splitting](https://github.com/rollup/rollup-starter-code-splitting) to let the consumer application import only the required components instead of the whole library.
+- [Make the library tree-shakeable](https://blog.theodo.com/2021/04/library-tree-shaking/) so that your consumer application only ends up including the components that are used in the application instead of the entire library. 
