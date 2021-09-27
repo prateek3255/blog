@@ -13,7 +13,7 @@ tags:
 ---
 
 
-Whether you like them or not, cookies are an essential part of modern web development. Yet, they are often misunderstood amongst developers and sometimes used where they shouldn’t have been or are missing attributes that can make your website vulnerable. This article will how browser cookies work, how you can access them and manipulate them both from the client and server, and how to control their visibility in the browser using their attributes and make your cookies more secure. We'll also take a brief look at privacy concerns related to third-party cookies at the end.
+Whether you like them or not, cookies are an essential part of modern web development. Yet, they are often misunderstood amongst developers and sometimes used where they shouldn’t have been or are missing attributes that can make your website vulnerable. This article will discuss how browser cookies work, how you can access and manipulate them both from the client and server, and how to control their visibility in the browser using their attributes and make your cookies more secure. We'll also take a brief look at privacy concerns related to third-party cookies at the end.
 
 
 
