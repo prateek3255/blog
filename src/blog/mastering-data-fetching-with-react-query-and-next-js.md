@@ -61,7 +61,7 @@ npx create-next-app@latest --ts
 yarn create next-app --typescript
 ```
 
-Since we are going to use React Query, we will also need to install the `react-query` package:
+Since we are going to use React Query, we will also need to install the `react-query` package -
 
 ```bash
 npm install react-query
