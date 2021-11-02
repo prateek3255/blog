@@ -17,7 +17,7 @@ React takes pride in calling itself an unopinionated UI library by giving you as
 
 This paradox of choices gave birth to frameworks like Next.js that take the burden off your shoulders by managing things like routing, bundling, server-side and static rendering, etc., yet giving you the best possible developer experience. But you're still mostly on your own when it comes to state management and data fetching, and for that you can use a library or no library according to the nature and scale of your application.
 
-Most web apps rely heavily on fetching and modifying data on the server and displaying it to the user. Although, for starters, managing and storing asynchronous data can be handled with component-based states and effects, things can get out of hand quickly as your application grows more complex and multiple components require the same piece of data across different pages or parts of your app.
+Most web apps rely heavily on fetching and modifying data on the server and displaying it to the user. Though managing and storing asynchronous data can be handled inside components with states and effects, this can get out of hand quickly. Especially as your application grows, and an increasing number of components require the same piece of data across different pages or parts of your app.
 
 This is where react-query comes in by allowing you to manage and cache server state throughout your application, with a zero-config yet customizable API. So in this post, we will look at how react-query works, the problems it solves, and how it nicely integrates with the different rendering mechanisms of Next.js.
 
@@ -51,15 +51,25 @@ I know there are other libraries worth mentioning ([SWR](https://swr.vercel.app/
 
 {% headingWithLink "Setup" %}
 
-Throughout this post, we will be building a simple Pokémon app that allows you to search your favorite Pokémons and show details like XP, abilities etc. for those Pokémon on a dedicated page via the [PokéAPI](https://pokeapi.co/).
+Throughout this post, we will be building a simple Pokémon app that allows you to search your favorite Pokémon and show details like XP, abilities etc. for those Pokémon on a dedicated page via the [PokéAPI](https://pokeapi.co/).
 
-To begin with, we will be starting with a simple Next.js app and adding React Query to it -
+To begin with, we will be using [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) to create a simple Next.js TypeScript project -
 
 ```bash
+npx create-next-app@latest --ts
+# or
+yarn create next-app --typescript
+```
+
+Since we are going to use React Query, we will also need to install the `react-query` package:
+
+```bash
+npm install react-query
+# or
 yarn add react-query
 ```
 
-Now, to use `react-query` anywhere in our app, we need to create a `QueryClient` that allows the queries to interact with the cache. And for your `QueryClient` to be globally available for your application, you need to wrap your application with the `QueryClientProvider`.
+Now, to use queries anywhere in our app, we need to create a `QueryClient` that allows the queries to interact with the cache. And for your `QueryClient` to be globally available for your application, you need to wrap your application with the `QueryClientProvider`.
 
 The way we do it in Next.js is by creating a [Custom App](https://nextjs.org/docs/advanced-features/custom-app) component via `pages/_app.tsx` -
 
@@ -102,7 +112,7 @@ You may have also noticed the `ReactQueryDevtools` in the code above. React Quer
 
 Now that we have the base setup ready, let's start writing our first Query. Since the purpose of this guide is to give your an overview of data fetching with React Query and Next.js, I won't be focusing on the styling aspects and will be using some already pre-built presentational components with styles.
 
-To begin with, we will be creating a search page that allows you to search for Pokémons, and displays the names of matching pokémons 
+To begin with, we will be creating a search page that allows you to search for Pokémon, and displays the names of matching pokémon. 
 
 ```tsx
 // pages/index.tsx
@@ -144,10 +154,10 @@ When it comes to [query keys](https://react-query.tanstack.com/guides/query-keys
 
 In our case, the resulting data depends on the `debounedSearchValue` . It will return different results for different values and the same result for the same values. Hence we are using an [array key](https://react-query.tanstack.com/guides/query-keys#array-keys) - `["searchPokemons", debounedSearchValue]`, which will always be unique for our data.
 
-Lastly, we have the second argument, which is a function that returns a promise. In our case, it would be the `searchPokemons` method that returns a promise resolving to an array of strings containing the names of the found Pokémons for a given query string.
+Lastly, we have the second argument, which is a function that returns a promise. In our case, it would be the `searchPokemons` method that returns a promise resolving to an array of strings containing the names of the found Pokémon for a given query string.
 
 {% callout %}
-The PokéAPI doesn't have the support for searching pokémons,, so I have created a function that searches a local array of all the ~900 Pokémon species and returns a Promise that resolves with an artificial delay. If you're curious, there is an [open issue for implementing search in PokéAPI](https://github.com/PokeAPI/pokeapi/issues/474). I will integrate the actual API if it's ever implemented.
+The PokéAPI doesn't have the support for searching pokémon, so I have created a function that searches a local array of all the ~900 Pokémon species and returns a Promise that resolves with an artificial delay. If you're curious, there is an [open issue for implementing search in PokéAPI](https://github.com/PokeAPI/pokeapi/issues/474). I will integrate the actual API if it's ever implemented.
 {% endcallout %}
 
 Now that we have the initial query ready, lets render the searched output - 
