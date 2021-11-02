@@ -76,4 +76,9 @@
   <lastmod>2021-09-26T05:30:54+00:00</lastmod>
   <priority>0.75</priority>
 </url>
+<url>
+  <loc>https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/</loc>
+  <lastmod>2021-11-02T11:15:44+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
 </urlset>
