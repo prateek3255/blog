@@ -30,9 +30,10 @@
   {% set absolutePostUrl %}{{ post.url | url | absoluteUrl(metadata.url) }}{% endset %}
   <entry>
     <title>{{ post.data.title }}</title>
-    <description>{{ post.data.description }}</description>
+    <summary>{{ post.data.description }}</summary>
     <link href="{{ absolutePostUrl }}"/>
-    <pubDate>{{ post.date | dateToRfc3339 }}</pubDate>
+    <published>{{ post.date | dateToRfc3339 }}</published>
+    <updated>{{ post.data.updatedAt | dateToRfc3339 }}</updated>
     <id>{{ absolutePostUrl }}</id>
     <content type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
   </entry>
