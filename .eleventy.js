@@ -45,9 +45,9 @@ function homeLink(title, link) {
 }
 
 function callout(content) {
-  return `<div class="bg-gray-200 text-black sm:text-xl text-base relative mt-7 callout sm:px-8 sm:py-2 px-6 py-1">
+  return `<aside class="bg-gray-200 text-black sm:text-xl text-base relative mt-7 callout sm:px-8 sm:py-2 px-6 py-1">
     ${content}
-  </div>`
+  </aside>`
 }
 
 async function imageShortcode(
