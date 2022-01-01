@@ -1,21 +1,19 @@
 ---
-title: Inside look at JavaScript Prototypes
-date: 2021-12-21
-updatedAt: 2021-12-21
-permalink: /blog/inside-javascript-prototypes/
+title: How JavaScript Classes work under the hood
+date: 2022-01-01
+updatedAt: 2022-01-01
+permalink: /blog/how-javascript-classes-work-under-the-hood/
 templateEngineOverride: njk,md
 description: Learn what prototypes are in JavaScript, what are they used for, what prototype chaining is and how do JavaScript classes work under the hood with these concepts.
-thumbnail: inside-javascript-prototypes.png
+thumbnail: how-javascript-classes-work-under-the-hood.png
 author: Prateek Surana
 tags:
   - javascript
 ---
 
-Prototypes are a core part of JavaScript, so much so that JavaScript is often referred to as a prototype-based language. 
+Classes in JavaScript are a blueprint for creating objects which allow you to encapsulate, data with code to work on that data. The `class` keyword was officially introduced in JavaScript with ES6 in 2015, but the classes created with the `class` keyword are mostly just syntactic sugar over the already existing pre-ES6 syntax for creating objects with custom prototypes.
 
-Although it is entirely possible that you've been using JavaScript for a while now and haven't ever heard about prototypes  (they're mostly abstracted out by the syntax) and knowing about them might not directly help in the day-to-day code we write but it will help you get a better understanding of JavaScript as a language.
-
-So in this article, we'll explore what prototypes are, what are they used for, what prototype chaining is, how it helps with prototypal inheritance, and lastly, how JavaScript classes work under the hood. We'll also be looking at examples throughout this article which you can try out yourself with any JavaScript compiler or even the browser console.
+So in this article, we'll explore what prototypes are, what are they used for, what prototype chaining is, how it helps with prototypal inheritance, and then finally, how do classes work under the hood with all these concepts. Throughout this article we'll also be looking at examples which you can try out yourself with any JavaScript compiler or even the browser console.
 
 
 
@@ -23,9 +21,13 @@ So in this article, we'll explore what prototypes are, what are they used for, w
 
 {% headingWithLink "What are prototypes anyways?" %}
 
+Prototypes are a core part of JavaScript, so much so that JavaScript is often referred to as a prototype-based language. 
+
+Although it is entirely possible that you've been using JavaScript for a while now and haven't ever heard about prototypes  (they're mostly abstracted out by the syntax) and knowing about them might not directly help in the day-to-day code we write but it will help you get a better understanding of JavaScript.
+
 In a nutshell, prototypes are a mechanism by which JavaScript objects can inherit features from one another. Objects can have a prototype object which they use as a template to inherit their properties and methods from.
 
-Have you ever wondered whenever you create an object or an array you get a bunch of handy methods ( `hasOwnProperty` , `toString`, etc.) right of the table even though you didn't define them when you created the object?
+Have you ever wondered whenever you create an object or an array you get a bunch of handy methods ( `hasOwnProperty` , `toString`, etc.) out of the box even though you didn't define them when you created the object or the array?
 
 ```jsx
 let obj = { name: "Prateek" };
@@ -35,11 +37,19 @@ let nums = [1, 2, 3];
 nums = nums.map(num => num + 1); // [2, 3, 4]
 ```
 
-Whenever you create objects and arrays in JavaScript, they come with their default prototype and the properties you saw above, defined on the default prototypes of  [Objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods) and [Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods), respectively.
+Whenever you create objects and arrays in JavaScript, they come with their default prototype and the properties you saw above, defined on the default prototypes of  [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods) and [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods), respectively.
 
 The way it works is that whenever you try to access a property on an object like `obj.hasOwnProperty` above, JavaScript first checks whether the object has a property called `hasOwnProperty` or not. If the property isn't defined on the object, it looks into its prototype, and if it cannot find it there, only then it returns `undefined`. In the example above, `hasOwnProperty` is a function defined on the Object's prototype; hence we are able to call it.
 
-You can get the prototype of any object using the `Object.getPrototypeof` method. Try running the below snippet in the console to see all the methods that along with `hasOwnProperty` that are available with the default Object prototype
+You can see all the methods like `hasOwnProperty`, that are available with the default Object prototype under `[[Prototype]]`, just by logging any object in the console.
+
+{% image "prototypes-in-console.png", "The prototype visible under [[Prototype]] in console" %}
+
+{% callout %}
+The double sqaure bracket `[[Prototype]]` signifies that its an internal property of the object, and [exists purely for expository purposes](https://stackoverflow.com/questions/17174786/what-is-the-significance-of-the-double-brackets-for-the-prototype-property-i).
+{% endcallout %}
+
+To get the prototype of any object, you can use the `Object.getPrototypeof` method. Try running the below snippet in the console:
 
 ```jsx
 let obj = { foo: 'bar'}
@@ -48,16 +58,12 @@ console.log(Object.getPrototypeOf(obj))
 
 {% image "prototypes-getprototypeof.png", "The object prototype with Object.getPrototypeOf" %}
 
-You can even see the prototype properties by just logging the object onto the console, the prototype properties are visible under `[[Prototype]]`.
-
-{% image "prototypes-in-console.png", "The prototype visible under [[Prototype]] in console" %}
-
-So the prototype is just another object with many template properties shared by all the objects with the same prototype.
+Here is a visualization to help you understand how it works:
 
 {% image "prototypes-object-visualization.png", "Object prototype visualization" %}
 
 {% callout %}
-You can also access the prototype via the [`__proto__`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto) property (try logging `obj.__proto__` in the console) on objects, but it's deprecated and will probably soon be dropped from the web standards.
+You can also access the prototype via the [`__proto__`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto) property (try logging `obj.__proto__` in the console) on any object. But it's deprecated and will probably soon be dropped from the web standards.
 {% endcallout %}
 
 You might think that since the prototype is just a JavaScript object, what happens if you mutate it. Try running the below snippet in the browser console and see what happens.
@@ -72,7 +78,7 @@ let obj2 = { name: 'arya' }
 console.log(obj2.foo) // "bar"
 ```
 
-Since we mutated the default Object prototype which is referenced by all the objects by default, accessing the `foo` property on any of them would give you `"bar"` as the value.
+Since we mutated the default `Object` prototype which is referenced by all the objects by default, accessing the `foo` property on any of them would give you `"bar"` as the value.
 
 What we just did above is known as prototype pollution, it used to be a popular way to add custom properties to shared objects, but it was not only dangerous (imagine an attacker making application-wide changes by modifying the prototype), with modern browsers it is also a [very slow operation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) hence it's not recommended.
 
@@ -94,11 +100,17 @@ console.log(prius.wheels) // 4
 console.log(prius.honk()) // Beep!
 ```
 
-Here is a visualization to help you better understand the above snippet:
+Again, here's a visualization to help you better understand the above snippet:
 
 {% image "prototypes-car-example-visualization.png", "Object.create visualization" %}
 
-In the above example, the object `prius` has `car` as its prototype, so it would be able to access the properties of the prototype while adding some of its own properties as well.
+In the above example, the object `prius` has `car` as its prototype, so it would be able to access the properties of the prototype while adding some of its own properties as well. With this example I think you might be starting to understand how prototypes can be used for inheritance in JavaScript. We'll be exploring this in more detail and revisiting this method in ther next sections.
+
+{% callout %}
+You can also create object with no prototype by passing `null` as the argument to `Object.create`. By doing this the prototype of the object would be `null` and you won't be able to access any default `Object` prototype properties, like `hasOwnProperty` and `toString` on it.
+
+Try it yourself in the console by running `let obj = Object.create(null)` and then accessing any of the default `Object` prototype properties on it.
+{% endcallout %}
 
 
 
@@ -140,7 +152,7 @@ console.log(person1.name) // Prateek
 console.log(Object.getPrototypeOf(person1)) // { constructor: function Person }
 ```
 
-In the above snippet, we have a regular function with a property `name` defined on its execution context, via the `this` keyword. When we invoke a function with the new keyword, apart from executing the function it does a bunch of other things:
+In the above snippet, we have a regular function with a property `name` defined on its execution context, via the `this` keyword. When we invoke a function with the `new` keyword, apart from executing the function it does a bunch of other things:
 
 - To begin with, it creates a new blank JavaScript object and sets the prototype of that object to the `Person` function’s `prototype` property.
 - Next, it points this newly created object to the `this` context of the function (i.e., all references to `this` inside the function now point to the newly created object, so in our case, the name property gets defined on that object).
@@ -158,7 +170,7 @@ You can further verify it by running the following code:
 console.log(Object.getPrototypeOf(person1) === Person.prototype) // true
 ```
 
-You can now also create properties on the functions `prototype` property and since it is the prototype shared with all the objects created with `Person` as the constructor function, it would also be available to all those objects.
+You can now also create properties on the function's `prototype` property and since it is the prototype shared with all the objects created with `Person` as the constructor function, it would also be available to all those objects.
 
 ```jsx
 Person.prototype.sayHello = function() {
@@ -287,9 +299,9 @@ Again here’s a visualization to help you grasp what’s happening here:
 
 {% headingWithLink "Classes in JavaScript" %}
 
-So now that we understand how prototype and prototype chaining work and how they allow for prototypal inheritance in JavaScript, let's look at JavaScript classes.
+So now that we understand how prototype and prototype chaining work and how they allow for prototypal inheritance in JavaScript, let's look at how these concepts apply to JavaScript classes.
 
-The `class` keyword was officially added to JavaScript with ES6 in 2015. The classes created with the `class` keyword are primarily syntactic sugar over the prototypal inheritance we saw in the previous section. Still, they also have some syntax and semantics that are not shared with pre-ES6 class-like semantics.
+As I mentioned in the beginning of the article, the `class` keyword was officially added to JavaScript with ES6 in 2015. The classes created with the `class` keyword are primarily syntactic sugar over the prototypal inheritance we saw in the previous section. Still, they also have some syntax and semantics that are not shared with pre-ES6 class-like semantics.
 
 For example, let's take the `Human` function that we created in the previous section, adding it here for reference:
 
@@ -374,6 +386,6 @@ Apart from the things we saw above JavaScript classes have multiple other featur
 
 To summarize again, in this article we learned what prototypes are and what are they used for, how you can create objects with a custom prototype with constructor functions, what is prototype chaining and how you can achieve prototypal inheritance with it, and finally, how do all these concepts apply to JavaScript classes.
 
-If you made it till here, I hope you learned something new about JavaScript and understand why it is called a prototype-based language. 
+If you made it till here, I hope you learned something new about JavaScript and understand how JavaScript classes work under the hood. 
 
 P.S. - The visualizations I created for this article were made with [Excalidraw](https://excalidraw.com/) and were inspired by the mental models from [Dan Abramov](https://twitter.com/dan_abramov) and [Maggie Appleton](https://maggieappleton.com/)’s [Just JavaScript](https://justjavascript.com/) course.
