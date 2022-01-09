@@ -13,7 +13,7 @@ tags:
 
 Classes in JavaScript are a blueprint for creating objects which allow you to encapsulate, data with code to work on that data. The `class` keyword was officially introduced in JavaScript with ES6 in 2015, but the classes created with the `class` keyword are mostly just syntactic sugar over the already existing pre-ES6 syntax for creating objects with custom prototypes.
 
-So in this article, we'll explore what prototypes are, what are they used for, what prototype chaining is, how it helps with prototypal inheritance, and then finally, how do classes work under the hood with all these concepts. Throughout this article we'll also be looking at examples which you can try out yourself with any JavaScript compiler or even the browser console.
+So in this article, we'll explore what prototypes are, what are they used for, what prototype chaining is and how it helps with prototypal inheritance, and then finally, how do classes work under the hood with all these concepts. Throughout this article we'll also be looking at examples which you can try out yourself with any JavaScript compiler or even the browser console.
 
 
 
