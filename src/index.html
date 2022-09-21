@@ -179,8 +179,9 @@ home: true
         gap-10
       "
     >
-      {% set postslist = collections.post.slice(-4) %} {% include
-      "partials/postslist.html" %}
+      {% set postslist = collections.post.slice(-4) %}
+      {% set showPostslistInCard = true %} 
+      {% include "partials/postslist.html" %}
     </div>
 
     <div class="mx-auto mb-16">

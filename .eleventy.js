@@ -159,6 +159,10 @@ module.exports = function (eleventyConfig) {
     );
   });
 
+  eleventyConfig.addFilter("filterPostsWithTitle", (posts, notAllowedTitles) => {
+    return posts.filter(({ data }) => !notAllowedTitles.includes(data.title));
+  })
+
   // Plugin for generating RSS feed
   eleventyConfig.addPlugin(pluginRss);
 
