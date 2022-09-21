@@ -160,7 +160,6 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("filterPostsWithTitle", (posts, notAllowedTitles) => {
-    // console.log(posts);
     return posts.filter(({ data }) => !notAllowedTitles.includes(data.title));
   })
 
