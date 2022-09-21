@@ -59,7 +59,14 @@ prism: true
         gap-6
       "
     >
-      {% set postslist = collections.post.slice(-2) %} 
+      {# Get a random post with the first tag where title is not equal to the current post title #}
+      {% set post1 = collections[ tags[1] ] | filterPostsWithTitle([title]) | random %}
+      {# Get two more random posts with different titles #}
+      {% set post2 = collections.post | filterPostsWithTitle([title, post1.data.title]) | random %}
+      {% set post3 = collections.post | filterPostsWithTitle([title, post1.data.title, post2.data.title]) | random %}
+
+      {# If there is a post with the given tag then use that post else use the other two random posts #}
+      {% set postslist = [ post1, post2 ] if post1 else [ post2, post3 ] %}
       {% set showPostslistInCard = true %}
       {% include "partials/postslist.html" %}
     </div>
