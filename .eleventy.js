@@ -113,6 +113,10 @@ async function imageShortcode(
     </picture>`;
 }
 
+function videoShortcode(src, autoPlayWithoutControls = false, additionalAttributes = '') {
+  return `<video src="/videos/${src}" ${autoPlayWithoutControls ? 'autoplay' : 'controls'} loop ${additionalAttributes}>Looks like your browser doesn't support this video you can download the video [here](/videos/${src}).</video>`
+}
+
 module.exports = function (eleventyConfig) {
   // Disable automatic use of your .gitignore
   eleventyConfig.setUseGitIgnore(false);
@@ -142,6 +146,9 @@ module.exports = function (eleventyConfig) {
 
   // Shortcode for generating image
   eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+
+  // Shortcode for generating video
+  eleventyConfig.addNunjucksShortcode("video", videoShortcode);
 
   // Shortcode for generating callout
   eleventyConfig.addPairedNunjucksShortcode("callout", callout);
@@ -190,6 +197,7 @@ module.exports = function (eleventyConfig) {
 
   // Copy Image Folder to /_site
   eleventyConfig.addPassthroughCopy("./src/img");
+  eleventyConfig.addPassthroughCopy("./src/videos");
 
   // Copy favicon to route of /_site
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
