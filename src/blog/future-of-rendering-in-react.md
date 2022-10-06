@@ -1,10 +1,10 @@
 ---
 title: The future of rendering in React
-date: 2022-10-05
-updatedAt: 2022-10-05
+date: 2022-10-06
+updatedAt: 2022-10-06
 permalink: /blog/future-of-rendering-in-react/
 templateEngineOverride: njk,md
-description: Learn how ESLint works, what are the role of plugins and extends keys in your ESLint config and how they make ESLint an extremely configurable and versatile JavaScript Linter.
+description: Understand what are the problems with current rendering patterns in React, and the new rendering patterns, introduced with React 18 aim to solve them.
 thumbnail: future-of-rendering-in-react.png
 author: Prateek Surana
 tags:
@@ -85,7 +85,7 @@ The way that server-side rendering works in React right now is:
 
 - We fetch relevant data and run the client-side JavaScript on the server for the page via [`renderToString`](https://reactjs.org/docs/react-dom-server.html#rendertostring), which gives us all the HTML necessary for displaying a page.
 - This HTML is then served to the client, leading to a fast First Contentful Paint.
-- But we’re not done yet; we still need to download and execute the client-side JavaScript to connect the JavaScript logic to the server-generated HTML to make the page interactive (this process is what we call “hydration”). If you are further interested in understanding why rehydration is necessary and how it works, check out The Perils of Rehydration article by Josh.
+- But we’re not done yet; we still need to download and execute the client-side JavaScript to connect the JavaScript logic to the server-generated HTML to make the page interactive (this process is what we call “hydration”). If you are further interested in understanding why rehydration is necessary and how it works, check out [The Perils of Rehydration article by Josh](https://www.joshwcomeau.com/react/the-perils-of-rehydration/).
 
 To better understand how it works, let’s look at the lifecycle of the same app that we saw in the previous section with SSR:
 
@@ -478,11 +478,11 @@ Now let’s check out how the app we have been looking at throughout this articl
 
 ## When can you start using these features?
 
-Not yet.
+Well, Not yet.
 
 You can try some demos that I have linked in the next section, but at the time of writing this article, [Server Components are still in alpha](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html), and Suspense for data fetching, which is needed for the Streaming SSR with new Suspense architecture, [still isn’t official yet and will be released with a minor update of React 18](https://github.com/facebook/react/issues/13206).
 
-And the React team also mentioned that all this stuff would be pretty complex so, and they expect the initial adoption would be through frameworks. So you should keep an eye out for the [Next.js Layouts RFC](https://nextjs.org/blog/layouts-rfc), which they are saying will be the biggest update to Next.js since its inception, and it will be built on top of the new React 18 features we discussed in this article.
+And the React team also mentioned that all this stuff would be pretty complex so, they expect the initial adoption would be through frameworks. So you should keep an eye out for the [Next.js Layouts RFC](https://nextjs.org/blog/layouts-rfc), which they are saying will be the biggest update to Next.js since its inception, and it will be built on top of the new React 18 features we discussed in this article.
 
 ## Demos
 
