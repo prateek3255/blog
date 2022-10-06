@@ -4,7 +4,7 @@ date: 2022-10-06
 updatedAt: 2022-10-06
 permalink: /blog/future-of-rendering-in-react/
 templateEngineOverride: njk,md
-description: Understand what are the problems with current rendering patterns in React, and the new rendering patterns, introduced with React 18 aim to solve them.
+description: Understand what are the problems with current rendering patterns in React, and how the new rendering patterns introduced with React 18 and future versions of React aim to solve them.
 thumbnail: future-of-rendering-in-react.png
 author: Prateek Surana
 tags:
