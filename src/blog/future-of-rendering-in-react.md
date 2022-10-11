@@ -59,7 +59,7 @@ To see how it works, let’s consider that we are rendering the below app:
 
 This is what the render cycle of the above app will look like:
 
-{% video "future-of-rendering-csr-demo.mov", false, 'style="margin: 0px;"' %}
+{% video "future-of-rendering-csr-demo.webm", false, 'style="margin: 0px;"' %}
 
 And hence this is the network graph:
 
@@ -101,7 +101,7 @@ To better understand how it works, let’s look at the lifecycle of the same app
 	</RightPane>
 </Layout>
 ```
-{% video "future-of-rendering-ssr-demo.mov", false %}
+{% video "future-of-rendering-ssr-demo.webm", false %}
 
 And hence this leads to the following network graph:
 
@@ -248,7 +248,7 @@ Again, let’s look at the lifecycle of the app with Comments wrapped in Suspens
 </Layout>
 ```
 
-{% video "future-of-rendering-streaming-ssr-with-suspense-demo.mov" %}
+{% video "future-of-rendering-streaming-ssr-with-suspense-demo.webm" %}
 
 
 
@@ -468,7 +468,7 @@ Now let’s check out how the app we have been looking at throughout this articl
 </Layout>
 ```
 
-{% video "future-of-rendering-server-components-demo.mov" %}
+{% video "future-of-rendering-server-components-demo.webm" %}
 
   The network graph for this would be very similar to the streaming rendering with Suspense one with way less JavaScript.
 
