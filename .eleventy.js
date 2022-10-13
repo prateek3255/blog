@@ -114,7 +114,8 @@ async function imageShortcode(
 }
 
 function videoShortcode(src, autoPlayWithoutControls = false, additionalAttributes = '') {
-  return `<video src="/videos/${src}" ${autoPlayWithoutControls ? 'autoplay' : 'controls'} loop ${additionalAttributes}>Looks like your browser doesn't support this video you can download the video [here](/videos/${src}).</video>`
+  // TODO: Emergency hotfix to avoid additional bandwidth usage revert to local images later
+  return `<video src="https://github.com/prateek3255/blog/blob/master/src/videos/${src}?raw=true" ${autoPlayWithoutControls ? 'autoplay' : 'controls'} loop ${additionalAttributes}>Looks like your browser doesn't support this video you can download the video [here](/videos/${src}).</video>`
 }
 
 module.exports = function (eleventyConfig) {
