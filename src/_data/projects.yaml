@@ -26,7 +26,7 @@ items:
    buttons:
     - title: "Check it out"
       icon: "fas fa-external-link-alt"
-      link: "https://prateeksurana.me/game-of-life"
+      link: "https://game-of-life.prateeksurana.me"
     - title: "View it on"
       icon: "fab fa-github"
       link: "https://github.com/prateek3255/game-of-life"
