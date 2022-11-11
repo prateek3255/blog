@@ -95,7 +95,7 @@ You might already be extending some popular configs in your project like the [`e
 
 We saw earlier how plugins allow you to add more rules for linting your project, and how you need to add the rules you want to use in your config or extend from some other shareable config that has the rules.
 
-Guess what plugins can also come with different sets of shareable configs and you can any of them according to your needs in your project. 
+Guess what plugins can also come with different sets of shareable configs and you can use any of them according to your needs in your project. 
 
 You can use these configs that come with your plugins by with the `plugin:` prefix. For instance let's say you are using a plugin called `eslint-plugin-my-awesome-plugin` and it comes with a config called `recommended-config` . You can then add `plugin:my-awesome-plugin/recommended-config` to the `extends` key in your config to extend from that shareable config.
 
