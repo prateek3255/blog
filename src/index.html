@@ -58,17 +58,7 @@ home: true
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="
-        feather feather-chevron-down
-        self-end
-        m-auto
-        animate-bounce
-        sm:h-16 sm:w-16
-        h-8
-        w-8
-        mt-5
-        sm:mt-0
-      "
+      class="feather feather-chevron-down self-end m-auto animate-bounce sm:h-16 sm:w-16 h-8 w-8 mt-5 sm:mt-0"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
@@ -81,34 +71,11 @@ home: true
     maintaining. {% endsectionHeader %}
     <div class="flex items-center justify-center mt-12">
       <div
-        class="
-          grid grid-cols-1
-          w-full
-          gap-10
-          sm:grid-cols-1
-          md:grid-cols-1
-          lg:grid-cols-2
-          xl:grid-cols-2
-        "
+        class="grid grid-cols-1 w-full gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2"
       >
         {% for item in projects.items %}
         <div
-          class="
-            transform
-            relative
-            bg-white
-            py-6
-            px-6
-            rounded-3xl
-            w-full
-            my-4
-            shadow-xl
-            flex flex-col
-            items-center
-            hover:shadow-2xl hover:scale-105
-            transition
-            duration-500
-          "
+          class="transform relative bg-white py-6 px-6 rounded-3xl w-full my-4 shadow-xl flex flex-col items-center hover:shadow-2xl hover:scale-105 transition duration-500"
         >
           <a
             href="{{ item.buttons[0].link }}"
@@ -155,33 +122,28 @@ home: true
     </div>
 
     <!-- blog -->
-    {% sectionHeader "Blog" %} Prateek has written for publications like {%
-    homeLink "LogRocket,", "https://blog.logrocket.com/author/prateeksurana/" %}
-    {% homeLink "Hackernoon,", "https://hackernoon.com/u/prateeksurana3255" %}
-    and {% homeLink "Better Programming",
+    {% sectionHeader "Blog" %} Prateek has contributed to various publications such as {% homeLink
+    "LogRocket,", "https://blog.logrocket.com/author/prateeksurana/" %} {%
+    homeLink "Hackernoon,", "https://hackernoon.com/u/prateeksurana3255" %} and
+    {% homeLink "Better Programming",
     "https://betterprogramming.pub/the-ultimate-guide-to-building-a-chrome-extension-4c01834c63ec"
-    %}. His posts have also been featured in newsletters like {% homeLink
-    "JavaScript Weekly", "https://javascriptweekly.com" %} ({% homeLink "#543",
+    %} in the past. His work has been featured in numerous React and
+    JavaScript newsletters including {% homeLink "JavaScript Weekly",
+    "https://javascriptweekly.com" %} ({% homeLink "#543",
     "https://javascriptweekly.com/issues/543" %} and {% homeLink "#558",
-    "https://javascriptweekly.com/issues/558" %}), {% homeLink "Bytes by ui.dev,",
-    "https://twitter.com/psuranas/status/1442717343080017924" %} and {% homeLink
-    "React Digest", "https://reactdigest.net/digests/314" %}. Here are some of
-    the posts he has written recently. {% endsectionHeader %}
+    "https://javascriptweekly.com/issues/558" %}), {% homeLink "Bytes by
+    ui.dev", "https://twitter.com/psuranas/status/1442717343080017924" %}, {%
+    homeLink "React Status", "https://react.statuscode.com/issues/309" %},
+    {%homeLink "This Week in React",
+    "https://thisweekinreact.com/newsletter/119" %} and {% homeLink "React
+    Digest", "https://reactdigest.net/digests/314" %}. Here are some of the
+    posts he has written recently. {% endsectionHeader %}
 
     <div
-      class="
-        mt-12
-        text-left
-        mx-auto
-        mb-16
-        grid grid-cols-1
-        lg:grid-cols-2
-        gap-10
-      "
+      class="mt-12 text-left mx-auto mb-16 grid grid-cols-1 lg:grid-cols-2 gap-10"
     >
-      {% set postslist = collections.post.slice(-4) %}
-      {% set showPostslistInCard = true %} 
-      {% include "partials/postslist.html" %}
+      {% set postslist = collections.post.slice(-4) %} {% set
+      showPostslistInCard = true %} {% include "partials/postslist.html" %}
     </div>
 
     <div class="mx-auto mb-16">
@@ -190,19 +152,7 @@ home: true
 
     <div
       x-data="newsletter()"
-      class="
-        p-6
-        sm:px-20
-        bg-gradient-to-b
-        from-white
-        to-gray-100
-        my-4
-        rounded-2xl
-        shadow-xl
-        w-full
-        max-w-3xl
-        mx-auto
-      "
+      class="p-6 sm:px-20 bg-gradient-to-b from-white to-gray-100 my-4 rounded-2xl shadow-xl w-full max-w-3xl mx-auto"
     >
       <h4 class="text-xl sm:text-2xl font-semibold my-2">
         Like the stuff he writes?
@@ -252,19 +202,7 @@ home: true
     free to drop him a message there. Not a Twitter person? You can also contact
     him via the form below. {% endsectionHeader %}
     <div
-      class="
-        p-6
-        sm:px-10
-        bg-gradient-to-b
-        from-white
-        to-gray-100
-        my-8
-        rounded-2xl
-        shadow-xl
-        w-full
-        max-w-3xl
-        mx-auto
-      "
+      class="p-6 sm:px-10 bg-gradient-to-b from-white to-gray-100 my-8 rounded-2xl shadow-xl w-full max-w-3xl mx-auto"
     >
       <form
         method="POST"
