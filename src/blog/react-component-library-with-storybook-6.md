@@ -1,7 +1,7 @@
 ---
 title: Creating a React component library using Storybook 6
 date: 2020-12-20
-updatedAt: 2021-09-26
+updatedAt: 2023-02-03
 permalink: /blog/react-component-library-using-storybook-6/
 templateEngineOverride: njk,md
 description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
@@ -20,7 +20,7 @@ Another benefit is that you can develop UI components easily in isolation and re
 
 {% image "storybook-working.png", "Storybook working" %}
 
-In this tutorial, I would be covering the steps for creating and publishing a React component library ([Storybook supports countless other frontend frameworks](https://storybook.js.org/)), with the following steps -
+In this tutorial, I would be covering the steps for creating and publishing a React component library ([Storybook supports countless other frontend frameworks](https://storybook.js.org/)), with the following steps.
 
 1. {% slugifiedLink "Setting up the project" %}
 2. {% slugifiedLink "Installing Storybook" %}
@@ -28,10 +28,7 @@ In this tutorial, I would be covering the steps for creating and publishing a Re
 4. {% slugifiedLink "Compiling the Library using Rollup" %}
 5. {% slugifiedLink "Publishing and consuming the library" %}
 
-
-
-
-
+You can find all the code that we will be writing in this tutorial on [GitHub](https://github.com/prateek3255/my-awesome-component-library).
 
 {% headingWithLink "Setting up the project" %}
 
@@ -41,7 +38,7 @@ Since we are building a component library that would be published to a package m
 If you have a component library using React already setup, then you can directly move forward to the next step. We just need a basic React setup before we can install Storybook.
 {% endcallout %}
 
-For that, create a new folder with whatever name you want for your component library. I would be calling mine my-awesome-component-library. 
+For that, create a new folder with whatever name you want for your component library. I would be calling mine my-awesome-component-library.
 
 Then run [`yarn init`](https://classic.yarnpkg.com/en/docs/cli/init/) and [`git init`](https://github.com/git-guides/git-init), respectively, in that folder providing appropriate values for the fields asked. This would initialize an empty NPM project with git. Also, [set up a gitignore file](https://docs.github.com/en/free-pro-team@latest/github/using-git/ignoring-files).
 
@@ -56,9 +53,9 @@ Since `react` requires that we need to have a single copy of `react-dom`, we wil
 ```json
 ...
 "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
- },
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+},
 ...
 ```
 
@@ -66,46 +63,31 @@ As one last step for setting up the project, let's also add a `tsconfig` for com
 
 ```json
 {
-    "compilerOptions": {
-      "target": "es5",
-      "outDir": "lib",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext"
-      ],
-      "declaration": true,
-      "declarationDir": "lib",
-      "allowJs": true,
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react"
-    },
-    "include": [
-      "src"
-    ],
-    "exclude": [
-        "node_modules",
-        "lib"
-    ]
-  }
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "lib",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "declaration": true,
+    "declarationDir": "lib",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"]
+}
 ```
 
 These options help TypeScript to [ignore and enforce certain rules while compiling our code](https://prateeksurana.me/blog/react-library-with-typescript/#setting-up-typescript-config). You can [check out all the flags available in the docs](https://www.typescriptlang.org/tsconfig).
-
-[GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/0f3932074fea5e97b2aaab6d31a794b4ef937514)
-
-
-
-
 
 
 {% headingWithLink "Installing Storybook" %}
@@ -116,7 +98,7 @@ Now that we have the React boilerplate ready we can now install Storybook, run t
 npx sb init
 ```
 
-This command will install all the core `devDependencies`, add scripts, setup some configuration files, and create example stories for you to get [you up and running with Storybook](https://storybook.js.org/docs/react/get-started/install). At the time of writing this article, I am using Storybook version 6.1.9
+This command will install all the core `devDependencies`, add scripts, setup some configuration files, and create example stories for you to get [you up and running with Storybook](https://storybook.js.org/docs/react/get-started/install). The Storybook version has been updated to 6.5.16 since this article was first published.
 
 You can now run `yarn storybook` and that should boot up Storybook for you with the examples they created for you.
 
@@ -136,13 +118,6 @@ Update the stories key in the file to this -
 
 This config would run TypeScript stories defined in the `src` folder, which we would be creating in the next step.
 
-[GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/f758d09f8df37268387f0b47987a91ff820a7ed7)
-
-
-
-
-
-
 {% headingWithLink "Adding stories and setting up the file structure" %}
 
 Now that we have the Storybook setup, we can start creating our components and writing stories for them.
@@ -157,7 +132,7 @@ In short, Stories let you render the different states of your UI component and l
 
 Let's create a demo component to check out how stories work and how you can make the most out of it.
 
-Our file structure would look something like this - 
+Our file structure would look something like this -
 
 ```bash
 .storybook/
@@ -179,23 +154,23 @@ src/
 
 We will be using the same button component that Storybook gave us with the demo earlier for demonstrating.
 
-Create a folder `src/components/Button` and paste the [Button.tsx,](https://github.com/prateek3255/my-awesome-component-library/blob/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a/src/components/Button/Button.tsx) [button.css](https://github.com/prateek3255/my-awesome-component-library/blob/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a/src/components/Button/button.css), and [index.ts](https://github.com/prateek3255/my-awesome-component-library/blob/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a/src/components/Button/index.ts) files in it.
+Create a folder `src/components/Button` and paste the [Button.tsx,](https://github.com/prateek3255/my-awesome-component-library/blob/master/src/components/Button/Button.tsx) [button.css](https://github.com/prateek3255/my-awesome-component-library/blob/master/src/components/Button/button.css), and [index.ts](https://github.com/prateek3255/my-awesome-component-library/blob/master/src/components/Button/index.ts) files in it.
 
 Lets add some stories ✨
 
-Create `src/components/Button/Button.stories.tsx` 
+Create `src/components/Button/Button.stories.tsx`
 
 Now add the following default export to it -
 
 ```jsx
 import React from "react";
-import { Meta } from "@storybook/react/types-6-0";
-import Button, { ButtonProps } from "./Button";
+import { ComponentMeta } from "@storybook/react";
+import Button from "./Button";
 
 export default {
   title: "Components/Button",
   component: Button,
-} as Meta;
+} as ComponentMeta<typeof Button>;
 ```
 
 The [default export in a story](https://storybook.js.org/docs/react/writing-stories/introduction#default-export) defines the meta information that will be used by Storybook and its addons.
@@ -210,27 +185,26 @@ To simplify writing multiple stories, Storybook provides an option to create sto
 
 ```tsx
 import React from "react";
-import { Meta } from "@storybook/react/types-6-0";
-import { Story } from "@storybook/react";
-import { Button, ButtonProps } from "./Button";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import Button from "./Button";
 
 export default {
   title: "Components/Button",
   component: Button,
-} as Meta;
+} as ComponentMeta<typeof Button>;
 
 // Create a master template for mapping args to render the Button component
-const Template: Story<ButtonProps> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 // Reuse that template for creating different stories
 export const Primary = Template.bind({});
-Primary.args = { label: "Primary 😃", size: "large" };
+Primary.args = { label: "Primary 😃", size: "large", type: "primary" };
 
 export const Secondary = Template.bind({});
-Secondary.args = { ...Primary.args, primary: false, label: "Secondary 😇" };
+Secondary.args = { ...Primary.args, type: "secondary", label: "Secondary 😇" };
 ```
 
-If you haven't already, you can restart the Storybook server by rerunning `yarn storybook`, and you should see the following. 
+If you haven't already, you can restart the Storybook server by rerunning `yarn storybook`, and you should see the following.
 
 {% image "initial-story-setup.jpg", "Initial Story Setup" %}
 
@@ -243,9 +217,9 @@ export default {
   title: "Components/Button",
   component: Button,
   argTypes: {
-    backgroundColor: { control: 'color' },
+    textColor: { control: 'color' },
   },
-} as Meta;
+} as ComponentMeta<typeof Button>;
 ```
 
 The current story preview also looks a bit weird with the button in one corner of the preview. As one last step, [add the `layout: 'centered'` key](https://storybook.js.org/docs/react/configure/story-layout) to the `.storybook/preview.js` file to center the preview. This file lets you control how your [story is rendered in the Storybook.](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering)
@@ -253,13 +227,6 @@ The current story preview also looks a bit weird with the button in one corner o
 If you followed the above steps, your final story preview would look something like this -
 
 {% image "final-story-setup.jpg", "Final story setup" %}
-
-[GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/af7ef6715e006db4c5a2f6fecb6212a0fc928d0a)
-
-
-
-
-
 
 {% headingWithLink "Compiling the Library using Rollup" %}
 
@@ -281,7 +248,7 @@ Let's add rollup, run the following to install Rollup and its plugins that we'll
 yarn add --dev rollup rollup-plugin-typescript2 @rollup/plugin-commonjs @rollup/plugin-node-resolve rollup-plugin-peer-deps-external rollup-plugin-postcss postcss
 ```
 
-Now before we add the rollup config, there are a few types of JavaScript modules that you should be aware of - 
+Now before we add the rollup config, there are a few types of JavaScript modules that you should be aware of -
 
 - [CommonJS](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules) - This module format is most commonly used with Node using the `require` function. Even though we are publishing a React module (which will be consumed by an application generally written in ESM format, then bundled and compiled by tools like webpack), we need to consider that it might also be used within a Server side rendering environment, which generally uses Node and hence might require a CJS counterpart of the library (ESM modules are supported in Node environment as of [v10 behind an experimental flag](https://nodejs.org/dist./v10.22.0/docs/api/esm.html)).
 - [ESM](https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules) - This is the modern module format that we normally use in our React applications in which modules are defined using a variety of import and export statements. The main benefit of shipping ES modules is that it [makes your library tree-shakable](https://bitsofco.de/what-is-tree-shaking/). This is supported by tools like Rollup and webpack 2+.
@@ -292,7 +259,7 @@ So we would want to support both ESM and CommonJS modules for our component libr
 To do that, `package.json` allows adding the entry points for both ESM and CommonJS modules via the module and main key, respectively. So add the following to keys to your `package.json` -
 
 ```json
-{ 
+{
   ...
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -320,13 +287,13 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   ],
   plugins: [
     peerDepsExternal(),
@@ -334,13 +301,13 @@ export default {
     commonjs(),
     typescript({ useTsconfigDeclarationDir: true }),
     postcss({
-        extensions: ['.css']
-    })
-  ]
+      extensions: [".css"],
+    }),
+  ],
 };
 ```
 
-Let's break it down one by one to figure out what's happening here. 
+Let's break it down one by one to figure out what's happening here.
 
 To start with, the [input key](https://rollupjs.org/guide/en/#input) indicates the entry point for Rollup for our component library, which is the `index.js` file that we just created, which contains the exports for all our components.
 
@@ -352,7 +319,7 @@ Lastly there is the plugin array with which we are using the following plugins -
 - [@rollup/plugin-node-resolve](https://www.npmjs.com/package/@rollup/plugin-node-resolve) - This plugin includes the third-party external dependencies into our final bundle (we don't have any dependencies for this tutorial, but you'll definitely need them as your library grows).
 - [@rollup/plugin-commonjs](https://www.npmjs.com/package/@rollup/plugin-commonjs) - This plugin enables the conversion to CJS so that they can be included in the final bundle
 - [rollup-plugin-typescript2](https://www.npmjs.com/package/rollup-plugin-typescript2) - This plugin compiles the TypeScript code to JavaScript for our final bundle and generates the type declarations for the `types` key in `package.json`. The `useTsconfigDeclarationDir` option outputs the types to the directory specified in the `tsconfig.json` file.
-- [rollup-plugin-postcss](https://www.npmjs.com/package/rollup-plugin-postcss) - This plugin helps include the CSS that we created as separate files in our final bundle. It does this by generating minified CSS from the *.css files and includes them via the `<head>` tag wherever used in our components.
+- [rollup-plugin-postcss](https://www.npmjs.com/package/rollup-plugin-postcss) - This plugin helps include the CSS that we created as separate files in our final bundle. It does this by generating minified CSS from the \*.css files and includes them via the `<head>` tag wherever used in our components.
 
 Now as one last step let's add the script to build our component library, add the following script to your `package.json` file -
 
@@ -371,13 +338,6 @@ Go ahead and run `yarn build` from your terminal and you should be able to see t
 
 Don't forget to add the `lib` folder to `.gitignore`.
 
-[GitHub: Code till this step](https://github.com/prateek3255/my-awesome-component-library/tree/8c5aab293f894c2e8e6416b4f522024f6d7c3585)
-
-
-
-
-
-
 {% headingWithLink "Publishing and consuming the library" %}
 
 Publishing the library to NPM couldn't be any easier. Since we have already defined all the required fields in `package.json`, you just need to run `npm publish`.
@@ -392,17 +352,17 @@ You can also refer to my [another article for the detailed steps and best practi
 
 You might also want to keep your library private. If you have multiple projects in a [monorepo](https://www.toptal.com/front-end/guide-to-monorepos) and are using something like [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/), then you don't actually need to publish the package anywhere.
 
-Place the library folder in your monorepo and add it to your workspaces array to the package.json in the root folder - 
+Place the library folder in your monorepo and add it to your workspaces array to the package.json in the root folder -
 
 ```json
 // package.json
 {
-  ... 
+  ...
 	"workspaces": [
 			...
 			"my-awesome-component-library"
 	],
-	...	
+	...
 }
 ```
 
@@ -411,18 +371,20 @@ Then you can directly access it from any other package in your workspace by just
 ```json
 // my-awesome-frontend/package.json
 {
-  ... 
+  ...
 	"dependencies": {
 			...
 			"my-awesome-component-library": 1.0.0,
 			...
 	},
-	...	
+	...
 }
 ```
+
+And that's it. You now have a component library which you can build in isolation and preview using storybook and consume in your application as a package. You can find all the code for this tutorial on [Github](https://github.com/prateek3255/my-awesome-component-library).
 
 ## Next Steps
 
 - Integrate [Netlify](https://www.netlify.com/) or some other service to automatically deploy the Storybook whenever a PR is merged into master and to generate pull previews whenever a new PR is opened.
 - Setup test cases [using React Testing library and Jest](https://www.pluralsight.com/guides/how-to-test-react-components-in-typescript).
-- [Make the library tree-shakeable](https://blog.theodo.com/2021/04/library-tree-shaking/) so that your consumer application only ends up including the components that are used in the application instead of the entire library. 
+- [Make the library tree-shakeable](https://blog.theodo.com/2021/04/library-tree-shaking/) so that your consumer application only ends up including the components that are used in the application instead of the entire library.
