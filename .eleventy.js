@@ -95,11 +95,10 @@ async function imageShortcode(
   return `<picture>
     ${Object.values(metadata)
       .map((imageFormat) => {
-        return `  <source type="${
-          imageFormat[0].sourceType
-        }" srcset="${imageFormat
-          .map((entry) => `${entry.srcset}`)
-          .join(", ")}" sizes="${sizes}">`;
+        return `  <source type="${imageFormat[0].sourceType
+          }" srcset="${imageFormat
+            .map((entry) => `${entry.srcset}`)
+            .join(", ")}" sizes="${sizes}">`;
       })
       .join("\n")}
       <img
@@ -208,6 +207,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/sitemap.xml");
   eleventyConfig.addPassthroughCopy("./src/robots.txt");
   eleventyConfig.addPassthroughCopy("./src/_redirects");
+
+  // Copy relevant node modules to assets
+  eleventyConfig.addPassthroughCopy({
+    "./node_modules/@codesandbox/sandpack-client/dist": "./js/sandpack",
+  });
+  eleventyConfig.addPassthroughCopy("./src/js");
 
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {

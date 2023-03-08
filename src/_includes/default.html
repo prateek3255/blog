@@ -95,6 +95,8 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/solid.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js"></script>
 
+    <script type="module" async src="/js/sandpack.js" />
+
     {% if environment.nodeEnv == "production" %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHRSMP3QE5"></script>
     <script>
@@ -129,6 +131,8 @@
     {% include "./partials/navbar.html" %}
 
     {{ content | safe }}
+
+    <iframe id="iframe"></iframe>
 
     {% include "./partials/footer.html" %}
     <script>
