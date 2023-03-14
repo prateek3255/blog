@@ -48,7 +48,7 @@ The most simple use case where you might need refs is when you want to store an 
      sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
    ></iframe>
 
-Keep in mind **not to use refs during rendering** (using them to display data on screen or deriving some value from them that ends up affecting the data displayed to the user) because changing them doesn’t trigger a re-render you might end up showing incorrect data.
+Keep in mind to **not to use refs during rendering** (using them to display data on screen or deriving some value from them that ends up affecting the data displayed to the user) because changing them doesn’t trigger a re-render and you might end up showing incorrect data.
 
 Although the most common use of refs is getting access to DOM nodes. As we discussed at the beginning of this article React takes care of manipulating the DOM for you to match the render output of your components, but sometimes you need to do something that React can't, like focusing on an input or calculating the size of a node. In these cases, you can use refs to access the DOM node and use the JavaScript DOM APIs on it.
 
