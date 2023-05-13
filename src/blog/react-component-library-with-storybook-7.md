@@ -1,11 +1,11 @@
 ---
-title: Creating a React component library using Storybook 6
+title: Creating a React component library using Storybook 7
 date: 2020-12-20
-updatedAt: 2023-02-03
-permalink: /blog/react-component-library-using-storybook-6/
+updatedAt: 2023-05-14
+permalink: /blog/react-component-library-using-storybook-7/
 templateEngineOverride: njk,md
-description: Learn how to build a React component library using Storybook 6 and TypeScript, compile it with Rollup and publish it.
-thumbnail: react-component-library-using-storybook-6.png
+description: Learn how to build a React component library using Storybook 7 and TypeScript, compile it with Rollup and publish it.
+thumbnail: react-component-library-using-storybook-7.png
 author: Prateek Surana
 tags:
   - typescript
@@ -32,7 +32,7 @@ You can find all the code that we will be writing in this tutorial on [GitHub](h
 
 {% headingWithLink "Setting up the project" %}
 
-Since we are building a component library that would be published to a package manager like NPM, we would be better off if we setup React from scratch instead of using something like create-react-app, which is better suited for web applications.
+Since we are building a component library that would be published to a package manager we would be creating a new package from scratch.
 
 {% callout %}
 If you have a component library using React already setup, then you can directly move forward to the next step. We just need a basic React setup before we can install Storybook.
@@ -98,7 +98,7 @@ Now that we have the React boilerplate ready we can now install Storybook, run t
 npx sb init
 ```
 
-This command will install all the core `devDependencies`, add scripts, setup some configuration files, and create example stories for you to get [you up and running with Storybook](https://storybook.js.org/docs/react/get-started/install). The Storybook version has been updated to 6.5.16 since this article was first published.
+This command will install all the core `devDependencies`, add scripts, setup some configuration files, and create example stories for you to get [you up and running with Storybook](https://storybook.js.org/docs/react/get-started/install). The Storybook version has been updated to 7.0.11 since this article was first published.
 
 You can now run `yarn storybook` and that should boot up Storybook for you with the examples they created for you.
 
@@ -162,77 +162,80 @@ Create `src/components/Button/Button.stories.tsx`
 
 Now add the following default export to it -
 
-```jsx
-import React from "react";
-import { ComponentMeta } from "@storybook/react";
-import Button from "./Button";
-
-export default {
-  title: "Components/Button",
-  component: Button,
-} as ComponentMeta<typeof Button>;
-```
-
-The [default export in a story](https://storybook.js.org/docs/react/writing-stories/introduction#default-export) defines the meta information that will be used by Storybook and its addons.
-
-To define a Story you [need to create named exports](https://storybook.js.org/docs/react/writing-stories/introduction#defining-stories) in the file, so for example we can create a story for the primary button type like this.
-
-```jsx
-export const PrimaryButton = () => <Button label="Hello world" primary />;
-```
-
-To simplify writing multiple stories, Storybook provides an option to create stories by [defining a master template and reusing that template for each story.](https://storybook.js.org/docs/react/writing-stories/introduction#using-args) So in our case, the stories for Primary and Secondary type buttons can be created like this -
-
 ```tsx
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./Button";
 
-export default {
+const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
-} as ComponentMeta<typeof Button>;
+};
+```
 
-// Create a master template for mapping args to render the Button component
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+Storybook uses the [Component Story Format (CSF)](https://github.com/ComponentDriven/csf) which is an open standard for UI component examples based on JavaScript ES6 modules.
 
-// Reuse that template for creating different stories
-export const Primary = Template.bind({});
-Primary.args = { label: "Primary 😃", size: "large", type: "primary" };
+The [default export in a story](https://storybook.js.org/docs/react/writing-stories/introduction#default-export) defines the metadata that controls how Storybook lists your stories. It mainly includes the title, the component that the story will render and other options that can be used to further customize the story.
 
-export const Secondary = Template.bind({});
-Secondary.args = { ...Primary.args, type: "secondary", label: "Secondary 😇" };
+To define a Story you [need to create named exports](https://storybook.js.org/docs/react/writing-stories/introduction#defining-stories) in the file. These named exports are objects that represent a single story of your component and can override certain metadata defined in the default export. For example, we can create a story for the Primary state of button by adding the following code to the `Button.stories.tsx` file:
+
+```tsx
+type Story = StoryObj<typeof Button>;
+
+export const Primary: Story = {
+  args: {
+    label: "Primary 😃",
+    size: "large",
+    type: "primary",
+  },
+};
+```
+
+Here the `args` object represent the default props that will be passed to our `Button` component when the story is rendered, although these props are also configurable by Storybook controls which we will get to in a minute.
+
+Similarly you can create a story for the secondary state for the `Button` component that will have secondary variant as the default when the story is rendered. Add the following code to the `Button.stories.tsx` file to test it out yourself:
+
+```tsx
+export const Secondary: Story = {
+  args: {
+    ...Primary.args,
+    type: "secondary",
+    label: "Secondary 😇",
+  },
+};
 ```
 
 If you haven't already, you can restart the Storybook server by rerunning `yarn storybook`, and you should see the following.
 
-{% image "initial-story-setup.jpg", "Initial Story Setup" %}
+{% image "initial-story-setup.png", "Initial Story Setup" %}
 
 Notice that Storybook automatically generated the controls, according to the component props, for us. This is thanks to [react-docgen-typescript, which is used by Storybook to infer the argTypes for a component](https://storybook.js.org/docs/react/api/argtypes#automatic-argtype-inference). One more reason to use TypeScript.
 
-Apart from using auto-generated controls, you can also define [custom controls](https://storybook.js.org/docs/react/essentials/controls#configuration) for some or all props using the `argTypes` key. For example, let's define a custom color picker for the `backgroundColor` prop, replace the default export in the stories file with this -
+Apart from using auto-generated controls, you can also define [custom controls](https://storybook.js.org/docs/react/essentials/controls#configuration) for some or all props using the `argTypes` key. For example, let's define a custom color picker for the `textColor` prop. Add the `argTypes` key to the default metadata export in the `Button.stories.tsx` file:
 
-```tsx
-export default {
+```tsx/3-5
+const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
   argTypes: {
-    textColor: { control: 'color' },
+    textColor: { control: "color" },
   },
-} as ComponentMeta<typeof Button>;
+};
 ```
 
 The current story preview also looks a bit weird with the button in one corner of the preview. As one last step, [add the `layout: 'centered'` key](https://storybook.js.org/docs/react/configure/story-layout) to the `.storybook/preview.js` file to center the preview. This file lets you control how your [story is rendered in the Storybook.](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering)
 
 If you followed the above steps, your final story preview would look something like this -
 
-{% image "final-story-setup.jpg", "Final story setup" %}
+{% image "final-story-setup.png", "Final story setup" %}
+
+There's a lot more configuration you can do with your stories, like customizing [story parameters](https://storybook.js.org/docs/react/writing-stories/parameters), [using decorators](https://storybook.js.org/docs/react/writing-stories/decorators), [extend your Storbook UI behaviour with addons](https://storybook.js.org/docs/react/essentials/introduction), etc. But that would be out of scope of this tutorial and is covered in much more detail in the [official Storybook documentation](https://storybook.js.org/docs/react/writing-stories/introduction).
 
 {% headingWithLink "Compiling the Library using Rollup" %}
 
-Now that you know how to build components with Storybook, it's time to move to the next step, which is compiling our library so that our end applications can consume it.
+Now that you know how to build components with Storybook, it's time to move to the next step, which is compiling and bundling our library so that our end applications can consume it.
 
-If you're not familiar with Rollup and wondering why we are using it to compile our library instead of something like webpack, that's because [Rollup is best suited for bundling libraries, whereas webpack is suited for apps](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c).
+We will be using Rollup to bundle the library. If you're not familiar  with Rollup I would recommend checking out this article by Rich on [why its better to use Rollup for libraries and Webpack for apps](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c).
 
 First, we would need to create an entry file that would export all the components for our component library. Create `src/index.ts`, and since our component library only has one component right now, it would look something like this -
 
@@ -245,7 +248,7 @@ export { Button };
 Let's add rollup, run the following to install Rollup and its plugins that we'll be using to bundle the library -
 
 ```bash
-yarn add --dev rollup rollup-plugin-typescript2 @rollup/plugin-commonjs @rollup/plugin-node-resolve rollup-plugin-peer-deps-external rollup-plugin-postcss postcss
+yarn add --dev rollup @rollup/plugin-typescript @rollup/plugin-commonjs @rollup/plugin-node-resolve rollup-plugin-peer-deps-external rollup-plugin-postcss rollup-plugin-dts postcss
 ```
 
 Now before we add the rollup config, there are a few types of JavaScript modules that you should be aware of -
@@ -276,50 +279,65 @@ Its time to add the Rollup config file now, create a file called `rollup.config.
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import typescript from "rollup-plugin-typescript2";
+import typescript from "@rollup/plugin-typescript";
 import postcss from "rollup-plugin-postcss";
+import dts from "rollup-plugin-dts";
 
-const packageJson = require("./package.json");
+// This is required to read package.json file when
+// using Native ES modules in Node.js
+// https://rollupjs.org/command-line-interface/#importing-package-json
+import { createRequire } from 'node:module';
+const requireFile = createRequire(import.meta.url);
+const packageJson = requireFile('./package.json');
 
-export default {
+
+export default [{
   input: "src/index.ts",
   output: [
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true,
+      sourcemap: true
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true,
-    },
+      sourcemap: true
+    }
   ],
   plugins: [
     peerDepsExternal(),
     resolve(),
     commonjs(),
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript(),
     postcss({
-      extensions: [".css"],
-    }),
-  ],
-};
+      extensions: ['.css']
+    })
+  ]
+}, {
+  input: 'lib/index.d.ts',
+  output: [{ file: 'lib/index.d.ts', format: 'es' }],
+  plugins: [dts()],
+  external: [/\.css$/]
+}];
 ```
 
-Let's break it down one by one to figure out what's happening here.
+Let's break it down one by one to figure out what's happening here. We are export an array from the config file which contains to objects, each with their input and output targets.
 
-To start with, the [input key](https://rollupjs.org/guide/en/#input) indicates the entry point for Rollup for our component library, which is the `index.js` file that we just created, which contains the exports for all our components.
+Starting with the first one, the [input key](https://rollupjs.org/guide/en/#input) indicates the entry point for Rollup for our component library, which is the `index.ts` file that we just created, which contains the exports for all our components.
 
-The output key indicates what types of output files will be generated at which place. As mentioned previously, we would be building the ESM and CommonJS bundles, and we read the output files for both bundles from the `package.json`.
+The output key indicates what types of output files will be generated at which place. As mentioned previously, we would be building the ESM and CommonJS bundles, and we read the output file paths for both bundles from the `package.json`.
+
+The second object is for bundling type declarations and is discussed in the plugins section below.
 
 Lastly there is the plugin array with which we are using the following plugins -
 
-- [rollup-plugin-peer-deps-external](https://www.npmjs.com/package/rollup-plugin-peer-deps-external) - This plugin avoids us from bundling the `peerDependencies` (react and react-dom in our case) in the final bundle as these will be provided by our consumer application.
+- [rollup-plugin-peer-deps-external](https://www.npmjs.com/package/rollup-plugin-peer-deps-external) - This plugin avoids us from bundling the `peerDependencies` (`react` and `react-dom` in our case) in the final bundle as these will be provided by our consumer application.
 - [@rollup/plugin-node-resolve](https://www.npmjs.com/package/@rollup/plugin-node-resolve) - This plugin includes the third-party external dependencies into our final bundle (we don't have any dependencies for this tutorial, but you'll definitely need them as your library grows).
-- [@rollup/plugin-commonjs](https://www.npmjs.com/package/@rollup/plugin-commonjs) - This plugin enables the conversion to CJS so that they can be included in the final bundle
-- [rollup-plugin-typescript2](https://www.npmjs.com/package/rollup-plugin-typescript2) - This plugin compiles the TypeScript code to JavaScript for our final bundle and generates the type declarations for the `types` key in `package.json`. The `useTsconfigDeclarationDir` option outputs the types to the directory specified in the `tsconfig.json` file.
+- [@rollup/plugin-commonjs](https://www.npmjs.com/package/@rollup/plugin-commonjs) - This plugin allows the rollup plugin to convert CommonJS modules to ESModules so that Rollup can bundle them together with other ES modules.
+- [@rollup/plugin-typescript](https://www.npmjs.com/package/rollup-plugin-typescript2) - This plugin compiles the TypeScript code to JavaScript for our final bundle and generates the type declarations for the `types` key in `package.json`.
 - [rollup-plugin-postcss](https://www.npmjs.com/package/rollup-plugin-postcss) - This plugin helps include the CSS that we created as separate files in our final bundle. It does this by generating minified CSS from the \*.css files and includes them via the `<head>` tag wherever used in our components.
+- [rollup-plugin-dts](https://www.npmjs.com/package/rollup-plugin-dts) - This plugin bundles all the type declarations into a single file. Although the TypeScript plugin generates the type declarations for our library but they are scattered across the files. This plugin helps us bundle them into a single file. We use the type declarations generated by the TypeScript plugin as the input for this plugin and override the declaration file.
 
 Now as one last step let's add the script to build our component library, add the following script to your `package.json` file -
 
