@@ -140,7 +140,7 @@ Our file structure would look something like this -
 	preview.js
 .gitignore
 package.json
-rollup.config.js
+rollup.config.mjs
 tsconfig.json
 src/
 	components/
@@ -273,7 +273,7 @@ To do that, `package.json` allows adding the entry points for both ESM and Commo
 
 The types key would point to the static types generated for your library via Rollup, which would help with [IntelliSense in code editors like VSCode.](https://code.visualstudio.com/docs/languages/typescript#_intellisense)
 
-Its time to add the Rollup config file now, create a file called `rollup.config.js` in the root folder and add the following to it -
+Its time to add the Rollup config file now, create a file called `rollup.config.mjs` in the root folder and add the following to it -
 
 ```jsx
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
