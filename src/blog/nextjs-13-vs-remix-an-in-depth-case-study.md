@@ -4,7 +4,7 @@ date: 2023-09-29
 updatedAt: 2023-09-29
 permalink: /blog/nextjs-13-vs-remix-an-in-depth-case-study/
 templateEngineOverride: njk,md
-description: Check out how you can write more efficient, maintainable and clean React code with these simple tips.
+description: A detailed comparison of the features Next.js 13 and Remix Run by building a Twitter Clone app in both frameworks.
 thumbnail: nextjs-13-vs-remix-an-in-depth-case-study.png
 author: Prateek Surana
 tags:

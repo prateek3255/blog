@@ -65,70 +65,16 @@ home: true
   </div>
 
   <div class="text-center w-full">
-    <!-- projects -->
-    {% sectionHeader "Projects", false %} Although Prateek has worked on a bunch
-    of projects but these are some that he is really proud of and/or is actively
-    maintaining. {% endsectionHeader %}
-    <div class="flex items-center justify-center mt-12">
-      <div
-        class="grid grid-cols-1 w-full gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2"
-      >
-        {% for item in projects.items %}
-        <div
-          class="transform relative bg-white py-6 px-6 rounded-3xl w-full my-4 shadow-xl flex flex-col items-center hover:shadow-2xl hover:scale-105 transition duration-500"
-        >
-          <a
-            href="{{ item.buttons[0].link }}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="/img/{{ item.logo }}"
-              alt="{{ item.name }} Logo"
-              height="100"
-              width="100"
-              style="height: 100px; width: auto"
-              class="rounded-full"
-            />
-          </a>
-          <div class="mt-8">
-            <a
-              href="{{ item.buttons[0].link }}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h3 class="text-xl sm:text-2xl font-semibold my-2">
-                {{ item.name }}
-              </h3>
-            </a>
-            <p class="text-base sm:text-lg mt-4 max-w-xs">
-              {{ item.description }}
-            </p>
-            <div class="my-10 w-full flex justify-center">
-              {% for button in item.buttons %}
-              <a
-                href="{{ button.link }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-secondary mr-4 last:mr-0"
-                >{{ button.title }} &nbsp;<i class="{{ button.icon }}"></i
-              ></a>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-
     <!-- blog -->
-    {% sectionHeader "Blog" %} Prateek has contributed to various publications such as {% homeLink
-    "LogRocket,", "https://blog.logrocket.com/author/prateeksurana/" %} {%
-    homeLink "Hackernoon,", "https://hackernoon.com/u/prateeksurana3255" %} and
-    {% homeLink "Better Programming",
+    {% sectionHeader "Blog", false %} Prateek has contributed to various
+    publications such as {% homeLink "LogRocket,",
+    "https://blog.logrocket.com/author/prateeksurana/" %} {% homeLink
+    "Hackernoon,",
+    "https://hackernoon.com/handling-files-on-the-web-a-deep-dive" %} and {%
+    homeLink "Better Programming",
     "https://betterprogramming.pub/the-ultimate-guide-to-building-a-chrome-extension-4c01834c63ec"
-    %} in the past. His work has been featured in numerous React and
-    JavaScript newsletters including {% homeLink "JavaScript Weekly",
+    %} in the past. His work has been featured in numerous React and JavaScript
+    newsletters including {% homeLink "JavaScript Weekly",
     "https://javascriptweekly.com" %} ({% homeLink "#543",
     "https://javascriptweekly.com/issues/543" %} and {% homeLink "#558",
     "https://javascriptweekly.com/issues/558" %}), {% homeLink "Bytes by
@@ -182,17 +128,75 @@ home: true
       </form>
     </div>
 
+    <!-- projects -->
+    {% sectionHeader "Projects" %} Although Prateek has worked on a bunch of
+    projects but these are some that he is really proud of and/or is actively
+    maintaining. {% endsectionHeader %}
+    <div class="flex items-center justify-center mt-12">
+      <div
+        class="grid grid-cols-1 w-full gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2"
+      >
+        {% for item in projects.items %}
+        <div
+          class="transform relative bg-white py-6 px-6 rounded-3xl w-full my-4 shadow-xl flex flex-col items-center hover:shadow-2xl hover:scale-105 transition duration-500"
+        >
+          <a
+            href="{{ item.buttons[0].link }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/img/{{ item.logo }}"
+              alt="{{ item.name }} Logo"
+              height="100"
+              width="100"
+              style="height: 100px; width: auto"
+              class="rounded-full"
+            />
+          </a>
+          <div class="mt-8">
+            <a
+              href="{{ item.buttons[0].link }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3 class="text-xl sm:text-2xl font-semibold my-2">
+                {{ item.name }}
+              </h3>
+            </a>
+            <p class="text-base sm:text-lg mt-4 max-w-xs">
+              {{ item.description }}
+            </p>
+            <div class="my-10 w-full flex justify-center">
+              {% for button in item.buttons %}
+              <a
+                href="{{ button.link }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary mr-4 last:mr-0"
+                >{{ button.title }} &nbsp;<i class="{{ button.icon }}"></i
+              ></a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
     <!-- Open Source -->
     {% sectionHeader "Open Source" %} Prateek 💞 Open source, apart from making
-    all his projects fully open sourced he also like to contribute to other
-    projects that he actively uses. He has so far contributed to {% homeLink
+    all of his projects fully open sourced he also like to contribute to other
+    projects that he actively uses. He currently maintains Devfolio's {% homeLink
+    "react-otp-input", "https://github.com/devfolioco/react-otp-input" %} which
+    has over 100k weekly downloads and has also contributed to {% homeLink
     "react-query",
     "https://github.com/tannerlinsley/react-query/pulls?q=is%3Apr+author%3Aprateek3255"
-    %}, {% homeLink "daily.dev",
-    "https://github.com/dailydotdev/daily/issues/142"%}, {% homeLink
-    "brahmosjs",
+    %}, {% homeLink "brahmosjs",
     "https://github.com/brahmosjs/brahmos/pulls?q=is%3Apr+author%3Aprateek3255"
-    %} and {% homeLink "many others.",
+    %}, {% homeLink "daily.dev",
+    "https://github.com/dailydotdev/daily/issues/142"%}, and {% homeLink "many
+    others.",
     "https://github.com/search?q=is%3Apr+author%3Aprateek3255+archived%3Afalse+repo%3A%22freeCodeCamp%2FfreeCodeCamp%22+repo%3A%22react-syntax-highlighter%2Freact-syntax-highlighter%22+repo%3A%22zulip%2Fzulip-mobile%22+repo%3A%22react-tags%2Freact-tags%22"
     %}{% endsectionHeader %}
 
