@@ -114,8 +114,7 @@ async function imageShortcode(
 }
 
 function videoShortcode(src, autoPlayWithoutControls = false, additionalAttributes = '') {
-  // TODO: Emergency hotfix to avoid additional bandwidth usage revert to local images later
-  return `<video src="https://github.com/prateek3255/blog/blob/master/src/videos/${src}?raw=true" ${autoPlayWithoutControls ? 'autoplay' : 'controls'} loop ${additionalAttributes}>Looks like your browser doesn't support this video you can download the video [here](/videos/${src}).</video>`
+  return `<video src="/videos/${src}" ${autoPlayWithoutControls ? 'autoplay' : 'controls'} loop ${additionalAttributes}>Looks like your browser doesn't support this video you can download the video [here](/videos/${src}).</video>`
 }
 
 module.exports = function (eleventyConfig) {
@@ -133,8 +132,8 @@ module.exports = function (eleventyConfig) {
   // Add shortcode for rendering heading with link
   eleventyConfig.addNunjucksShortcode(
     "headingWithLink",
-    function (heading, type = "h2") {
-      const slug = stringtoSlug(heading);
+    function (heading, type = "h2", customSlug = null) {
+      const slug = customSlug ? stringtoSlug(customSlug) : stringtoSlug(heading);
       return `<${type} class="relative">
       <a id="${slug}" href="#${slug}" class="header-anchor">
       <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="absolute top-2 -left-7 opacity-0 icon" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
