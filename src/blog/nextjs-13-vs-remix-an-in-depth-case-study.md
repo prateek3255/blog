@@ -578,7 +578,7 @@ With server actions, you don’t need to create API endpoints. Instead, you can 
 This tweet by Lee Robinson summarizes it really well as to how much less code you have to write with Server Actions:
 
 <div style="display:flex; justify-content:center;">
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">How is this not illegal <a href="https://t.co/TieLpPotYS">pic.twitter.com/TieLpPotYS</a></p>&mdash; Lee Robinson (@leeerob) <a href="https://twitter.com/leeerob/status/1659407393095135232?ref_src=twsrc%5Etfw">May 19, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">How is this not illegal <a href="https://t.co/TieLpPotYS">pic.twitter.com/TieLpPotYS</a></p>&mdash; Lee Robinson (@leeerob) <a href="https://twitter.com/leeerob/status/1659407393095135232?ref_src=twsrc%5Etfw">May 19, 2023</a></blockquote> <script async defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 
 If you are in a Server Component, you can define a Server Action inside a component by placing `'use server'` on the first line and then either use it with a form by directly passing it to the `action` prop of `form` or by passing it to a client component. (When action prop is used in Server Components, the form works without JavaScript)
