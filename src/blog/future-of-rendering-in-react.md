@@ -1,7 +1,7 @@
 ---
 title: The future of rendering in React
 date: 2022-10-06
-updatedAt: 2022-10-06
+updatedAt: 2023-10-01
 permalink: /blog/future-of-rendering-in-react/
 templateEngineOverride: njk,md
 description: Understand what are the problems with current rendering patterns in React, and how the new rendering patterns introduced with React 18 and future versions of React aim to solve them.
@@ -477,6 +477,10 @@ Now let’s check out how the app we have been looking at throughout this articl
   The React team also mentioned in the [RFC FAQs](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md#is-this-in-production-at-facebook) that they ran an experiment with a small number of users on a single page at Facebook and they have with encouraging results with ~30% product code size reduction.
 
 ## When can you start using these features?
+
+### Update
+React Server Components are stable now and can be used in production with the Next.js app directory with v13.4 and later. You can read the[ Next.js docs](https://nextjs.org/docs/app/building-your-application/rendering/server-components) for more info and also checkout my new blog where I [compare building a Twitter Clone with Next.js and React Server Components and Remix](https://prateeksurana.me/blog/nextjs-13-vs-remix-an-in-depth-case-study/).
+### Original answer
 
 Well, Not yet.
 

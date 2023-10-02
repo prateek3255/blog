@@ -41,7 +41,7 @@ We will be comparing them in different sections, which include Layouts, Data Fet
 
 When it comes to layout, I like how both frameworks went pretty much the same route by allowing you to create shared nested layouts that persist between navigations.
 
-The majority of web apps we build today, in one way or another, have a layout that is shared by multiple URLs grouped together. Whether it be a sidebar in documentation or tabs in an analytics dashboard, shared layouts are everywhere, and Twitter Clone was not any different. In fact, a few of the pages had a situation where one layout was nested in another: the user profile page. This layout had a sidebar that persists across almost all routes and also had tabs where each tab had its own URL.
+The majority of web apps we build today, in one way or another, have a layout that is shared by multiple URLs grouped together. Whether it be a sidebar in a documentation or tabs in an analytics dashboard, shared layouts are everywhere, and Twitter Clone was not any different. In fact, a few of the pages had a situation where one layout was nested in another. The user profile page had a sidebar that persists across almost all routes and also had tabs where each tab had its own URL.
 
 {% image "twitter-clone-user-profile-page.png", "Twitter Clone User Profile Page" %}
 
@@ -55,11 +55,11 @@ With Remix, in their new v2 version, you can use the dot delimiter to create a s
 
 If your invoice URLs share a common layout, you can create an `invoice.tsx` file that contains the layout. In this file, you can add the [`<Outlet />`](https://remix.run/docs/en/main/file-conventions/routes#nested-layouts-without-nested-urls) component where the pages that share the layout are supposed to be, which will result in both the `/invoices/new` and `/invoices/{id}` pages sharing that layout.
 
-There also might be some cases where you need a common layout but don’t have a shared URL structure. Remix has a solution for that as well if you create a route `_` that route is not included in the URL. These routes are called [Pathless Routes](https://remix.run/docs/en/main/file-conventions/routes#nested-layouts-without-nested-urls).
+There also might be some cases where you need a common layout but don’t have a shared URL structure. Remix has a solution for that as well if you create a route with the prefix `_`, that route is not included in the URL. These routes are called [Pathless Routes](https://remix.run/docs/en/main/file-conventions/routes#nested-layouts-without-nested-urls).
 
 All of these features combined enable you to compose and create powerful nested layouts, such as the one for [user profile](https://twitter-rsc.vercel.app/wolverine) in the Twitter Clone app.
 
-Apart from the sidebar shared by almost all pages. The user profile page also required a separate layout because it included tabs for tweets, replies, and likes, which could have been standalone pages. This is what the file structure for the Remix app looks like:
+Apart from the sidebar shared by almost all pages. The user profile page also required a separate layout because it included tabs for tweets, replies, and likes, which would have been separate pages and hence standalone URLs of their own. This is what the file structure for the Remix app looks like:
 
 ```jsx
 app/
@@ -78,7 +78,7 @@ app/
 
 Here `_base.tsx` is the main layout which contains the sidebar shared by most pages. Then there’s the `_base.$username.tsx` layout, which is a nested layout within the base layout and contains the profile header and the tabs for tweets, replies, and likes. The `._index.tsx` represents `/` URL for the given layout. 
 
-Here is also a representation of these routes work for the user profile page in the app:
+The following is a representation of these routes work for the user profile page in the app:
 
 {% image "remix-layout-for-user-profile-page.png", "Remix Layout for User Profile Page" %}
 
@@ -115,7 +115,7 @@ app/
       page.tsx -->   /signup
 ```
 
-This is how these routes render the user profile page:
+And the following image is how these routes render the user profile page:
 
 {% image "nextjs-layout-for-user-profile-page.png", "Next.js Layout for User Profile Page" %}
 
@@ -126,23 +126,23 @@ You can also [check out the code on GitHub](https://github.com/prateek3255/twitt
 
 Now if we compare the routing mechanisms of both these frameworks, I really like the Remix one, because of how intuitive it is, and you can tell what route the file/layout represents just by looking at it. Whereas with Next.js, you end up with a Spaghetti of `page.tsx` and `layout.tsx`, and you have to look through your directory structure to figure out what URL a given page would be rendered on.
 
-But having said that, I also understand why Next.js did that because it's not just page and layouts that live in those directories but also other stuff like `notFound.tsx` , `loading.tsx` , `error.tsx` etc., which help you define your loading/error states for each of your route segments in a more declarative way. Also another benefit is that you can colocate your components with your routes.
+But having said that, I also understand why Next.js did that because it's not just page and layouts that live in those directories but also other stuff like `notFound.tsx` , `loading.tsx` , `error.tsx` etc., which help you define your loading/error states for each of your route segments. Also another benefit is that you can colocate your components with your routes.
 
 Either way, I love that both of the frameworks have chosen pretty much the same direction for file-system-based routing, and it feels like the right way to go.
 
 <!-- ## Data Fetching -->
 {% headingWithLink "Data Fetching","h2" %}
 
-Data fetching is a crucial part of modern web applications. Previously, most React apps would fetch data on the browser, resulting in blank pages or loading screens while the browser downloads JavaScript, and React initializes and starts fetching data for rendering your components. This would significantly impact performance on low-powered devices or with poor internet connections.
+Data fetching is a crucial part of modern web applications. At the beginning, most React apps used to be client side rendered where the server just sends an empty `index.html` file with the relevant JavaScript bundle in a `<script />` tag. This resulted in blank pages initially while the browser downloads and executes the JavaScript, React initializes and starts fetching data for rendering your components. This would significantly impact performance on low-powered devices or devices with poor internet connections.
 
-Next.js and Gatsby primarily changed that when they simplified fetching data on the server and/or at the build time for React applications allowing pre-render of the initial HTML for you. So now the users have the initial UI ready as your website first loads. Although they still have to wait for the JavaScript to be downloaded and parsed before they can start interacting.
+Next.js and Gatsby primarily changed that when they simplified fetching data on the server and/or at the build time for React applications allowing pre-rendering the initial HTML. So now the users have the initial UI ready as your website first loads. Although they still have to wait for the JavaScript to be downloaded and [React to be hydrated](https://react.dev/reference/react-dom/client/hydrateRoot) before they can start interacting.
 
 Now Next.js 13 and Remix both take this one step further. Next.js with React Server components and Remix with their loaders and parallel data fetching.
 
 <!-- ### Remix -->
 {% headingWithLink "Remix","h3","Remix Data Fetching" %}
 
-When it comes to Remix, the way you fetch data is in loaders where each route can define a [`loader`](https://remix.run/docs/en/main/route/loader) function that provides relevant data to the route when rendering and is only run on the server. 
+When it comes to Remix, the way you fetch data is in loaders where each route can define a [`loader`](https://remix.run/docs/en/main/route/loader) function that provides relevant data to the route when rendering. Loaders are only run on the server. 
 
 Here is an example of a loader from the Remix Twitter Clone, which is used in the [`_base.tsx` layout](https://github.com/prateek3255/twitter-clone/blob/e8e676379e4c5442f5db1a3dcc6bd865abe4a0a3/apps/remix/app/routes/_base.tsx#L19-L22):
 
@@ -227,15 +227,15 @@ The recommended way to compose your applications in Next.js 13 is by keeping the
 <!-- ### Bottom line -->
 {% headingWithLink "Bottom line","h3","Bottom line Data Fetching" %}
 
-Although I appreciate the way Remix has built a powerful API using loaders, which allows for parallel data fetching for child routes and easy revalidations, and I also like the fact that loaders always return a Fetch Response, but React Server components still feel like the better API.
+Although I appreciate the way Remix has built a powerful API using loaders, which allows for parallel data fetching for child routes and easy revalidations, and I also like the fact that loaders always return a Fetch Response, but React Server Components still feel like the right to go.
 
-In addition to other benefits, such as deterministic bundle size, React Server Components also provide a great developer experience (DX). They allow you to compose your component tree in a way that fetches data exactly where it belongs, rather than only in route segments and declarative manner.
+In addition to other benefits, such as deterministic bundle size, React Server Components also provide a great developer experience (DX). They allow you to compose your component tree in a way that fetches data exactly where it belongs, rather than only in route segments.
 
 Remix has also acknowledged the benefits RSCs bring to the table, and they, too, plan to [integrate React Server Components in the future](https://twitter.com/remix_run/status/1661017634480201734).
 
-One another caveat with loaders is that you define your loaders in the same file that your components go to. While the compiler does a good job in segregating between client and server bundles, but can still lead to accidental exposure of server-only secret or shipping server-only bundles to the client, it also has a whole doc with the [gotchas that you need to be aware of when importing modules in your Route segments](https://remix.run/docs/en/main/guides/constraints). And yes, Next.js prior to the app directory also suffers from the same caveats with `getServerSideProps`.
+One another caveat with loaders is that you define your loaders in the same file that your components go to. While the compiler does a good job in segregating between client and server bundles, but can still lead to accidental exposure of server-only secret or shipping server-only bundles to the client, Remix also has a whole doc with the [gotchas that you need to be aware of when importing modules in your Route segments](https://remix.run/docs/en/main/guides/constraints). And yes, Next.js prior to the app directory also suffers from the same caveats with `getServerSideProps`.
 
-Lastly, Server Components are also not the best solution for data fetching either. By default, if you just fetch data in your Server Components, data will be fetched sequentially in a waterfall along the Server Component tree. Although there are ways to parallelize it, [the solutions are far from perfect](https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#parallel-data-fetching).
+Lastly, Server Components are also suffer from some problems of their own. By default, if you just fetch data in your Server Components, data will be fetched sequentially in a waterfall along the Server Component tree. Although there are ways to parallelize it, [the solutions are far from perfect](https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#parallel-data-fetching).
 
 <!-- ## Streaming -->
 {% headingWithLink "Streaming","h2" %}
@@ -251,7 +251,7 @@ Both Remix and Next.js 13 have good support for Streaming with Suspense.
 <!-- ### Remix -->
 {% headingWithLink "Remix","h3","Remix Streaming" %}
 
-With Remix, you can simply use the [`defer`](https://remix.run/docs/en/main/utils/defer) wrapper and return promises instead of responses for the items you want to stream from your loaders. Then in the component, you can use the [`Await`](https://remix.run/docs/en/main/components/await) component to handle deferred loader promises and wrap it in a Suspense boundary to display a loading indicator until the promise is resolved.
+With Remix, you can simply use the [`defer`](https://remix.run/docs/en/main/utils/defer) wrapper and return promises instead of resolved values for the items you want to stream from your loaders. Then in the component, you can use the [`Await`](https://remix.run/docs/en/main/components/await) component to handle deferred loader promises and wrap it in a Suspense boundary to display a loading indicator until the promise is resolved.
 
 Here is a simplified version of how I used it in the Twitter Clone app, where I [stream the first page of the infinite tweets from the server](https://github.com/prateek3255/twitter-clone/blob/main/apps/remix/app/routes/_base.%24username._index.tsx):
 
@@ -362,7 +362,7 @@ Also, I really like how straightforward it is with React Server Components, wher
 <!-- ## Data mutations -->
 {% headingWithLink "Data mutations","h2" %}
 
-When it comes to mutations, we probably are all used to handling it ourselves by making API requests to a backend server and then updating the local state to reflect the changes, or even using libraries like react-query that help with handling most of the stuff for you. Both of the frameworks want to change that by making actions part of their core features.
+When it comes to mutations, we probably are all used to handling it ourselves by making API requests to a backend server and then updating the local state to reflect the changes, or even using libraries like React Query that help with handling most of the stuff for you. Both of the frameworks want to change that by making actions part of their core features.
 
 In Remix, these are taken care of by actions, and at the time of writing this blog, [Next.js also added Server actions with 13.4](https://nextjs.org/blog/next-13-4), but they are still in alpha.
 
@@ -546,13 +546,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   
 ```
 
-Notice how we use `hidden` type inputs in the form for passing relevant data like the `tweetId` and `hasLiked` to the server. We are also setting the name of the button to `_action` and the value to `toggle_tweet_like`, and this data is then used on the server to identify what type of action was triggered, which is useful when you have multiple forms on your page.
+Notice how we use `hidden` type inputs in the form for passing relevant data like the `tweetId` and `hasLiked` to the server. We are also setting the name of the button to `_action` and the value to `toggle_tweet_like`, this allows us on the server to identify what type of action was triggered, which is useful when you have multiple forms on your page.
 
-Now as we saw in the full stack data flow, Remix will automatically run all the loaders on the page via the browser `fetch` and update the data on the page that was reading the data from the relevant loaders. So the tweet like count and the button state, automatically gets updated. Check out this video to see how it works:
+Now as we saw in the full stack data flow, Remix will automatically run all the loaders on the page via the browser `fetch`, updating the UI on the page that was reading the data from the relevant loaders. So the tweet like count and the button state, automatically gets updated. Check out this video to see how it works:
 
 {% video "tweet-like-remix.webm" %}
 
-My favorite part is since Remix forces you to use HTML forms everywhere and browsers by default, serialize the form inputs, and send data to the server automatically, users can start interacting with the page before the JavaScript even loads. You can verify this by disabling JavaScript and then taking actions on almost any page in the app.
+My favorite part is since Remix forces you to use HTML forms everywhere and since browsers by default, serialize the form inputs, and send data to the server automatically, users can start interacting with the page before the JavaScript even loads. You can verify this by disabling JavaScript and then taking actions on almost any page in the app.
 
 For instance here is an example from Sign in page where the form errors are shown even without JavaScript:
 
@@ -581,7 +581,7 @@ This tweet by Lee Robinson summarizes it really well as to how much less code yo
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">How is this not illegal <a href="https://t.co/TieLpPotYS">pic.twitter.com/TieLpPotYS</a></p>&mdash; Lee Robinson (@leeerob) <a href="https://twitter.com/leeerob/status/1659407393095135232?ref_src=twsrc%5Etfw">May 19, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 
-If you are in a server component, you can define a server action inside a component by placing `'use server'` on the first line and then either use it with a form by directly passing it to the `action` prop of `form` or by passing it to a client component. (When action prop is used in Server Components, the form works without JavaScript)
+If you are in a Server Component, you can define a Server Action inside a component by placing `'use server'` on the first line and then either use it with a form by directly passing it to the `action` prop of `form` or by passing it to a client component. (When action prop is used in Server Components, the form works without JavaScript)
 
 ```jsx
 export default async function Page() {
@@ -742,7 +742,7 @@ export const SubmitButton = ({ children }: { children?: React.ReactNode; }) => {
 };
 ```
 
-On the client side, you can also use the `startTransition` API to execute server actions that do server mutations (call `revalidatePath`, `redirect`, or `revalidateTag` ) and execute the server action directly on button click, for instance, check out how it is implemented for the Follow button
+On the client side, you can also use the `startTransition` API to execute server actions that do server mutations (call `revalidatePath`, `redirect`, or `revalidateTag` ) and execute the server action directly on button click, for instance, check out how it is implemented for the Follow button:
 
 ```jsx
 const [isPending, startTransition] = React.useTransition();
@@ -769,12 +769,12 @@ export const toggleFollowUser = async ({
   userId: string;
   isFollowing: boolean;
 }) => {
-  /* Remix’sin DB omitted for brevity */
+  /* Updating the value in DB, omitted for brevity */
   revalidatePath("/[username]");
 };
 ```
 
-Here is a demo of how the above code works in the app:
+Here is a demo of how the following state is automatically updated on the profile page with the `revalidatePath` when the user clicks on the follow button:
 
 {% video "nextjs-unfollow-demo.webm" %}
 
@@ -788,7 +788,7 @@ But actions also have a caveat, which is the same that we saw with loaders, that
 Next.js’ server actions solve the above problems by allowing you just to create functions that can be called from anywhere inside your app just by importing them. However, at the moment, they lack the good form support and automatic revalidation that Remix has and also feel pretty unstable and under-documented at the moment. I had to [open a couple of discussions in Next.js](https://github.com/vercel/next.js/discussions/categories/app-router?discussions_q=author%3Aprateek3255+category%3A%22App+Router%22) to understand how the API works.
 
 {% callout %}
-💡 Next.js recently released significant updates to server actions with [v13.5](https://nextjs.org/blog/next-13-5). So some of the APIs used above, like using `startTransition` for server mutations, don’t seem to be documented anymore. They have also added better support for forms now. I’ll be updating the app and the blog with the latest API soon.
+Next.js recently released significant updates to server actions with [v13.5](https://nextjs.org/blog/next-13-5). So some of the APIs used above, like using `startTransition` for server mutations, don’t seem to be documented anymore. They have also added better support for forms now. I’ll be updating the app and the blog with the latest API soon.
 
 For reference, you can find the old Server Actions API that I used while building the Twitter Clone on [Web Archive of Next.js docs](https://web.archive.org/web/20230617214943/https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions).
 {% endcallout %}
@@ -807,11 +807,11 @@ The infinite scroll implementation was heavily inspired by this article called [
 
 The concept is that you create a route similar to a normal route module, but if you don’t export a default component from that route, you can still use the loaders and actions defined in that route via `GET` and `POST` requests. They almost act like Next.js’ version of API routes.
 
-So for Remix, I created a new route called `routes/resource-infinite-tweets.tsx`, which had a named export for `InfiniteTweets`. Since this was not a default export, Remix won’t render any UI for this route. This named export was used in all the components that had Infinite loading.
+So for Remix, I created a new route called `routes/resource-infinite-tweets.tsx`, which had a named export for `InfiniteTweets`. Since this was not a default export, Remix won’t render any UI for this route. This named export was used in all the components that had infinite loading tweets.
 
 I won’t go into much detail about how the component worked; you can check out the [relevant code for it on GitHub](https://github.com/prateek3255/twitter-clone/blob/main/apps/remix/app/routes/resource.infinite-tweets.tsx). In short, I used the [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) API to detect the end of the page and triggered a request to fetch the next page of tweets, which were then added to the reducer. All the other states including like/retweet/reply counts, are also stored in the reducer.
 
-Let’s take an example of one of the pages this component was used in: [the user tweets page](https://twitter-remix-run.vercel.app/wolverine). The first page of the tweets is loaded on the server and is streamed to the client, as we saw in the streaming section. But for the next page onwards, we use the loader defined in the `resource-infinite-tweets.tsx`, which looks something like this:
+Let’s take an example of one of the pages this component was used in: [the user tweets page](https://twitter-remix-run.vercel.app/wolverine). The first page of the tweets is loaded on the server and is streamed to the client, as we saw in the [streaming section](#remix-streaming). But for the next page onwards, we use the loader defined in the `resource-infinite-tweets.tsx`, which looks something like this:
 
 ```jsx
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -848,7 +848,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 ```
 
-Now to trigger the loader, we use the `fetcher` that we saw in the data mutations section. It also has a method called `submit` that allows us to programmatically trigger a `GET` request to the loader, which fetches the next batch of tweets.
+Now to trigger the loader, we use the `fetcher` that we saw in the data mutations section. It also has a method called [`submit`](https://remix.run/docs/en/main/hooks/use-fetcher#fetchersubmitformdata-options) that allows us to programmatically trigger a `GET` request to the loader, which fetches the next batch of tweets.
 
 ```jsx
 React.useEffect(() => {
@@ -894,7 +894,9 @@ React.useEffRemix) => {
 }, [fetcher.data, isLoggedIn]);
 ```
 
-This route module has an action as well, which handles all the liking/retweeting/replies for the tweets, which use the same code with `fetcher.Form` that we saw in the Data mutations section.
+This route module has an action as well, which handles all the liking/retweeting/replies for the tweets, which use the same code with `fetcher.Form` that we saw in the [data mutations](#remix-data-mutations) section.
+
+```jsx
 
 <!-- ### Next.js -->
 {% headingWithLink "Next.js","h3","Next.js Infinite Loading" %}
@@ -976,7 +978,7 @@ Then similar to Remix, we add the data to the reducer, which renders the next se
 
 Infinite loading was the only part in both frameworks where I had to manage the state of the tweets on the client side.
 
-This is the part where the reusability aspect of Server Actions really shines in Next.js 13. I just had to create a function that fetches the infinite tweets, and that function is used both for fetching and streaming the first page of tweets and then passed as a prop to the `InfiniteTweets` component that handles fetching the next pages.
+This is the part where the composability aspect of Server Actions really shines in Next.js 13. I just had to fetch the first page in the the Server Component that would be streamed and then create a Server Action for fetching the next pages in the component itself which was directly passed to the client component.
 
 In Remix, although the fetcher and resource route did make fetching data easier but then we also had to create a separate loader for each route to streamed the first page for the infinite tweets.
 
@@ -1020,14 +1022,14 @@ For the Twitter Clone app, there wasn’t much use of caching and static renderi
 Next.js has improved the caching support significantly, where they have different layers of caching that allow you to cache not only the rendered routes but also the responses for `fetch` requests on the edge. You can read about it in much more detail in [Next.js’ Caching docs.](https://nextjs.org/docs/app/building-your-application/caching)
 
 {% callout %}
-For the Twitter Clone, we do use the request memoization, which memoizes functions that request the same data in multiple places in the Server React component tree while only executing it once.
+For the Twitter Clone, we do use the [request memoization](https://nextjs.org/docs/app/building-your-application/caching#request-memoization), which memoizes functions that request the same data in multiple places in the Server React component tree while only executing it once.
 {% endcallout %}
 
 Remix doesn’t have any explicit APIs for handling caching, and it completely relies on the [`Cache-Control` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) to cache responses on the edge and in the browser.
 
 ## Conclusion
 
-If you made it this far, then I hope you enjoyed reading the blog, you had some interesting takeaways for either of the frameworks, and that it helps making you a better decision when building your next full-stack app.
+If you made it this far, then I hope you enjoyed reading the blog, you had some interesting takeaways for either of the frameworks that help making you a better decision when building your next full-stack app.
 
 In conclusion, building complex full-stack web applications in React has never been this faster and easier, thanks to both of these frameworks. As for me, I really loved how Remix has built a framework that leverages the fundamental Web APIs and offers you a simple yet powerful way of building modern web apps. Meanwhile, the app directory in Next.js just blows my mind with how React Server Components and Server Actions allow you to compose and create full-stack components while shipping a deterministic bundle size to the browser. Really excited about what the future holds for both frameworks.
 
