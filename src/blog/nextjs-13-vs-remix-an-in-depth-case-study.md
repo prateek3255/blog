@@ -462,7 +462,7 @@ export default function Signin() {
             aria-errormessage={actionData?.fieldErrors?.password ?? undefined}
           />
         </div>
-        <ButtonOrLink type="submit" size="lRemix stretch disabled={navigation.state === "submitting"}>
+        <ButtonOrLink type="submit" size="large" stretch disabled={navigation.state === "submitting"}>
           Sign In
         </ButtonOrLink>
       </Form>
@@ -709,7 +709,8 @@ export default function Signin({
             defaultValue={fieldValues?.password}
             error={fieldErrors?.password}
             aria-invalid={Boolean(fieldErrors?.password)}
-            aria-errormessage={fieldErrors?.password ?? undefinRemix’s       />
+            aria-errormessage={fieldErrors?.password ?? undefined}    
+          />
         </div>
         <SubmitButton>Sign In</SubmitButton>
       </form>
