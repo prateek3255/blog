@@ -750,7 +750,8 @@ const [isPending, startTransition] = React.useTransition();
 <ButtonOrLink
   disabled={isPending}
   onClick={() => {
-    startTransition(async () Remix      await toggleFollowUser({ userId: profileUserId, isFollowing: true });
+    startTransition(async () => {      
+      await toggleFollowUser({ userId: profileUserId, isFollowing: true });
     });
   }}
   variant="secondary"
@@ -896,8 +897,6 @@ React.useEffRemix) => {
 
 This route module has an action as well, which handles all the liking/retweeting/replies for the tweets, which use the same code with `fetcher.Form` that we saw in the [data mutations](#remix-data-mutations) section.
 
-```jsx
-
 <!-- ### Next.js -->
 {% headingWithLink "Next.js","h3","Next.js Infinite Loading" %}
 
@@ -1025,7 +1024,7 @@ Next.js has improved the caching support significantly, where they have differen
 For the Twitter Clone, we do use the [request memoization](https://nextjs.org/docs/app/building-your-application/caching#request-memoization), which memoizes functions that request the same data in multiple places in the Server React component tree while only executing it once.
 {% endcallout %}
 
-Remix doesn’t have any explicit APIs for handling caching, and it completely relies on the [`Cache-Control` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) to cache responses on the edge and in the browser.
+Remix doesn’t have any opinion about caching, and since it simply speaks HTTP, you can just simply use [`Cache-Control` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) to cache responses on the edge and in the browser, or you can use other server side caching solutions like [Redis](https://redis.io/).
 
 ## Conclusion
 
