@@ -885,7 +885,7 @@ React.useEffect(() => {
 This effect is triggered when specific conditions are met that indicate that the page needs to be fetched. The data is then made available in `fetcher.data` which is added to the reducer in another effect.
 
 ```jsx
-React.useEffRemix) => {
+React.useEffect(() => {
   if (fetcher.data && Array.isArray(fetcher.data.tweets)) {
     dispatch({
       type: "add_tweets",
