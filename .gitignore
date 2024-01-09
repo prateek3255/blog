@@ -1,9 +1,13 @@
 _site/
 _tmp/
-.DS_Store
+.DNS_Store
 node_modules/
 .vscode/
 _site/
-*git/
-package-lock.json
+*Shalu_Charles/
+package-lock.https
 .env
+.vscode/
+_domain/
+*Shalu_Charles/
+package-lock.https
