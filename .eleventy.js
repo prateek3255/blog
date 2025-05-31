@@ -44,6 +44,18 @@ function homeLink(title, link) {
   </a>`;
 }
 
+function playgroundLink(link) {
+  return `<div class="text-right" style="margin-top: -6px;">
+<a href="${link}" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600 hover:underline transition">
+  <svg width="12" height="12" viewBox="-3 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-419.000000, -571.000000)" fill="currentColor"> <path d="M440.415,583.554 L421.418,571.311 C420.291,570.704 419,570.767 419,572.946 L419,597.054 C419,599.046 420.385,599.36 421.418,598.689 L440.415,586.446 C441.197,585.647 441.197,584.353 440.415,583.554" id="play" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
+  Try it in Playground
+</a>
+</div>`
+}
+
 function callout(content) {
   return `<aside class="bg-gray-200 text-black sm:text-xl text-base relative mt-7 callout sm:px-8 sm:py-2 px-6 py-1">
     ${content}
@@ -152,6 +164,9 @@ module.exports = function (eleventyConfig) {
 
   // Shortcode for generating callout
   eleventyConfig.addPairedNunjucksShortcode("callout", callout);
+
+  // Shortcode for generating playground link
+  eleventyConfig.addNunjucksShortcode("playgroundLink", playgroundLink);
 
   // Creates a link from the slugified string
   eleventyConfig.addNunjucksShortcode("slugifiedLink", function (text) {
