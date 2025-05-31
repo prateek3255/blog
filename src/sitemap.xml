@@ -97,8 +97,13 @@
   <priority>0.75</priority>
 </url>
 <url>
-  <loc>https://prateeksurana.me//blog/nextjs-13-vs-remix-an-in-depth-case-study/</loc>
+  <loc>https://prateeksurana.me/blog/nextjs-13-vs-remix-an-in-depth-case-study/</loc>
   <lastmod>2023-11-03T13:00:00+00:00</lastmod>
+  <priority>0.75</priority>
+</url>
+<url>
+  <loc>https://prateeksurana.me/blog/guide-to-go-for-javascript-developers/</loc>
+  <lastmod>2025-05-31T13:00:00+00:00</lastmod>
   <priority>0.75</priority>
 </url>
 </urlset>

@@ -1,10 +1,10 @@
 ---
 title: A JavaScript Developer's Guide to Go
-date: 2025-05-22
-updatedAt: 2025-05-22
+date: 2025-05-31
+updatedAt: 2025-05-31
 permalink: /blog/guide-to-go-for-javascript-developers/
 templateEngineOverride: njk,md
-description: A guide for JavaScript developers for getting started with Go, by covering and comparing the fundamental concepts of both languages.
+description: A guide for JavaScript developers learning Go through direct comparisons of fundamental concepts between both languages.
 thumbnail: guide-to-go-for-javascript-developers.png
 author: Prateek Surana
 tags:
