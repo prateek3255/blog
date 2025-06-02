@@ -1583,6 +1583,8 @@ func main() {
 
 The above example uses `WaitGroup`, which are part of the `sync` package, that provides basic [synchronization primitives](https://pkg.go.dev/sync) for Go.
 
+[Channels](https://gobyexample.com/channels) are another powerful feature of Go that allow goroutines to communicate with each other, and can be used to synchronize execution.
+
 {% endcallout %}
 
 The key difference in the examples is that JavaScript achieves concurrency through asynchronous I/O and the event loop, by delegating I/O operations to browser or Node.js which perform these operations outside of the main thread, however for CPU intensive tasks JavaScript would still run on the single main thread blocking everything else. Go, on the other hand, enables true parallelism with goroutines that can execute simultaneously across CPU cores. Here's an example of how you can run CPU intensive tasks in parallel using goroutines:
