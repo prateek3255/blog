@@ -1583,7 +1583,7 @@ func main() {
 
 The above example uses `WaitGroup`, which are part of the `sync` package, that provides basic [synchronization primitives](https://pkg.go.dev/sync) for Go.
 
-[Channels](https://gobyexample.com/channels) are another powerful feature of Go that allow goroutines to communicate with each other, and can be used to synchronize execution.
+[Channels](https://gobyexample.com/channels) are another powerful feature of Go that allow goroutines to communicate with each other, and can be used to synchronize execution. I am not covering them in this guide because they deserve a separate blog of their own, but they are worth checking out if you want to learn more about Go's concurrency model.
 
 {% endcallout %}
 
