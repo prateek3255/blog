@@ -4,6 +4,8 @@ items:
     url: "/"
   - text: Blog
     url: "/blog"
+  - text: Talks
+    url: "/talks"
   - text: Twitter
     url: "https://twitter.com/psuranas"
     icon: "fab fa-twitter"

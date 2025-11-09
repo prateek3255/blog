@@ -1,0 +1,11 @@
+---
+items:
+  - title: "The Future of Rendering in React"
+    link: "https://www.youtube.com/watch?v=6wsw6eKdIOM"
+    date: 2022-09-18
+    description: "This talk covers the different rendering strategies that exist in React, how they work under the hood, where they fall short in certain scenarios and what does the future of rendering of rendering looks like with React Server Components."
+  - title: "Elevate your routing game with TanStack Router"
+    link: "https://www.youtube.com/watch?v=DzSi-0iPNLs"
+    date: 2024-07-12
+    description: "This talk explores why client-side routers are essential in modern frontend frameworks and how TanStack Router elevates routing with type-safe APIs, first-class query-param state management, and seamless data-fetching for full-stack apps."
+

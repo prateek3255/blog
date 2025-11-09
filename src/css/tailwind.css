@@ -133,7 +133,7 @@ pre[class*="language-"] {
 }
 
 .input-primary {
-  @apply input bg-white placeholder-indigo-200
+  @apply input bg-white placeholder-indigo-300
 }
 
 .input-secondary {

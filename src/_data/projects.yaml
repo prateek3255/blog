@@ -1,8 +1,18 @@
 ---
 items:
+ - name: "noCap"
+   logo: "no-cap.png"
+   description: "A Turing-complete esoteric interpreted programming language built in Go."
+   buttons:
+    - title: "Check it out"
+      icon: "fas fa-external-link-alt"
+      link: "https://nocap.prateeksurana.me/"
+    - title: "View it on"
+      icon: "fab fa-github"
+      link: "https://github.com/prateek3255/no-cap"
  - name: "Scrroll In"
    logo: "scrroll-in.png"
-   description: "A chrome extension that lets you save multiple scroll positions on a webpage and allow you to access them whenever you come back to the page."
+   description: "A chrome extension that lets you save multiple scroll positions on a webpage."
    buttons:
     - title: "Check it out"
       icon: "fab fa-chrome"
@@ -50,10 +60,10 @@ items:
     - title: "View it on"
       icon: "fab fa-github"
       link: "https://github.com/prateek3255/game-of-life"
- - name: "Smart Apart"
-   logo: "smart-apart.webp"
-   description: "An android app that provides you a daily curated feed in various categories. This is the project with which Prateek started his development journey."
-   buttons:
-    - title: "Check it out"
-      icon: "fab fa-google-play"
-      link: "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
+#  - name: "Smart Apart"
+#    logo: "smart-apart.webp"
+#    description: "An android app that provides you a daily curated feed in various categories. This is the project with which Prateek started his development journey."
+#    buttons:
+#     - title: "Check it out"
+#       icon: "fab fa-google-play"
+#       link: "https://play.google.com/store/apps/details?id=com.smartapart.technetium"
