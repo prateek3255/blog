@@ -1,9 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { projects } from '../../data';
+
+const projects = await getCollection('projects');
 ---
 
 <Layout
@@ -21,8 +23,8 @@ import { projects } from '../../data';
 
     <section class="pt-2">
       <div class="divide-y divide-border">
-        {projects.map((project) => (
-          <ProjectCard project={project} />
+        {projects.map((entry) => (
+          <ProjectCard project={entry.data} />
         ))}
       </div>
     </section>

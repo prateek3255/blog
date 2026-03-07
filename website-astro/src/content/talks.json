@@ -1,0 +1,34 @@
+[
+  {
+    "id": "building-at-the-edge",
+    "title": "Building at the Edge: Real-time Everything",
+    "event": "Next.js Conf 2024",
+    "date": "Nov 2024",
+    "description": "How edge runtimes and streaming change the architecture of real-time collaborative applications.",
+    "youtubeId": "dQw4w9WgXcQ"
+  },
+  {
+    "id": "dx-is-a-product-discipline",
+    "title": "DX is a Product Discipline",
+    "event": "React Summit 2024",
+    "date": "Jun 2024",
+    "description": "A talk on treating developer experience with the same rigor as user experience — metrics, feedback loops, and iteration.",
+    "youtubeId": "dQw4w9WgXcQ"
+  },
+  {
+    "id": "type-safe-apis-end-to-end",
+    "title": "Type-safe APIs from End to End",
+    "event": "TypeScript Congress 2023",
+    "date": "Sep 2023",
+    "description": "Live-coding a full-stack app where TypeScript types flow from the database all the way to the frontend component.",
+    "youtubeId": "dQw4w9WgXcQ"
+  },
+  {
+    "id": "future-of-css-architecture",
+    "title": "The Future of CSS Architecture",
+    "event": "CSSDay 2023",
+    "date": "Jun 2023",
+    "description": "Design tokens, cascade layers, and container queries — the building blocks of a scalable CSS architecture.",
+    "youtubeId": "dQw4w9WgXcQ"
+  }
+]

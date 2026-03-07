@@ -6,10 +6,10 @@ import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
-import { projects } from '../data';
 
 const allPosts = await getCollection('blog');
 const featuredPosts = allPosts.filter((p) => p.data.featured && !p.data.archived);
+const allProjects = await getCollection('projects');
 ---
 
 <Layout title="Alex Rivera — Web Engineer">
@@ -69,8 +69,8 @@ const featuredPosts = allPosts.filter((p) => p.data.featured && !p.data.archived
     <section class="pt-10 pb-14 border-b border-border">
       <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Projects</p>
       <div class="flex flex-col gap-4">
-        {projects.slice(0, 3).map((project) => (
-          <ProjectCard project={project} />
+        {allProjects.slice(0, 3).map((entry) => (
+          <ProjectCard project={entry.data} />
         ))}
       </div>
       <div class="mt-6">

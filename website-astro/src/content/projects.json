@@ -1,0 +1,33 @@
+[
+  {
+    "id": "velox-ui",
+    "name": "Velox UI",
+    "description": "An unstyled, accessible component library for React. Zero dependencies, fully typed, and built for customisation.",
+    "url": "https://github.com",
+    "repo": "https://github.com",
+    "tags": ["React", "TypeScript", "Open Source"]
+  },
+  {
+    "id": "schema-forge",
+    "name": "Schema Forge",
+    "description": "A visual schema editor that generates Zod, TypeScript, and JSON Schema from a single source of truth.",
+    "url": "https://github.com",
+    "repo": "https://github.com",
+    "tags": ["TypeScript", "Zod", "CLI"]
+  },
+  {
+    "id": "heatmap-fyi",
+    "name": "Heatmap.fyi",
+    "description": "Dead-simple heatmaps for any website. Drop in one script tag, see where users actually click.",
+    "url": "https://github.com",
+    "tags": ["SaaS", "Analytics", "Next.js"]
+  },
+  {
+    "id": "logpipe",
+    "name": "Logpipe",
+    "description": "Structured log shipping from any Node.js or Edge runtime to your preferred sink — zero config, tiny footprint.",
+    "url": "https://github.com",
+    "repo": "https://github.com",
+    "tags": ["Node.js", "Edge", "Open Source"]
+  }
+]
