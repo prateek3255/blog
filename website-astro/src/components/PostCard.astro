@@ -1,0 +1,66 @@
+---
+export interface PostCardData {
+  slug: string;
+  title: string;
+  description?: string;
+  date: string;
+  views?: string;
+  featured?: boolean;
+  archived?: boolean;
+  externalUrl?: string;
+}
+
+interface Props {
+  post: PostCardData;
+  showDescription?: boolean;
+}
+
+const { post, showDescription = false } = Astro.props;
+const href = post.externalUrl ?? `/blog/${post.slug}`;
+const isExternal = !!post.externalUrl;
+let hostname = '';
+if (isExternal) {
+  try { hostname = new URL(post.externalUrl!).hostname; } catch {}
+}
+---
+
+<article>
+  <a
+    href={href}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+    class="group block py-5 border-b border-border last:border-0"
+  >
+    <h2 class="font-serif text-[1.125rem] leading-snug font-medium text-foreground group-hover:opacity-70 transition-opacity text-balance">
+      {post.title}
+    </h2>
+
+    {showDescription && post.description && (
+      <p class="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        {post.description}
+      </p>
+    )}
+
+    <div class="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+      <span>{post.date}</span>
+      {post.views && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{post.views} views</span>
+        </>
+      )}
+      {isExternal && hostname && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span class="opacity-60">{hostname}</span>
+        </>
+      )}
+      {post.archived && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span class="opacity-60">Archived</span>
+        </>
+      )}
+    </div>
+  </a>
+</article>

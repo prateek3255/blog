@@ -1,0 +1,121 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: string;
+  views?: string;
+  archived?: boolean;
+}
+
+const { title, description, date, views, archived } = Astro.props;
+---
+
+<Layout title={`${title} — Alex Rivera`} description={description}>
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <!-- Back link -->
+    <div class="pt-10 pb-8">
+      <a
+        href="/blog"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+      >
+        <span aria-hidden="true" class="group-hover:-translate-x-0.5 transition-transform">←</span>
+        All posts
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="pb-10 border-b border-border">
+      <h1 class="font-serif text-[2rem] leading-tight font-semibold text-balance">
+        {title}
+      </h1>
+      {description && (
+        <p class="mt-4 text-muted-foreground leading-relaxed text-[0.9375rem]">
+          {description}
+        </p>
+      )}
+      <div class="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
+        <time>{date}</time>
+        {views && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{views} views</span>
+          </>
+        )}
+        {archived && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Archived</span>
+          </>
+        )}
+      </div>
+    </header>
+
+    <!-- Body -->
+    <article class="mt-10 prose-custom">
+      <slot />
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .prose-custom :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(p) {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
+    margin-bottom: 1.25rem;
+  }
+
+  .prose-custom :global(pre) {
+    background-color: var(--color-muted);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+  }
+
+  .prose-custom :global(code):not(pre > code) {
+    background-color: var(--color-muted);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
+  }
+
+  .prose-custom :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose-custom :global(a:hover) {
+    opacity: 0.7;
+  }
+
+  .prose-custom :global(ul),
+  .prose-custom :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose-custom :global(li) {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
+    margin-bottom: 0.25rem;
+  }
+</style>

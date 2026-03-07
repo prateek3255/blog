@@ -1,0 +1,123 @@
+---
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/talks', label: 'Talks' },
+];
+---
+
+<header class="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+  <nav
+    class="max-w-2xl mx-auto px-6 h-14 flex items-center justify-between"
+    aria-label="Main navigation"
+  >
+    <a
+      href="/"
+      class="font-serif text-sm font-semibold tracking-tight hover:opacity-70 transition-opacity"
+      aria-label="Home — Alex Rivera"
+    >
+      AR
+    </a>
+
+    <div class="flex items-center gap-5 text-sm text-muted-foreground">
+      {links.map(({ href, label }) => {
+        const active = href === '/' ? pathname === '/' : pathname.startsWith(href);
+        return (
+          <a
+            href={href}
+            class:list={[
+              'transition-colors hover:text-foreground',
+              { 'text-foreground': active },
+            ]}
+          >
+            {label}
+          </a>
+        );
+      })}
+
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-foreground transition-colors"
+        aria-label="GitHub profile (opens in new tab)"
+      >
+        GitHub
+      </a>
+
+      <!-- Dark mode toggle -->
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+        class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+      >
+        <!-- Sun icon: shown in dark mode -->
+        <svg
+          id="icon-sun"
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="hidden"
+        >
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <!-- Moon icon: shown in light mode -->
+        <svg
+          id="icon-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="hidden"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  function initThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    const sun = document.getElementById('icon-sun');
+    const moon = document.getElementById('icon-moon');
+
+    function syncIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      sun?.classList.toggle('hidden', !isDark);
+      moon?.classList.toggle('hidden', isDark);
+    }
+
+    // Sync on load
+    syncIcons();
+
+    btn?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      syncIcons();
+    });
+  }
+
+  // Run on initial load
+  initThemeToggle();
+  // Re-run if view transitions are ever added
+  document.addEventListener('astro:page-load', initThemeToggle);
+</script>

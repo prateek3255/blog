@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { projects } from '../data';
+
+const allPosts = await getCollection('blog');
+const featuredPosts = allPosts.filter((p) => p.data.featured && !p.data.archived);
+---
+
+<Layout title="Alex Rivera — Web Engineer">
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <!-- Hero -->
+    <section class="pt-16 pb-14 border-b border-border">
+      <h1 class="font-serif text-3xl font-semibold leading-tight text-balance">
+        Hey, I'm Alex Rivera
+      </h1>
+      <p class="mt-4 text-muted-foreground leading-relaxed text-[0.9375rem]">
+        It's nice to meet you. I'm a product-minded web engineer, currently building
+        developer tooling at{' '}
+        <a
+          href="https://github.com"
+          class="text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Acme Corp
+        </a>
+        . I write about web development, DX, and design systems.
+      </p>
+    </section>
+
+    <!-- Featured posts -->
+    <section class="pt-10 pb-14 border-b border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Writing</p>
+      <div class="divide-y divide-border">
+        {featuredPosts.map((post) => (
+          <PostCard
+            post={{
+              slug: post.id,
+              title: post.data.title,
+              description: post.data.description,
+              date: post.data.date,
+              views: post.data.views,
+              archived: post.data.archived,
+              externalUrl: post.data.externalUrl,
+            }}
+            showDescription
+          />
+        ))}
+      </div>
+      <div class="mt-6">
+        <a
+          href="/blog"
+          class="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+        >
+          All articles
+          <span aria-hidden="true" class="group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="pt-10 pb-14 border-b border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Projects</p>
+      <div class="flex flex-col gap-4">
+        {projects.slice(0, 3).map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+      <div class="mt-6">
+        <a
+          href="/projects"
+          class="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+        >
+          All projects
+          <span aria-hidden="true" class="group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="pt-10">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
+      <NewsletterForm />
+    </section>
+  </main>
+  <Footer />
+</Layout>

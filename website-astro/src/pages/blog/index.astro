@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const allPosts = await getCollection('blog');
+
+// Sort by date descending — dates are strings like "12th Feb 2025", parse via Date
+const sorted = allPosts.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const active = sorted.filter((p) => !p.data.archived);
+const archived = sorted.filter((p) => p.data.archived);
+---
+
+<Layout
+  title="Blog — Alex Rivera"
+  description="Articles on web development, developer experience, and design systems."
+>
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <section class="pt-16 pb-10 border-b border-border">
+      <h1 class="font-serif text-3xl font-semibold">Blog posts</h1>
+      <p class="mt-3 text-muted-foreground text-[0.9375rem] leading-relaxed">
+        Posts on developer experience and web development
+      </p>
+    </section>
+
+    <!-- Active posts -->
+    <section class="pt-2">
+      <div class="divide-y divide-border">
+        {active.map((post) => (
+          <PostCard
+            post={{
+              slug: post.id,
+              title: post.data.title,
+              description: post.data.description,
+              date: post.data.date,
+              views: post.data.views,
+              archived: post.data.archived,
+              externalUrl: post.data.externalUrl,
+            }}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Archived posts -->
+    {archived.length > 0 && (
+      <section class="mt-12">
+        <p class="text-xs uppercase tracking-widest text-muted-foreground mb-4">Archived</p>
+        <div class="divide-y divide-border">
+          {archived.map((post) => (
+            <PostCard
+              post={{
+                slug: post.id,
+                title: post.data.title,
+                description: post.data.description,
+                date: post.data.date,
+                views: post.data.views,
+                archived: post.data.archived,
+                externalUrl: post.data.externalUrl,
+              }}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</Layout>

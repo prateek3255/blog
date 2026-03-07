@@ -1,0 +1,59 @@
+---
+// No server-side props needed — purely client-interactive
+---
+
+<div id="newsletter-wrapper">
+  <p class="text-[0.9375rem] text-foreground leading-relaxed">
+    I occasionally write about things I&apos;m building, reading, or thinking about.
+    No spam, unsubscribe any time.
+  </p>
+
+  <form id="newsletter-form" class="mt-5 flex items-center gap-2 max-w-sm">
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input
+      id="newsletter-email"
+      type="email"
+      placeholder="your@email.com"
+      required
+      class="flex-1 h-9 rounded-none border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-shadow"
+    />
+    <button
+      type="submit"
+      id="newsletter-submit"
+      class="h-9 px-4 text-sm bg-foreground text-background hover:opacity-80 transition-opacity disabled:opacity-50 shrink-0 cursor-pointer"
+    >
+      Subscribe
+    </button>
+  </form>
+
+  <p id="newsletter-success" class="mt-5 text-sm text-muted-foreground hidden">
+    You&apos;re in. Talk soon.
+  </p>
+
+  <p id="newsletter-error" class="mt-2 text-xs text-red-500 hidden">
+    Something went wrong. Please try again.
+  </p>
+</div>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('newsletter-submit') as HTMLButtonElement | null;
+  const successMsg = document.getElementById('newsletter-success');
+  const errorMsg = document.getElementById('newsletter-error');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submitBtn) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Subscribing…';
+    errorMsg?.classList.add('hidden');
+
+    // Simulate submission — wire up to your mailing list provider here
+    await new Promise((r) => setTimeout(r, 800));
+
+    // Show success
+    form.classList.add('hidden');
+    successMsg?.classList.remove('hidden');
+  });
+</script>

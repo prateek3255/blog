@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data';
+---
+
+<Layout
+  title="Projects — Alex Rivera"
+  description="Open source tools and side projects I have built."
+>
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <section class="pt-16 pb-10 border-b border-border">
+      <h1 class="font-serif text-3xl font-semibold">Projects</h1>
+      <p class="mt-3 text-muted-foreground text-[0.9375rem] leading-relaxed">
+        Open source tools, side projects, and experiments.
+      </p>
+    </section>
+
+    <section class="pt-2">
+      <div class="divide-y divide-border">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
