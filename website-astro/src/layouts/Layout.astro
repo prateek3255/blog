@@ -4,9 +4,19 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title, description = 'Personal portfolio and blog of Prateek Surana, a FullStack Engineer.' } = Astro.props;
+const {
+  title,
+  description = 'Personal portfolio and blog of Prateek Surana, a FullStack Engineer.',
+  ogImage = '/og/og.png',
+  ogType = 'website',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -16,8 +26,24 @@ const { title, description = 'Personal portfolio and blog of Prateek Surana, a F
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Prateek Surana" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@psuranas" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +63,7 @@ const { title, description = 'Personal portfolio and blog of Prateek Surana, a F
       })();
     </script>
   </head>
-  <body class="font-sans antialiased">
+  <body class="font-sans antialiased min-h-screen flex flex-col">
     <slot />
   </body>
 </html>

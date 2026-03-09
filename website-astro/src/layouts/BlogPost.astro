@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
 import { getTagDisplayName } from '../utils/tags';
 
 interface Props {
@@ -12,9 +13,10 @@ interface Props {
   readTime?: number;
   tags?: string[];
   archived?: boolean;
+  ogImage?: string;
 }
 
-const { title, description, date, updatedAt, readTime, tags, archived } = Astro.props;
+const { title, description, date, updatedAt, readTime, tags, archived, ogImage } = Astro.props;
 
 // Format ISO date (YYYY-MM-DD) to a readable string like "6 Oct 2022"
 function formatDate(iso: string): string {
@@ -26,7 +28,7 @@ function formatDate(iso: string): string {
 }
 ---
 
-<Layout title={`${title} — Prateek Surana`} description={description}>
+<Layout title={`${title} — Prateek Surana`} description={description} ogImage={ogImage} ogType="article">
   <Nav />
   <main class="max-w-2xl mx-auto px-6 pb-24">
     <!-- Back link -->
@@ -85,6 +87,12 @@ function formatDate(iso: string): string {
     <article class="mt-10 prose-custom">
       <slot />
     </article>
+
+    <!-- Newsletter -->
+    <section class="mt-16 pt-10 border-t border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
+      <NewsletterForm />
+    </section>
   </main>
   <Footer />
 </Layout>
@@ -92,7 +100,7 @@ function formatDate(iso: string): string {
 <style>
   .prose-custom :global(h2) {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     font-weight: 600;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
@@ -101,7 +109,7 @@ function formatDate(iso: string): string {
 
   .prose-custom :global(h3) {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
@@ -109,7 +117,7 @@ function formatDate(iso: string): string {
   }
 
   .prose-custom :global(h4) {
-    font-size: 0.9375rem;
+    font-size: 1.1rem;
     font-weight: 600;
     margin-top: 1.75rem;
     margin-bottom: 0.5rem;

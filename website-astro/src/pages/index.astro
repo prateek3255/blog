@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
+import ContactForm from '../components/ContactForm.astro';
 import { getReadTime } from '../utils/reading-time';
 
 const allPosts = await getCollection('blog');
@@ -36,8 +37,7 @@ const allProjects = await getCollection('projects');
           Fold
         </a>
         . I love building stuff from scratch and writing about what I learn along the way, usually
-        related to Go, JavaScript, React, and TypeScript. Apart from my unconditional love for
-        technology, I relax with music, movies and video games.
+        related to Go, JavaScript, React, and TypeScript.
       </p>
     </section>
 
@@ -73,6 +73,12 @@ const allProjects = await getCollection('projects');
       </div>
     </section>
 
+    <!-- Newsletter -->
+    <section class="pt-10 pb-14 border-b border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
+      <NewsletterForm />
+    </section>
+
     <!-- Projects -->
     <section class="pt-10 pb-14 border-b border-border">
       <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Projects</p>
@@ -92,10 +98,13 @@ const allProjects = await getCollection('projects');
       </div>
     </section>
 
-    <!-- Newsletter -->
+    <!-- Contact -->
     <section class="pt-10">
-      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
-      <NewsletterForm />
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Get in Touch</p>
+      <p class="text-[0.9375rem] text-muted-foreground leading-relaxed mb-5">
+        I'm pretty active on <a href="https://twitter.com/psuranas" target="_blank" rel="noopener noreferrer" class="text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">X</a> and keep my DMs open — feel free to drop a message there. Not an X person? Use the form below.
+      </p>
+      <ContactForm />
     </section>
   </main>
   <Footer />

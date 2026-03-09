@@ -1,8 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import reactBangalore from '../../assets/talks/react-bangalore.jpg';
+import reactNexus from '../../assets/talks/react-nexus.jpg';
+
+const thumbnails: Record<string, ImageMetadata> = {
+  'react-bangalore': reactBangalore,
+  'react-nexus': reactNexus,
+};
 
 const talks = await getCollection('talks');
 ---
@@ -35,11 +43,21 @@ const talks = await getCollection('talks');
                 aria-label={`Watch ${talk.title} on YouTube`}
               >
                 <div class="relative w-full aspect-video bg-muted overflow-hidden border border-border">
-                  <img
-                    src={`https://img.youtube.com/vi/${talk.youtubeId}/maxresdefault.jpg`}
-                    alt={`Thumbnail for ${talk.title}`}
-                    class="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
-                  />
+                  {talk.thumbnail && thumbnails[talk.thumbnail] ? (
+                    <Image
+                      src={thumbnails[talk.thumbnail]}
+                      alt={`Thumbnail for ${talk.title}`}
+                      class="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+                      widths={[640, 896]}
+                      sizes="(min-width: 672px) 896px, 100vw"
+                    />
+                  ) : (
+                    <img
+                      src={`https://img.youtube.com/vi/${talk.youtubeId}/maxresdefault.jpg`}
+                      alt={`Thumbnail for ${talk.title}`}
+                      class="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+                    />
+                  )}
                   <!-- Play button overlay -->
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div class="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">

@@ -5,7 +5,8 @@
     "event": "React Meetup Bangalore",
     "date": "Sep 2022",
     "description": "This talk covers the different rendering strategies that exist in React, how they work under the hood, where they fall short in certain scenarios and what does the future of rendering looks like with React Server Components.",
-    "youtubeId": "6wsw6eKdIOM"
+    "youtubeId": "6wsw6eKdIOM",
+    "thumbnail": "react-bangalore"
   },
   {
     "id": "elevate-routing-tanstack-router",
@@ -13,6 +14,7 @@
     "event": "React Nexus",
     "date": "Jul 2024",
     "description": "This talk explores why client-side routers are essential in modern frontend frameworks and how TanStack Router elevates routing with type-safe APIs, first-class query-param state management, and seamless data-fetching for full-stack apps.",
-    "youtubeId": "DzSi-0iPNLs"
+    "youtubeId": "DzSi-0iPNLs",
+    "thumbnail": "react-nexus"
   }
 ]

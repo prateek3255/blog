@@ -16,6 +16,7 @@ type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
 const { Content } = await render(post);
 const readTime = getReadTime(post.body);
+const ogImage = `/og/blog/${post.id}.png`;
 ---
 
 <BlogPost
@@ -26,6 +27,7 @@ const readTime = getReadTime(post.body);
   readTime={readTime}
   tags={post.data.tags}
   archived={post.data.archived}
+  ogImage={ogImage}
 >
   <Content />
 </BlogPost>
