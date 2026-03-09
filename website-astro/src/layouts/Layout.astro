@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title,
-  description = 'Personal portfolio and blog of Prateek Surana, a FullStack Engineer.',
+  description = 'Prateek is a FullStack Engineer currently building Fold. He love building stuff from scratch and writing about what I learn along the way, usually related to Go, JavaScript, React, and TypeScript',
   ogImage = '/og/og.png',
   ogType = 'website',
 } = Astro.props;
@@ -28,7 +28,17 @@ const ogImageURL = new URL(ogImage, Astro.site).toString();
     <title>{title}</title>
     <link rel="canonical" href={canonicalURL} />
     {description && <meta name="description" content={description} />}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Favicons — light scheme (default) -->
+    <link rel="icon" type="image/x-icon" href="/favicons/favicon-light.ico" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32-light.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16-light.png" media="(prefers-color-scheme: light)" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-light.png" media="(prefers-color-scheme: light)" />
+    <!-- Favicons — dark scheme -->
+    <link rel="icon" type="image/x-icon" href="/favicons/favicon-dark.ico" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32-dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16-dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />

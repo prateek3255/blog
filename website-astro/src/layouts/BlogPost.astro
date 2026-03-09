@@ -93,9 +93,53 @@ function formatDate(iso: string): string {
       <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
       <NewsletterForm />
     </section>
+
+    <!-- Comments -->
+    <section class="mt-16 pt-10 border-t border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Comments</p>
+      <div id="utterances-container"></div>
+    </section>
   </main>
   <Footer />
 </Layout>
+
+<script>
+  function getUtterancesTheme(): string {
+    return document.documentElement.classList.contains('dark') ? 'github-dark' : 'github-light';
+  }
+
+  function loadUtterances() {
+    const container = document.getElementById('utterances-container');
+    if (!container) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://utteranc.es/client.js';
+    script.setAttribute('repo', 'prateek3255/blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', getUtterancesTheme());
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+    container.appendChild(script);
+  }
+
+  function syncUtterancesTheme() {
+    const theme = getUtterancesTheme();
+    const iframe = document.querySelector<HTMLIFrameElement>('.utterances-frame');
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage(
+        { type: 'set-theme', theme },
+        'https://utteranc.es'
+      );
+    }
+  }
+
+  // Load utterances on page load
+  loadUtterances();
+
+  // Sync theme when the dark mode toggle mutates the <html> class
+  const observer = new MutationObserver(syncUtterancesTheme);
+  observer.observe(document.documentElement, { attributeFilter: ['class'] });
+</script>
 
 <style>
   .prose-custom :global(h2) {

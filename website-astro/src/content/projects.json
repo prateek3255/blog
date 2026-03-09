@@ -5,7 +5,7 @@
     "description": "A Turing-complete esoteric interpreted programming language built in Go.",
     "url": "https://nocap.prateeksurana.me/",
     "repo": "https://github.com/prateek3255/no-cap",
-    "tags": ["Go", "Interpreter", "Open Source"]
+    "tags": ["Go", "Interpreter"]
   },
   {
     "id": "scrroll-in",
@@ -13,7 +13,7 @@
     "description": "A chrome extension that lets you save multiple scroll positions on a webpage.",
     "url": "https://chrome.google.com/webstore/detail/scrroll-in/cjgjbjogfodppempgdlppgefojbcmjom",
     "repo": "https://github.com/devfolioco/scrroll-in",
-    "tags": ["Chrome Extension", "JavaScript", "Open Source"]
+    "tags": ["Chrome Extension", "JavaScript"]
   },
   {
     "id": "twitter-clone",
@@ -21,7 +21,7 @@
     "description": "Two implementations of the core features of Twitter built using React Server Components with Next.js and Remix.",
     "url": "https://prateeksurana.me/blog/nextjs-13-vs-remix-an-in-depth-case-study/",
     "repo": "https://github.com/prateek3255/twitter-clone",
-    "tags": ["React", "Next.js", "Remix", "Open Source"]
+    "tags": ["React", "Next.js", "Remix"]
   },
   {
     "id": "scriptified",
@@ -37,7 +37,7 @@
     "description": "A Twitter bot that tweets a random frame from the Netflix show Arcane every hour, via GitHub actions cron jobs.",
     "url": "https://twitter.com/arcane_frames",
     "repo": "https://github.com/prateek3255/every_arcane_frame",
-    "tags": ["GitHub Actions", "Python", "Open Source"]
+    "tags": ["GitHub Actions", "JavaScript"]
   },
   {
     "id": "game-of-life",
@@ -45,6 +45,6 @@
     "description": "An interactive game demonstrating and explaining John Conway's Game of Life. Built with Next.js and TailwindCSS.",
     "url": "https://game-of-life.prateeksurana.me",
     "repo": "https://github.com/prateek3255/game-of-life",
-    "tags": ["Next.js", "TailwindCSS", "Open Source"]
+    "tags": ["Next.js", "TailwindCSS"]
   }
 ]

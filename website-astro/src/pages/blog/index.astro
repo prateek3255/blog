@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import PostCard from '../../components/PostCard.astro';
+import ExternalLink from '../../components/ExternalLink.astro';
 import { getReadTime } from '../../utils/reading-time';
 
 const allPosts = await getCollection('blog');
@@ -19,14 +20,18 @@ const archived = sorted.filter((p) => p.data.archived);
 
 <Layout
   title="Blog — Prateek Surana"
-  description="Articles on web development, Go, JavaScript, React, and TypeScript."
 >
   <Nav />
   <main class="max-w-2xl mx-auto px-6 pb-24">
     <section class="pt-16 pb-10 border-b border-border">
       <h1 class="font-serif text-3xl font-semibold">Blog posts</h1>
       <p class="mt-3 text-muted-foreground text-[0.9375rem] leading-relaxed">
-        Writing about Go, JavaScript, React, TypeScript and everything in between.
+        Writing about Go, JavaScript, React, TypeScript, and everything in between. Some of these
+        posts have been featured in newsletters such as
+        <ExternalLink href="https://bytes.dev">Bytes by Fireship</ExternalLink>,
+        <ExternalLink href="https://javascriptweekly.com">JavaScript Weekly</ExternalLink>,
+        <ExternalLink href="https://golangweekly.com">Golang Weekly</ExternalLink>,
+        <ExternalLink href="https://react.statuscode.com">React Status</ExternalLink>, and more.
       </p>
     </section>
 
