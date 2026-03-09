@@ -1,11 +1,13 @@
 ---
+import { getTagDisplayName } from '../utils/tags';
+
 export interface PostCardData {
   slug: string;
   title: string;
   description?: string;
   date: string;
-  views?: string;
-  featured?: boolean;
+  readTime?: number;
+  tags?: string[];
   archived?: boolean;
   externalUrl?: string;
 }
@@ -15,12 +17,21 @@ interface Props {
   showDescription?: boolean;
 }
 
-const { post, showDescription = false } = Astro.props;
+const { post, showDescription = true } = Astro.props;
 const href = post.externalUrl ?? `/blog/${post.slug}`;
 const isExternal = !!post.externalUrl;
 let hostname = '';
 if (isExternal) {
   try { hostname = new URL(post.externalUrl!).hostname; } catch {}
+}
+
+// Format ISO date (YYYY-MM-DD) to a readable string like "6 Oct 2022"
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 ---
 
@@ -41,12 +52,12 @@ if (isExternal) {
       </p>
     )}
 
-    <div class="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-      <span>{post.date}</span>
-      {post.views && (
+    <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+      <span>{formatDate(post.date)}</span>
+      {post.readTime && (
         <>
           <span aria-hidden="true">·</span>
-          <span>{post.views} views</span>
+          <span>{post.readTime} min read</span>
         </>
       )}
       {isExternal && hostname && (
@@ -62,5 +73,15 @@ if (isExternal) {
         </>
       )}
     </div>
+
+    {post.tags && post.tags.length > 0 && (
+      <div class="mt-2 flex flex-wrap gap-1.5">
+        {post.tags.map((tag) => (
+          <span class="text-[0.6875rem] uppercase tracking-wide text-muted-foreground border border-border rounded-sm px-1.5 py-0.5 leading-none">
+            {getTagDisplayName(tag)}
+          </span>
+        ))}
+      </div>
+    )}
   </a>
 </article>

@@ -20,7 +20,9 @@ const { Content } = await render(post);
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
-  views={post.data.views}
+  updatedAt={post.data.updatedAt}
+  readTime={post.data.readTime}
+  tags={post.data.tags}
   archived={post.data.archived}
 >
   <Content />

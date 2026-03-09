@@ -8,45 +8,51 @@ import ProjectCard from '../components/ProjectCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
 
 const allPosts = await getCollection('blog');
-const featuredPosts = allPosts.filter((p) => p.data.featured && !p.data.archived);
+const recentPosts = allPosts
+  .filter((p) => !p.data.archived)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 4);
+
 const allProjects = await getCollection('projects');
 ---
 
-<Layout title="Alex Rivera — Web Engineer">
+<Layout title="Prateek Surana — FullStack Engineer">
   <Nav />
   <main class="max-w-2xl mx-auto px-6 pb-24">
     <!-- Hero -->
     <section class="pt-16 pb-14 border-b border-border">
       <h1 class="font-serif text-3xl font-semibold leading-tight text-balance">
-        Hey, I'm Alex Rivera
+        Hey, I'm Prateek
       </h1>
       <p class="mt-4 text-muted-foreground leading-relaxed text-[0.9375rem]">
-        It's nice to meet you. I'm a product-minded web engineer, currently building
-        developer tooling at{' '}
+        I'm a FullStack Engineer currently building{' '}
         <a
-          href="https://github.com"
+          href="https://fold.money"
           class="text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Acme Corp
+          Fold
         </a>
-        . I write about web development, DX, and design systems.
+        . I love building stuff from scratch and writing about what I learn along the way, usually
+        related to Go, JavaScript, React, and TypeScript. Apart from my unconditional love for
+        technology, I relax with music, movies and video games.
       </p>
     </section>
 
-    <!-- Featured posts -->
+    <!-- Recent posts -->
     <section class="pt-10 pb-14 border-b border-border">
       <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Writing</p>
       <div class="divide-y divide-border">
-        {featuredPosts.map((post) => (
+        {recentPosts.map((post) => (
           <PostCard
             post={{
               slug: post.id,
               title: post.data.title,
               description: post.data.description,
               date: post.data.date,
-              views: post.data.views,
+              readTime: post.data.readTime,
+              tags: post.data.tags,
               archived: post.data.archived,
               externalUrl: post.data.externalUrl,
             }}

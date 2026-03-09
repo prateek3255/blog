@@ -1,0 +1,61 @@
+---
+/**
+ * Callout component — used as <Callout> in MDX posts.
+ * Renders a subtle aside box with a left border accent.
+ * Supports rich content via <slot /> (links, iframes, inline HTML, etc.)
+ */
+---
+
+<aside class="callout">
+  <div class="callout-icon">
+    💡
+  </div>
+  <div class="callout-content">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout-icon {
+    margin-top: 6px;
+    margin-left: 3px;
+    font-size: 1.5rem;
+  }
+
+  .callout-content {
+    padding: 6px;
+  }
+
+  .callout {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: var(--color-muted);
+    padding-inline: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  /* .callout::before {
+    content: "💡";
+    position: absolute;
+    top: 0.6rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    opacity: 0.6;
+  } */
+
+  /* Ensure the last child inside callout doesn't have extra bottom margin */
+  .callout-content :global(> *:last-child) {
+    margin-bottom: 0;
+  }
+
+  /* Paragraphs inside callout inherit the muted colour override */
+  .callout :global(p) {
+    color: color-mix(in oklch, var(--color-foreground) 85%, transparent);
+  }
+</style>

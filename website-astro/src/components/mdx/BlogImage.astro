@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  /** Imported image asset — use: import img from './image.png' then src={img} */
+  src: ImageMetadata;
+  alt: string;
+  /** Optional extra CSS classes */
+  class?: string;
+}
+
+const { src, alt, class: className } = Astro.props;
+---
+
+<figure class:list={['blog-image', className]}>
+  <Image src={src} alt={alt} />
+</figure>
+
+<style>
+  .blog-image {
+    margin: 1.75rem 0;
+  }
+
+  .blog-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+  }
+</style>

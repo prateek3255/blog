@@ -2,19 +2,31 @@
 import Layout from './Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getTagDisplayName } from '../utils/tags';
 
 interface Props {
   title: string;
   description?: string;
   date: string;
-  views?: string;
+  updatedAt?: string;
+  readTime?: number;
+  tags?: string[];
   archived?: boolean;
 }
 
-const { title, description, date, views, archived } = Astro.props;
+const { title, description, date, updatedAt, readTime, tags, archived } = Astro.props;
+
+// Format ISO date (YYYY-MM-DD) to a readable string like "6 Oct 2022"
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
 ---
 
-<Layout title={`${title} — Alex Rivera`} description={description}>
+<Layout title={`${title} — Prateek Surana`} description={description}>
   <Nav />
   <main class="max-w-2xl mx-auto px-6 pb-24">
     <!-- Back link -->
@@ -33,17 +45,18 @@ const { title, description, date, views, archived } = Astro.props;
       <h1 class="font-serif text-[2rem] leading-tight font-semibold text-balance">
         {title}
       </h1>
-      {description && (
-        <p class="mt-4 text-muted-foreground leading-relaxed text-[0.9375rem]">
-          {description}
-        </p>
-      )}
-      <div class="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
-        <time>{date}</time>
-        {views && (
+      <div class="mt-5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <time datetime={date}>{formatDate(date)}</time>
+        {updatedAt && (
           <>
             <span aria-hidden="true">·</span>
-            <span>{views} views</span>
+            <span>Updated {formatDate(updatedAt)}</span>
+          </>
+        )}
+        {readTime && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{readTime} min read</span>
           </>
         )}
         {archived && (
@@ -53,6 +66,19 @@ const { title, description, date, views, archived } = Astro.props;
           </>
         )}
       </div>
+
+      {tags && tags.length > 0 && (
+        <div class="mt-3 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <a
+              href={`/blog/tags/${tag}`}
+              class="text-[0.6875rem] uppercase tracking-wide text-muted-foreground border border-border rounded-sm px-1.5 py-0.5 leading-none hover:text-foreground transition-colors"
+            >
+              {getTagDisplayName(tag)}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
 
     <!-- Body -->
@@ -70,6 +96,23 @@ const { title, description, date, views, archived } = Astro.props;
     font-weight: 600;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(h4) {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
     color: var(--color-foreground);
   }
 
@@ -112,10 +155,64 @@ const { title, description, date, views, archived } = Astro.props;
     margin-bottom: 1.25rem;
   }
 
+  .prose-custom :global(ul) {
+    list-style-type: disc;
+  }
+
+  .prose-custom :global(ol) {
+    list-style-type: decimal;
+  }
+
   .prose-custom :global(li) {
+    display: list-item;
     font-size: 0.9375rem;
     line-height: 1.7;
     color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
     margin-bottom: 0.25rem;
+  }
+
+  .prose-custom :global(blockquote) {
+    border-left: 3px solid var(--color-border);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: color-mix(in oklch, var(--color-foreground) 75%, transparent);
+    font-style: italic;
+  }
+
+  .prose-custom :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    margin: 1.75rem 0;
+  }
+
+  .prose-custom :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+
+  .prose-custom :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin: 1.5rem 0;
+  }
+
+  .prose-custom :global(th),
+  .prose-custom :global(td) {
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .prose-custom :global(th) {
+    background-color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .prose-custom :global(iframe) {
+    margin-bottom: 1.25rem;
   }
 </style>

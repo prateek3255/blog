@@ -1,0 +1,46 @@
+---
+interface Props {
+  src: string;
+  autoplay?: boolean;
+}
+
+const { src, autoplay = false } = Astro.props;
+---
+
+<div class="video-wrapper">
+  {autoplay ? (
+    <video
+      src={src}
+      autoplay
+      loop
+      muted
+      playsinline
+      class="blog-video"
+    >
+      <source src={src} type="video/webm" />
+    </video>
+  ) : (
+    <video
+      src={src}
+      controls
+      playsinline
+      class="blog-video"
+    >
+      <source src={src} type="video/webm" />
+    </video>
+  )}
+</div>
+
+<style>
+  .video-wrapper {
+    margin: 1.75rem 0;
+  }
+
+  .blog-video {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    display: block;
+  }
+</style>

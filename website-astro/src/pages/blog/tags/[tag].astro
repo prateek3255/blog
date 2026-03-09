@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getTagDisplayName } from '../../../utils/tags';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+
+  // Collect all unique tags across all posts
+  const tagSet = new Set<string>();
+  allPosts.forEach((post) => {
+    post.data.tags?.forEach((tag) => tagSet.add(tag));
+  });
+
+  return Array.from(tagSet).map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: allPosts
+        .filter((post) => post.data.tags?.includes(tag))
+        .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Awaited<ReturnType<typeof getCollection<'blog'>>>;
+}
+
+const { tag, posts } = Astro.props;
+const displayName = getTagDisplayName(tag);
+---
+
+<Layout
+  title={`${displayName} — Blog — Prateek Surana`}
+  description={`Blog posts tagged with ${displayName}.`}
+>
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <section class="pt-16 pb-10 border-b border-border">
+      <div class="mb-2">
+        <a
+          href="/blog"
+          class="text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+        >
+          <span aria-hidden="true" class="group-hover:-translate-x-0.5 transition-transform">←</span>
+          All posts
+        </a>
+      </div>
+      <h1 class="font-serif text-3xl font-semibold">{displayName}</h1>
+      <p class="mt-3 text-muted-foreground text-[0.9375rem] leading-relaxed">
+        {posts.length} post{posts.length !== 1 ? 's' : ''} tagged with <strong>{displayName}</strong>
+      </p>
+    </section>
+
+    <section class="pt-2">
+      <div class="divide-y divide-border">
+        {posts.map((post) => (
+          <PostCard
+            post={{
+              slug: post.id,
+              title: post.data.title,
+              description: post.data.description,
+              date: post.data.date,
+              readTime: post.data.readTime,
+              tags: post.data.tags,
+              archived: post.data.archived,
+              externalUrl: post.data.externalUrl,
+            }}
+          />
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
