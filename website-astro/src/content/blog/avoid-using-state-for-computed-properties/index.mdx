@@ -42,7 +42,7 @@ Now, this might seem fine at first but imagine if a new requirement comes in, an
 
 To exemplify the above problem, let's extend our above example by adding a field for age, and let's imagine the age needs to be greater than 18 years. ([Try it out on codesandbox)](https://codesandbox.io/s/simple-name-with-gender-state-7wroc?file=/src/App.js)
 
-```js {2,5-9,17-24,32-35}
+```js {3,6-10,18-25,33-36}
 function App() {
   const [name, setName] = React.useState("");
   const [age, setAge] = React.useState(0);
@@ -219,7 +219,7 @@ But for our case, we have to rely on this pattern, so what can we do to keep the
 
 Well, as it turns out, there are a few ways of fixing it. One is that you can add a `key` prop with the value as the id of your item to the Editor component. This would cause React to [unmount the previous instance of the component and remount it](https://stackoverflow.com/a/43892905/8252081) causing our state to be initialized again whenever the props, i.e. the key with item id, change.
 
-```jsx {2}
+```jsx {3}
 ...
         <StatefulEditor
           key={item.id}
@@ -232,7 +232,7 @@ Well, as it turns out, there are a few ways of fixing it. One is that you can ad
 
 This should suffice for most situations. If your component tree is expensive, then the above method can slightly affect performance because your component gets unmounted and remounted again. So what the [React docs recommend](https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops) is that you update the state during rendering, and React will re-run the component with updated state immediately after the current render. So in our case, this is what it would look like - 
 
-```jsx {3-9}
+```jsx {4-10}
 const StatefulEditor = (props) => {
   const [name, setName] = useState(props.item.name);
   const [description, setDescription] = useState(props.item.description);

@@ -5,6 +5,7 @@ import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
 import PostCard from '../../../components/PostCard.astro';
 import { getTagDisplayName } from '../../../utils/tags';
+import { getReadTime } from '../../../utils/reading-time';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
@@ -66,7 +67,8 @@ const displayName = getTagDisplayName(tag);
               title: post.data.title,
               description: post.data.description,
               date: post.data.date,
-              readTime: post.data.readTime,
+              updatedAt: post.data.updatedAt,
+              readTime: getReadTime(post.body),
               tags: post.data.tags,
               archived: post.data.archived,
               externalUrl: post.data.externalUrl,

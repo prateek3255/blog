@@ -160,7 +160,7 @@ The PokéAPI doesn't have the support for searching pokémon, so I have created 
 
 Now that we have the initial query ready, lets render the searched output - 
 
-```js {15-17,20-31,41}
+```js {16-18,21-32,42}
 // pages/index.tsx
 
 import { useQuery } from "react-query";
@@ -334,7 +334,7 @@ To begin with, we will need to modify `_app.tsx` so that the dehydrated queries 
 
 Make the following changes in the `_app.tsx` file -
 
-```ts {2,11,14}
+```ts {3,12,15}
 import React from "react";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider, Hydrate } from "react-query";

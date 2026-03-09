@@ -133,6 +133,20 @@ function formatDate(iso: string): string {
     margin: 1.5rem 0;
   }
 
+  /* Line highlighting via @shikijs/transformers transformerMetaHighlight */
+  .prose-custom :global(pre .line.highlighted) {
+    background-color: color-mix(in oklch, var(--color-foreground) 8%, transparent);
+    display: inline-block;
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    padding-left: calc(1rem - 2px);
+    border-left: 2px solid color-mix(in oklch, var(--color-foreground) 40%, transparent);
+  }
+
+  .prose-custom :global(pre .line.highlighted + .line.highlighted) {
+    margin-top: -1px;
+  }
+
   .prose-custom :global(code):not(pre > code) {
     background-color: var(--color-muted);
     border-radius: 0.25rem;

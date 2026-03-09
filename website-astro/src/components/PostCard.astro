@@ -6,6 +6,7 @@ export interface PostCardData {
   title: string;
   description?: string;
   date: string;
+  updatedAt?: string;
   readTime?: number;
   tags?: string[];
   archived?: boolean;
@@ -53,7 +54,7 @@ function formatDate(iso: string): string {
     )}
 
     <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-      <span>{formatDate(post.date)}</span>
+      <span>{formatDate(post.updatedAt ?? post.date)}</span>
       {post.readTime && (
         <>
           <span aria-hidden="true">·</span>
