@@ -1,0 +1,284 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { getTagDisplayName } from '../utils/tags';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: string;
+  updatedAt?: string;
+  readTime?: number;
+  tags?: string[];
+  archived?: boolean;
+  ogImage?: string;
+}
+
+const { title, description, date, updatedAt, readTime, tags, archived, ogImage } = Astro.props;
+
+// Format ISO date (YYYY-MM-DD) to a readable string like "6 Oct 2022"
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+---
+
+<Layout title={`${title} — Prateek Surana`} description={description} ogImage={ogImage} ogType="article">
+  <Nav />
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+    <!-- Back link -->
+    <div class="pt-10 pb-8">
+      <a
+        href="/blog"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+      >
+        <span aria-hidden="true" class="group-hover:-translate-x-0.5 transition-transform">←</span>
+        All posts
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="pb-10 border-b border-border">
+      <h1 class="font-serif text-[2rem] leading-tight font-semibold text-balance">
+        {title}
+      </h1>
+      <div class="mt-5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <time datetime={date}>{formatDate(date)}</time>
+        {updatedAt && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Updated {formatDate(updatedAt)}</span>
+          </>
+        )}
+        {readTime && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{readTime} min read</span>
+          </>
+        )}
+        {archived && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Archived</span>
+          </>
+        )}
+      </div>
+
+      {tags && tags.length > 0 && (
+        <div class="mt-3 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <a
+              href={`/blog/tags/${tag}`}
+              class="text-[0.6875rem] uppercase tracking-wide text-muted-foreground border border-border rounded-sm px-1.5 py-0.5 leading-none hover:text-foreground transition-colors"
+            >
+              {getTagDisplayName(tag)}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Body -->
+    <article class="mt-10 prose-custom">
+      <slot />
+    </article>
+
+    <!-- Newsletter -->
+    <section class="mt-16 pt-10 border-t border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Newsletter</p>
+      <NewsletterForm />
+    </section>
+
+    <!-- Comments -->
+    <section class="mt-16 pt-10 border-t border-border">
+      <p class="text-xs uppercase tracking-widest text-muted-foreground mb-5">Comments</p>
+      <div id="utterances-container"></div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  function getUtterancesTheme(): string {
+    return document.documentElement.classList.contains('dark') ? 'github-dark' : 'github-light';
+  }
+
+  function loadUtterances() {
+    const container = document.getElementById('utterances-container');
+    if (!container) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://utteranc.es/client.js';
+    script.setAttribute('repo', 'prateek3255/blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', getUtterancesTheme());
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+    container.appendChild(script);
+  }
+
+  function syncUtterancesTheme() {
+    const theme = getUtterancesTheme();
+    const iframe = document.querySelector<HTMLIFrameElement>('.utterances-frame');
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage(
+        { type: 'set-theme', theme },
+        'https://utteranc.es'
+      );
+    }
+  }
+
+  // Load utterances on page load
+  loadUtterances();
+
+  // Sync theme when the dark mode toggle mutates the <html> class
+  const observer = new MutationObserver(syncUtterancesTheme);
+  observer.observe(document.documentElement, { attributeFilter: ['class'] });
+</script>
+
+<style>
+  .prose-custom :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(h4) {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-foreground);
+  }
+
+  .prose-custom :global(p) {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
+    margin-bottom: 1.25rem;
+  }
+
+  .prose-custom :global(pre) {
+    background-color: var(--color-muted);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+  }
+
+  /* Line highlighting via @shikijs/transformers transformerMetaHighlight */
+  .prose-custom :global(pre .line.highlighted) {
+    background-color: color-mix(in oklch, var(--color-foreground) 8%, transparent);
+    display: inline-block;
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    padding-left: calc(1rem - 2px);
+    border-left: 2px solid color-mix(in oklch, var(--color-foreground) 40%, transparent);
+  }
+
+  .prose-custom :global(pre .line.highlighted + .line.highlighted) {
+    margin-top: -1px;
+  }
+
+  .prose-custom :global(code):not(pre > code) {
+    background-color: var(--color-muted);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
+  }
+
+  .prose-custom :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose-custom :global(a:hover) {
+    opacity: 0.7;
+  }
+
+  .prose-custom :global(ul),
+  .prose-custom :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose-custom :global(ul) {
+    list-style-type: disc;
+  }
+
+  .prose-custom :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .prose-custom :global(li) {
+    display: list-item;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
+    margin-bottom: 0.25rem;
+  }
+
+  .prose-custom :global(blockquote) {
+    border-left: 3px solid var(--color-border);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: color-mix(in oklch, var(--color-foreground) 75%, transparent);
+    font-style: italic;
+  }
+
+  .prose-custom :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    margin: 1.75rem 0;
+  }
+
+  .prose-custom :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+
+  .prose-custom :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin: 1.5rem 0;
+  }
+
+  .prose-custom :global(th),
+  .prose-custom :global(td) {
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .prose-custom :global(th) {
+    background-color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .prose-custom :global(iframe) {
+    margin-bottom: 1.25rem;
+  }
+</style>

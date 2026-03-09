@@ -1,0 +1,88 @@
+---
+import { getTagDisplayName } from '../utils/tags';
+
+export interface PostCardData {
+  slug: string;
+  title: string;
+  description?: string;
+  date: string;
+  updatedAt?: string;
+  readTime?: number;
+  tags?: string[];
+  archived?: boolean;
+  externalUrl?: string;
+}
+
+interface Props {
+  post: PostCardData;
+  showDescription?: boolean;
+}
+
+const { post, showDescription = true } = Astro.props;
+const href = post.externalUrl ?? `/blog/${post.slug}`;
+const isExternal = !!post.externalUrl;
+let hostname = '';
+if (isExternal) {
+  try { hostname = new URL(post.externalUrl!).hostname; } catch {}
+}
+
+// Format ISO date (YYYY-MM-DD) to a readable string like "6 Oct 2022"
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+---
+
+<article>
+  <a
+    href={href}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+    class="group block py-5 border-b border-border last:border-0"
+  >
+    <h2 class="font-serif text-[1.125rem] leading-snug font-medium text-foreground group-hover:opacity-70 transition-opacity text-balance">
+      {post.title}
+    </h2>
+
+    {showDescription && post.description && (
+      <p class="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        {post.description}
+      </p>
+    )}
+
+    <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+      <span>{formatDate(post.updatedAt ?? post.date)}</span>
+      {post.readTime && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{post.readTime} min read</span>
+        </>
+      )}
+      {isExternal && hostname && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span class="opacity-60">{hostname}</span>
+        </>
+      )}
+      {post.archived && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span class="opacity-60">Archived</span>
+        </>
+      )}
+    </div>
+
+    {post.tags && post.tags.length > 0 && (
+      <div class="mt-2 flex flex-wrap gap-1.5">
+        {post.tags.map((tag) => (
+          <span class="text-[0.6875rem] uppercase tracking-wide text-muted-foreground border border-border rounded-sm px-1.5 py-0.5 leading-none">
+            {getTagDisplayName(tag)}
+          </span>
+        ))}
+      </div>
+    )}
+  </a>
+</article>

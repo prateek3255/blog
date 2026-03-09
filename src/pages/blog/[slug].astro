@@ -1,0 +1,33 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+import { getReadTime } from '../../utils/reading-time';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await render(post);
+const readTime = getReadTime(post.body);
+const ogImage = `/og/blog/${post.id}.png`;
+---
+
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  updatedAt={post.data.updatedAt}
+  readTime={readTime}
+  tags={post.data.tags}
+  archived={post.data.archived}
+  ogImage={ogImage}
+>
+  <Content />
+</BlogPost>

@@ -1,0 +1,42 @@
+---
+---
+
+<form
+  method="POST"
+  action="https://formspree.io/prateeksurana3255@gmail.com"
+  class="flex flex-col gap-4 max-w-sm"
+>
+  <input type="hidden" name="_subject" value="Contact request from personal website" />
+  <div>
+    <label for="contact-email" class="sr-only">Your email</label>
+    <input
+      id="contact-email"
+      aria-label="Email"
+      type="email"
+      name="_replyto"
+      placeholder="Your email"
+      required
+      class="w-full h-9 rounded-none border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-shadow"
+    />
+  </div>
+  <div>
+    <label for="contact-message" class="sr-only">Your message</label>
+    <textarea
+      id="contact-message"
+      aria-label="Message"
+      name="message"
+      placeholder="Your message"
+      required
+      rows="5"
+      class="w-full rounded-none border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-shadow resize-none"
+    ></textarea>
+  </div>
+  <div>
+    <button
+      type="submit"
+      class="h-9 px-4 text-sm bg-foreground text-background hover:opacity-80 transition-opacity cursor-pointer"
+    >
+      Send
+    </button>
+  </div>
+</form>

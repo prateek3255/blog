@@ -1,0 +1,58 @@
+---
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<div class="playground-link-wrapper">
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="playground-link"
+    aria-label="Try it in the playground (opens in new tab)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      class="play-icon"
+    >
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    Try it in Playground
+  </a>
+</div>
+
+<style>
+  .playground-link-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .playground-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-muted-foreground);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .playground-link:hover {
+    color: var(--color-foreground);
+  }
+
+  .play-icon {
+    flex-shrink: 0;
+  }
+</style>

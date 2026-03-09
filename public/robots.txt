@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://prateeksurana.me/sitemap-index.xml

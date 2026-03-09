@@ -1,0 +1,68 @@
+---
+// No server-side props needed — purely client-interactive
+---
+
+<div id="newsletter-wrapper">
+  <p class="text-[0.9375rem] text-foreground leading-relaxed">
+    Subscribe to get all new posts straight to your inbox. No spam ever. Unsubscribe at any time.
+    Or <a href="/rss.xml" class="underline underline-offset-2 hover:opacity-70 transition-opacity">subscribe via RSS</a> if emails aren't your thing.
+  </p>
+
+  <form id="newsletter-form" class="mt-5 flex items-center gap-2 max-w-sm">
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input
+      id="newsletter-email"
+      name="email"
+      type="email"
+      placeholder="john@doe.com"
+      required
+      class="flex-1 h-9 rounded-none border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-shadow"
+    />
+    <button
+      type="submit"
+      id="newsletter-submit"
+      class="h-9 px-4 text-sm bg-foreground text-background hover:opacity-80 transition-opacity disabled:opacity-50 shrink-0 cursor-pointer"
+    >
+      Count me in
+    </button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('newsletter-submit') as HTMLButtonElement | null;
+  const emailInput = document.getElementById('newsletter-email') as HTMLInputElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submitBtn || !emailInput) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Subscribing…';
+
+    const registerEndpoint =
+      import.meta.env.PROD
+        ? 'https://api.prateeksurana.me/'
+        : 'http://localhost:3000/';
+
+    try {
+      const response = await fetch(`${registerEndpoint}api/register`, {
+        method: 'POST',
+        body: JSON.stringify({ email: emailInput.value }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        window.location.href = '/confirm';
+      } else {
+        alert(data.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Count me in';
+      }
+    } catch {
+      alert('Something went wrong, please refresh the page and try again!');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Count me in';
+    }
+  });
+</script>
