@@ -115,7 +115,7 @@ function buildTemplate(title) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    padding: '0 60px',
+                    maxWidth: '828px',
                   },
                   children: [
                     {
