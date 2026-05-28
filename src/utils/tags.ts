@@ -17,6 +17,7 @@ export const TAG_DISPLAY_NAMES: Record<string, string> = {
   eslint: 'ESLint',
   'vs-code': 'VS Code',
   productivity: 'Productivity',
+  http: 'HTTP'
 };
 
 /**
