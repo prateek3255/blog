@@ -13,6 +13,7 @@ import BlogImage from '@/components/mdx/BlogImage.astro';
 import http1 from './http1.png';
 import http2 from './http2.png';
 import http3 from './http3.png';
+import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
 
 Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
@@ -26,7 +27,7 @@ Transmission Control Protocol is a Transport Layer Protocol that is used by send
 
 To begin transmitting over TCP a three way handshake needs to be made between the source and the destination to establish a connection. The source first sending a `SYN` (initial request) packet to the destination server to start the dialogue. Then the destination server sends the `SYN-ACK` packet to agree to the process. Lastly the source sends an `ACK` packet to the target to confirm to the process after which a connection is established and the message contents can be sent from there on.
 
-←- Visualization of how the connection process works —>
+<TcpHandshake client:visible />
 
 Once the connection is established, whenever data packets are transmitted from sender to receiver, the sender maintains a retransmission timer for unacknowledged packets. If an `ACK` is not received within a certain duration (Retransmission Timeout), it retries the packets.
 

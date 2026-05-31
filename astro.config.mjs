@@ -1,4 +1,3 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -8,6 +7,8 @@ import { transformerMetaHighlight } from '@shikijs/transformers';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+
+import react from '@astrojs/react';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -32,22 +33,19 @@ const lastmodMap = buildLastmodMap();
 
 export default defineConfig({
   site: 'https://prateeksurana.me',
-  integrations: [
-    mdx(),
-    sitemap({
-      serialize(item) {
-        // Extract slug from blog post URLs: /blog/{slug}/
-        const match = item.url.match(/\/blog\/([^/]+)\/$/);
-        if (match) {
-          const slug = match[1];
-          if (lastmodMap[slug]) {
-            item.lastmod = lastmodMap[slug];
-          }
+  integrations: [mdx(), sitemap({
+    serialize(item) {
+      // Extract slug from blog post URLs: /blog/{slug}/
+      const match = item.url.match(/\/blog\/([^/]+)\/$/);
+      if (match) {
+        const slug = match[1];
+        if (lastmodMap[slug]) {
+          item.lastmod = lastmodMap[slug];
         }
-        return item;
-      },
-    }),
-  ],
+      }
+      return item;
+    },
+  }), react()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     shikiConfig: {
