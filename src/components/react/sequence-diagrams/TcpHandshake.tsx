@@ -30,9 +30,9 @@ const C_ACK         = "#E5954A";
 const PHASES = buildPhases([
   { type: "pause", name: "start",  weight: 0.5 },
   { type: "arrow", name: "syn",    weight: 2 },
-  { type: "pause", name: "pause1", weight: 1 },
+  { type: "pause", name: "pause1", weight: 1.4 },
   { type: "arrow", name: "synack", weight: 2 },
-  { type: "pause", name: "pause2", weight: 0.8 },
+  { type: "pause", name: "pause2", weight: 1.2 },
   { type: "arrow", name: "ack",    weight: 1.5 },
   { type: "pause", name: "done",   weight: 0.5 },
 ]);
@@ -59,48 +59,21 @@ const { LEFT_EDGE: CE, RIGHT_EDGE: SE, USABLE_TOP, USABLE_H } = LAYOUT;
 
 const ARROWS = [
   {
-    name: "syn", color: C_SYN,
-    x1: CE, y1: USABLE_TOP + USABLE_H * 0.0,
-    x2: SE, y2: USABLE_TOP + USABLE_H * 0.32,
+    name: "syn", label: "SYN", color: C_SYN,
+    x1: CE,      y1: USABLE_TOP + USABLE_H * 0.0,
+    x2: SE - 10, y2: USABLE_TOP + USABLE_H * 0.32,
   },
   {
-    name: "synack", color: C_SYNACK,
-    x1: SE, y1: USABLE_TOP + USABLE_H * 0.32,
-    x2: CE, y2: USABLE_TOP + USABLE_H * 0.65,
+    name: "synack", label: "SYN-ACK", color: C_SYNACK,
+    x1: SE,      y1: USABLE_TOP + USABLE_H * 0.32,
+    x2: CE + 10, y2: USABLE_TOP + USABLE_H * 0.65,
   },
   {
-    name: "ack", color: C_ACK,
-    x1: CE, y1: USABLE_TOP + USABLE_H * 0.65,
-    x2: SE, y2: USABLE_TOP + USABLE_H * 1.0,
+    name: "ack", label: "ACK", color: C_ACK,
+    x1: CE,      y1: USABLE_TOP + USABLE_H * 0.65,
+    x2: SE - 10, y2: USABLE_TOP + USABLE_H * 1.0,
   },
 ];
-
-// ── state labels shown inside boxes ──────────────────────────────────────────
-type BoxState = "idle" | "syn" | "synack" | "ack";
-
-function getBoxState(t: number): BoxState {
-  const syn    = getPhase("syn");
-  const synack = getPhase("synack");
-  const ack    = getPhase("ack");
-  if (!syn || !synack || !ack) return "idle";
-  if (t < syn.start)    return "idle";
-  if (t < synack.start) return "syn";
-  if (t < ack.start)    return "synack";
-  return "ack";
-}
-
-const CLIENT_STATES = {
-  idle:   { text: "CLOSED",      color: "#7090c0" },
-  syn:    { text: "SYN_SENT",    color: "#4a78b8" },
-  synack: { text: "ESTABLISHED", color: "#2D5FA8" },
-  ack:    { text: "ESTABLISHED", color: "#2D5FA8" },
-};
-const SERVER_STATES = {
-  idle:   { text: "LISTEN",       color: "#50a070" },
-  syn:    { text: "SYN_RECEIVED", color: "#3a8060" },
-  synack: { text: "SYN_RECEIVED", color: "#3a8060" },
-  ack:    { text: "ESTABLISHED",  color: "#246B47" },
-};
 
 // ── annotation text per phase ─────────────────────────────────────────────────
 const ANNOTATIONS = {
@@ -118,18 +91,10 @@ function getAnnotation(t: number): string {
   return (active?.name ? ANNOTATIONS[active.name as keyof typeof ANNOTATIONS] : undefined) ?? "";
 }
 
-// ── legend ────────────────────────────────────────────────────────────────────
-const LEGEND = [
-  { color: C_SYN,    label: "SYN - synchronise" },
-  { color: C_SYNACK, label: "SYN-ACK - synchronise + acknowledge" },
-  { color: C_ACK,    label: "ACK - acknowledge" },
-];
-
 // ── component ─────────────────────────────────────────────────────────────────
 export default function TCPHandshake() {
-  const { t, playing, setPlaying, seek } = useSequenceAnimation(5200);
+  const { t, playing, setPlaying, seek } = useSequenceAnimation(6000);
 
-  const boxState   = getBoxState(t);
   const activeIdx  = activeArrowIndex(t);
   const annotation = getAnnotation(t);
 
@@ -139,7 +104,6 @@ export default function TCPHandshake() {
     <SequenceDiagram
       t={t} playing={playing} setPlaying={setPlaying} seek={seek}
       annotation={annotation}
-      legendItems={LEGEND}
     >
       {/* Arrows first so box edges clip their tips */}
       {ARROWS.map((arrow, i) => (
@@ -148,6 +112,7 @@ export default function TCPHandshake() {
           x1={arrow.x1} y1={arrow.y1}
           x2={arrow.x2} y2={arrow.y2}
           color={arrow.color}
+          label={arrow.label}
           visible={i <= activeIdx}
           progress={
             i < activeIdx ? 1 : phaseProgress(arrow.name, t)
@@ -159,14 +124,10 @@ export default function TCPHandshake() {
       <ActorBox
         x={CLIENT_X} label="Client"
         fill={C_CLIENT_FILL} bg={C_CLIENT_BG}
-        stateText={CLIENT_STATES[boxState].text}
-        stateColor={CLIENT_STATES[boxState].color}
       />
       <ActorBox
         x={SERVER_X} label="Server"
         fill={C_SERVER_FILL} bg={C_SERVER_BG}
-        stateText={SERVER_STATES[boxState].text}
-        stateColor={SERVER_STATES[boxState].color}
       />
     </SequenceDiagram>
   );

@@ -19,7 +19,7 @@ import React, { useState, useEffect, useRef, type ReactNode } from "react";
 // ── shared layout ─────────────────────────────────────────────────────────────
 export const LAYOUT = {
   W: 680,
-  H: 460,
+  H: 400,
   BOX_W: 100,
   BOX_RX: 8,
   PADDING_TOP: 20,
@@ -106,7 +106,12 @@ export function useSequenceAnimation(duration = 5000) {
       const dt = now - lastTimeRef.current;
       lastTimeRef.current = now;
       let next = tRef.current + dt / duration;
-      if (next >= 1) next = 0;
+      if (next >= 1) {
+        tRef.current = 1;
+        setT(1);
+        setPlaying(false);
+        return;
+      }
       tRef.current = Math.max(0, Math.min(1, next));
       setT(tRef.current);
       rafRef.current = requestAnimationFrame(tick);
@@ -133,13 +138,10 @@ interface ActorBoxProps {
   label: string;
   fill: string;
   bg: string;
-  stateText?: string;
-  stateColor?: string;
 }
 
-export function ActorBox({ x, label, fill, bg, stateText, stateColor }: ActorBoxProps) {
+export function ActorBox({ x, label, fill, bg }: ActorBoxProps) {
   const { BOX_Y, BOX_H, BOX_W, BOX_RX } = LAYOUT;
-  const BAND_H = 48;
 
   return (
     <g>
@@ -147,27 +149,13 @@ export function ActorBox({ x, label, fill, bg, stateText, stateColor }: ActorBox
         x={x} y={BOX_Y} width={BOX_W} height={BOX_H}
         rx={BOX_RX} fill={bg} stroke={fill} strokeWidth={1.5}
       />
-      {/* Header band with rounded top corners only */}
-      <path
-        d={`M${x + BOX_RX},${BOX_Y} H${x + BOX_W - BOX_RX} Q${x + BOX_W},${BOX_Y} ${x + BOX_W},${BOX_Y + BOX_RX} V${BOX_Y + BAND_H} H${x} V${BOX_Y + BOX_RX} Q${x},${BOX_Y} ${x + BOX_RX},${BOX_Y} Z`}
-        fill={fill}
-      />
       <text
-        x={x + BOX_W / 2} y={BOX_Y + 24}
+        x={x + BOX_W / 2} y={BOX_Y + BOX_H / 2}
         textAnchor="middle" dominantBaseline="middle"
-        fill="#fff" fontSize={14} fontWeight={600}
+        fill={fill} fontSize={14} fontWeight={600}
       >
         {label}
       </text>
-      {stateText && (
-        <text
-          x={x + BOX_W / 2} y={BOX_Y + 62}
-          textAnchor="middle" dominantBaseline="middle"
-          fill={stateColor ?? "#999"} fontSize={9} fontWeight={400}
-        >
-          {stateText}
-        </text>
-      )}
     </g>
   );
 }
@@ -187,19 +175,30 @@ interface DiagramArrowProps {
   x2: number;
   y2: number;
   color: string;
+  label?: string;
   progress: number;
   visible: boolean;
 }
 
-export function DiagramArrow({ x1, y1, x2, y2, color, progress, visible }: DiagramArrowProps) {
+export function DiagramArrow({ x1, y1, x2, y2, color, label, progress, visible }: DiagramArrowProps) {
   if (!visible) return null;
 
-  const len    = Math.hypot(x2 - x1, y2 - y1);
-  const drawn  = easeInOut(Math.max(0, progress));
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const len = Math.hypot(dx, dy);
+  const drawn = easeInOut(Math.max(0, progress));
   const offset = len * (1 - drawn);
-  const angle  = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
-  const tipX   = x1 + (x2 - x1) * drawn;
-  const tipY   = y1 + (y2 - y1) * drawn;
+  const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+  const textAngle = Math.abs(angle) > 90 ? angle + 180 : angle;
+  const tipX = x1 + dx * drawn;
+  const tipY = y1 + dy * drawn;
+  const midX = x1 + dx * 0.5;
+  const midY = y1 + dy * 0.5;
+  const normalX = dy / len;
+  const normalY = -dx / len;
+  const labelOffset = normalY <= 0 ? 12 : -12;
+  const labelX = midX + normalX * labelOffset;
+  const labelY = midY + normalY * labelOffset;
 
   return (
     <g>
@@ -215,6 +214,16 @@ export function DiagramArrow({ x1, y1, x2, y2, color, progress, visible }: Diagr
           fill={color}
           transform={`translate(${tipX},${tipY}) rotate(${angle + 180})`}
         />
+      )}
+      {label && drawn >= 0.5 && (
+        <text
+          x={labelX} y={labelY}
+          textAnchor="middle" dominantBaseline="middle"
+          fill={color} fontSize={12} fontWeight={600}
+          transform={`rotate(${textAngle}, ${labelX}, ${labelY})`}
+        >
+          {label}
+        </text>
       )}
     </g>
   );
@@ -269,7 +278,10 @@ export function Controls({ t, playing, setPlaying, seek }: ControlsProps) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 4px 0" }}>
       <button
-        onClick={() => setPlaying((p) => !p)}
+        onClick={() => {
+        if (!playing && t >= 1) seek(0);
+        setPlaying(p => !p);
+      }}
         style={{
           width: 36, height: 36, borderRadius: "50%",
           border: "0.5px solid #ccc", background: "#fff",
