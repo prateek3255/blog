@@ -56,22 +56,27 @@ function activeArrowIndex(t: number): number {
 // ── arrows ────────────────────────────────────────────────────────────────────
 // Zigzag: each arrow's fromY = previous arrow's toY.
 const { LEFT_EDGE: CE, RIGHT_EDGE: SE, USABLE_TOP, USABLE_H } = LAYOUT;
+const ARROW_Y_SHIFT = -18;
+
+function arrowY(position: number) {
+  return USABLE_TOP + USABLE_H * position + ARROW_Y_SHIFT;
+}
 
 const ARROWS = [
   {
     name: "syn", label: "SYN", color: C_SYN,
-    x1: CE,      y1: USABLE_TOP + USABLE_H * 0.0,
-    x2: SE - 10, y2: USABLE_TOP + USABLE_H * 0.32,
+    x1: CE,      y1: arrowY(0.0),
+    x2: SE - 10, y2: arrowY(0.32),
   },
   {
     name: "synack", label: "SYN-ACK", color: C_SYNACK,
-    x1: SE,      y1: USABLE_TOP + USABLE_H * 0.32,
-    x2: CE + 10, y2: USABLE_TOP + USABLE_H * 0.65,
+    x1: SE,      y1: arrowY(0.32),
+    x2: CE + 10, y2: arrowY(0.65),
   },
   {
     name: "ack", label: "ACK", color: C_ACK,
-    x1: CE,      y1: USABLE_TOP + USABLE_H * 0.65,
-    x2: SE - 10, y2: USABLE_TOP + USABLE_H * 1.0,
+    x1: CE,      y1: arrowY(0.65),
+    x2: SE - 10, y2: arrowY(1.0),
   },
 ];
 

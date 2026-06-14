@@ -14,6 +14,7 @@ import http1 from './http1.png';
 import http2 from './http2.png';
 import http3 from './http3.png';
 import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
+import TcpPacketRetry from '@/components/react/sequence-diagrams/TcpPacketRetry.tsx';
 
 Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
@@ -29,9 +30,9 @@ To begin transmitting over TCP a three way handshake needs to be made between th
 
 <TcpHandshake client:visible />
 
-Once the connection is established, whenever data packets are transmitted from sender to receiver, the sender maintains a retransmission timer for unacknowledged packets. If an `ACK` is not received within a certain duration (Retransmission Timeout), it retries the packets.
+Once the connection is established, either side can send data over the same TCP connection. TCP keeps track of which packets have been acknowledged, and if an `ACK` does not arrive before the retransmission timeout expires, the sender retries the unacknowledged packet.
 
-←-Visualization of how packet delivery works with retry —>
+<TcpPacketRetry client:visible />
 
 ## HTTP/1.1 - The OG protocol
 

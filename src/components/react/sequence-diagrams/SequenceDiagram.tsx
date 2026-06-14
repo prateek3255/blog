@@ -23,7 +23,7 @@ export const LAYOUT = {
   BOX_W: 100,
   BOX_RX: 8,
   PADDING_TOP: 20,
-  PADDING_BOTTOM: 20,
+  PADDING_BOTTOM: 40,
   get BOX_H() { return this.H - this.PADDING_TOP - this.PADDING_BOTTOM; },
   get BOX_Y() { return this.PADDING_TOP; },
   get CLIENT_X() { return 40; },
@@ -176,11 +176,12 @@ interface DiagramArrowProps {
   y2: number;
   color: string;
   label?: string;
+  labelSide?: "above" | "below";
   progress: number;
   visible: boolean;
 }
 
-export function DiagramArrow({ x1, y1, x2, y2, color, label, progress, visible }: DiagramArrowProps) {
+export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above", progress, visible }: DiagramArrowProps) {
   if (!visible) return null;
 
   const dx = x2 - x1;
@@ -196,7 +197,8 @@ export function DiagramArrow({ x1, y1, x2, y2, color, label, progress, visible }
   const midY = y1 + dy * 0.5;
   const normalX = dy / len;
   const normalY = -dx / len;
-  const labelOffset = normalY <= 0 ? 12 : -12;
+  const shouldUseUpperNormal = labelSide === "above";
+  const labelOffset = shouldUseUpperNormal === (normalY <= 0) ? 12 : -12;
   const labelX = midX + normalX * labelOffset;
   const labelY = midY + normalY * labelOffset;
 
@@ -345,7 +347,7 @@ export function SequenceDiagram({ t, playing, setPlaying, seek, annotation, lege
       >
         {children}
         {annotation && (
-          <text x={W / 2} y={H - 8} textAnchor="middle" dominantBaseline="auto" fill="#aaa" fontSize={11}>
+          <text x={W / 2} y={H - 14} textAnchor="middle" dominantBaseline="auto" fill="#aaa" fontSize={13} fontWeight={600}>
             {annotation}
           </text>
         )}
