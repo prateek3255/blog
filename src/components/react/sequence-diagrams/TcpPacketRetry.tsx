@@ -51,12 +51,12 @@ function activeArrowIndex(t: number): number {
   return idx;
 }
 
-const { CLIENT_X, SERVER_X, LEFT_EDGE, RIGHT_EDGE, BOX_W, USABLE_TOP } = LAYOUT;
-const SERVER_CENTER = SERVER_X + BOX_W / 2;
+const { CLIENT_X, SERVER_X, LEFT_EDGE, RIGHT_EDGE, USABLE_TOP } = LAYOUT;
 const ROW_TOP_SHIFT = -45;
 const ACK_GAP = 12;
 const PAIR_GAP = 62;
 const RETRY_GAP = 54;
+const TIMEOUT_SWITCH = 0.68;
 const FIRST_PACKET_Y = USABLE_TOP + ROW_TOP_SHIFT;
 const ROWS = [
   FIRST_PACKET_Y,
@@ -175,29 +175,60 @@ function getAnnotation(t: number): string {
   return (active?.name ? ANNOTATIONS[active.name as keyof typeof ANNOTATIONS] : undefined) ?? "";
 }
 
-function TimeoutMarker({ rowIndex, visible }: { rowIndex: number; visible: boolean }) {
-  if (!visible) return null;
+function TimeoutIndicator({ rowIndex, phaseName, t }: { rowIndex: number; phaseName: string; t: number }) {
+  const phase = getPhase(phaseName);
+  if (!phase || t < phase.start) return null;
 
   const y = rowY(rowIndex);
-  const x = RIGHT_EDGE - 56;
+  const x = RIGHT_EDGE - 60;
+  const markerY = y - 18;
+  const textY = markerY - 14;
+  const progress = phaseProgress(phaseName, t);
+  const showSpinner = t < phase.end && progress < TIMEOUT_SWITCH;
 
   return (
     <g>
-      <circle cx={x} cy={y} r={7} fill="#fff" stroke="#D6A32C" strokeWidth={1.5} />
-      <text
-        x={x}
-        y={y + 0.5}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="#D6A32C"
-        fontSize={11}
-        fontWeight={700}
-      >
-        !
-      </text>
-      <text x={x + 14} y={y - 1} fill="#B78A18" fontSize={11} fontWeight={600}>
-        timeout
-      </text>
+      {showSpinner ? (
+        <g>
+          <circle
+            cx={x}
+            cy={markerY}
+            r={7}
+            fill="none"
+            stroke="#D6A32C"
+            strokeWidth={1.8}
+            strokeLinecap="round"
+            strokeDasharray="10 34"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from={`0 ${x} ${markerY}`}
+              to={`360 ${x} ${markerY}`}
+              dur="0.9s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+      ) : (
+        <g>
+          <text x={x} y={textY} textAnchor="middle" fill="#B78A18" fontSize={11} fontWeight={600}>
+            Timeout
+          </text>
+          <circle cx={x} cy={markerY} r={7} fill="#fff" stroke="#D6A32C" strokeWidth={1.5} />
+          <text
+            x={x}
+            y={markerY + 0.5}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="#D6A32C"
+            fontSize={11}
+            fontWeight={700}
+          >
+            !
+          </text>
+        </g>
+      )}
     </g>
   );
 }
@@ -230,8 +261,8 @@ export default function TcpPacketRetry() {
         />
       ))}
 
-      <TimeoutMarker rowIndex={2} visible={t >= (getPhase("timeout1")?.start ?? 1)} />
-      <TimeoutMarker rowIndex={3} visible={t >= (getPhase("timeout2")?.start ?? 1)} />
+      <TimeoutIndicator rowIndex={2} phaseName="timeout1" t={t} />
+      <TimeoutIndicator rowIndex={3} phaseName="timeout2" t={t} />
 
       <ActorBox x={CLIENT_X} label="Client" fill={C_CLIENT_FILL} bg={C_CLIENT_BG} />
       <ActorBox x={SERVER_X} label="Server" fill={C_SERVER_FILL} bg={C_SERVER_BG} />

@@ -15,6 +15,7 @@ import http2 from './http2.png';
 import http3 from './http3.png';
 import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
 import TcpPacketRetry from '@/components/react/sequence-diagrams/TcpPacketRetry.tsx';
+import Http1HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http1HeadOfLineBlocking.tsx';
 
 Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
@@ -116,9 +117,9 @@ Although HTTP/1.1 does support pipelining multiple requests and then sending the
 
 </Callout>
 
-Below we visualize data exchange across two persistent TCP connections between a client and server. Each request and response is broken into TCP segments, with larger payloads spanning multiple segments. Notice how despite having two connections, a single slow request creates a bottleneck, all subsequent requests queued behind it are forced to wait, illustrating Head of Line Blocking in action.
+Below we visualize HTTP/1.1 data exchange across a persistent TCP connection between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments. Notice how a single slow response keeps the connection occupied long enough that later requests queued behind it on that same connection are forced to wait, illustrating Head of Line Blocking in action.
 
-←- visualization where even though some requests are fast slow requests cause an overall network slowdown —>
+<Http1HeadOfLineBlocking client:visible />
 
 For testing purposes I also created a demo server running on HTTP/1.1 and loaded a hundred resources simultaneously where each took 20ms to process, and here is what the network graph looked like:
 

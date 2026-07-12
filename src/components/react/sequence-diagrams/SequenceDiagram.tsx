@@ -334,20 +334,23 @@ interface SequenceDiagramProps {
   seek: (val: number) => void;
   annotation?: string;
   legendItems?: LegendItem[];
+  viewBoxHeight?: number;
   children?: ReactNode;
 }
 
-export function SequenceDiagram({ t, playing, setPlaying, seek, annotation, legendItems = [], children }: SequenceDiagramProps) {
+export function SequenceDiagram({ t, playing, setPlaying, seek, annotation, legendItems = [], viewBoxHeight, children }: SequenceDiagramProps) {
   const { W, H } = LAYOUT;
+  const svgH = viewBoxHeight ?? H;
+
   return (
     <div style={{ fontFamily: "sans-serif", maxWidth: W, margin: "0 auto", padding: "16px 0" }}>
       <svg
-        viewBox={`0 0 ${W} ${H}`} width="100%"
+        viewBox={`0 0 ${W} ${svgH}`} width="100%"
         style={{ display: "block", border: "0.5px solid #e0e0e0", borderRadius: 8, background: "#fff" }}
       >
         {children}
         {annotation && (
-          <text x={W / 2} y={H - 14} textAnchor="middle" dominantBaseline="auto" fill="#aaa" fontSize={13} fontWeight={600}>
+          <text x={W / 2} y={svgH - 14} textAnchor="middle" dominantBaseline="auto" fill="#aaa" fontSize={13} fontWeight={600}>
             {annotation}
           </text>
         )}
