@@ -117,7 +117,7 @@ Although HTTP/1.1 does support pipelining multiple requests and then sending the
 
 </Callout>
 
-Below we visualize HTTP/1.1 data exchange across a persistent TCP connection between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments. Notice how a single slow response keeps the connection occupied long enough that later requests queued behind it on that same connection are forced to wait, illustrating Head of Line Blocking in action.
+Below we visualize HTTP/1.1 data exchange across two persistent TCP connections between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments. ACKs are shown but unlabeled for readability. Notice how, even with multiple connections, a slow response can still block later requests queued behind it on the same connection, illustrating Head of Line Blocking in action.
 
 <Http1HeadOfLineBlocking client:visible />
 
