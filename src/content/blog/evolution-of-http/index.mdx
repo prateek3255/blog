@@ -25,21 +25,31 @@ We'll start with a brief look at TCP and how it works at a high level, since und
 
 ## TCP
 
-Transmission Control Protocol is a Transport Layer Protocol that is used by sender and receiver to break down a message into packets and then reassemble it at the receiver, with flow and error control inherently baked into it.
+Transmission Control Protocol is a Transport Layer protocol used by the sender and receiver to break down a stream of data into segments and reassemble it at the receiver, with flow and error control inherently built in.
 
-To begin transmitting over TCP a three way handshake needs to be made between the source and the destination to establish a connection. The source first sending a `SYN` (initial request) packet to the destination server to start the dialogue. Then the destination server sends the `SYN-ACK` packet to agree to the process. Lastly the source sends an `ACK` packet to the target to confirm to the process after which a connection is established and the message contents can be sent from there on.
+<Callout>
+Each TCP segment consists of a header and a data section. The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793).
+</Callout>
+
+To begin transmitting over TCP, a three-way handshake needs to be made between the source and the destination to establish a connection. During this handshake, both the client and the server must agree on a starting sequence number that is used to guarantee the ordering of future segments.
+
+ - The client picks a random sequence number `x`. Then it sends a segment with the `SYN` (initial request) flag set to the destination server to start the dialogue.
+ - The server increments `x` by 1 and picks a random sequence number `y`. Then it sends a segment back to the client with the `SYN` and `ACK` flags set, the sequence number set to `y`, and the acknowledgement number set to `x+1` to acknowledge the client's request.
+ - The client increments both `x` and `y` by 1 and a segment with the `ACK` flag set, the sequence number set to `x+1` and the acknowledgement number set to `y+1`, is sent back to the server, completing the handshake.
 
 <TcpHandshake client:visible />
 
-Once the connection is established, either side can send data over the same TCP connection. TCP keeps track of which packets have been acknowledged, and if an `ACK` does not arrive before the retransmission timeout expires, the sender retries the unacknowledged packet.
+Once the connection is established, either side can send data via segments over the same TCP connection. To guard against an unreliable network, each side uses a sequence number to verify correct ordering and delivery of segments. This sequence number is then acknowledged by the other side with an acknowledgement number to confirm that the transmitted data was received successfully.
+
+Both sides also keep a Retransmission Timeout (RTO) timer to detect segment loss. If a segment is not acknowledged within the RTO, it is retransmitted.
 
 <TcpPacketRetry client:visible />
 
 ## HTTP/1.1 - The OG protocol
 
-This protocol although got refined multiple times, ruled the web for nearly two decades before the introduction of HTTP/2.
+Although this protocol went through multiple refinements, it ruled the web for nearly two decades before the introduction of HTTP/2.
 
-It followed a simple text based format that was sent over the network using TCP, which browsers and servers understand. For instance a typical HTTP request would look like this:
+It followed a simple text based format sent over TCP, one that both browsers and servers could easily parse. For instance a typical HTTP request would look like this:
 
 ```
 GET /resource/1 HTTP/1.1
@@ -49,7 +59,7 @@ Cache-Control: no-cache
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
 ```
 
-And the response from the server would looks like this:
+And the response from the server would look like this:
 
 ```
 HTTP/1.1 200 OK
@@ -60,7 +70,7 @@ Content-Length: 59
 { "id": 1 }
 ```
 
-The thing that made HTTP/1.1 special was the fact that it allowed reuse the TCP connection for multiple requests, skipping the need for opening a new connection and doing a handshake for it for every request. The following example illustrates multiple HTTP/1.1 requests sent over a single persistent TCP connection demonstrating how clients can reuse connections to load resources more efficiently:
+The thing that made HTTP/1.1 special over its predecessors was that it allowed reusing the same TCP connection for multiple requests, skipping the need to open a new connection and perform a handshake for every request. The following example illustrates multiple HTTP/1.1 requests sent over a single persistent TCP connection, demonstrating how clients can reuse connections to load resources more efficiently:
 
 ```
 GET / HTTP/1.1
@@ -109,13 +119,15 @@ content-type: application/json
 {"id": "a"}
 ```
 
-It worked really well for quite a long until the web became much more complex, with multiple requests being made for a web page and other resources. With the main bottleneck being Head of Line Blocking, which meant even though you could send multiple requests over the same connection the next request has to wait for the previous request to finish, so one slow request could delay multiple requests. And since browsers usually limit up to 6 TCP connections per session this significantly affects performance of websites making hundreds of requests.
+It worked really well for quite a long time, until the web became much more complex, with many requests being made for a single web page and its resources. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
 
 <Callout>
 
 Although HTTP/1.1 does support pipelining multiple requests and then sending the responses in the same order, it still does not fix Head of Line Blocking since responses must still be returned in order, meaning a slow response blocks all subsequent ones. It is also rarely used because of implementation differences across servers.
 
 </Callout>
+
+Also since browsers usually limit up to 6 concurrent TCP connections per host this significantly affected performance of websites making hundreds of requests. This is also why techniques like domain sharding (splitting assets across img1.example.com, img2.example.com, etc.) were popular for a while, more hostnames meant more connection pools, meaning more parallelism.
 
 Below we visualize HTTP/1.1 data exchange across two persistent TCP connections between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments. ACKs are shown but unlabeled for readability. Notice how, even with multiple connections, a slow response can still block later requests queued behind it on the same connection, illustrating Head of Line Blocking in action.
 
@@ -141,6 +153,8 @@ After the TCP handshake, the browser and server perform a **TLS handshake** (thi
 - The browser generates a secret, encrypts it using the server's **public key** (asymmetric/RSA encryption), and sends it to the server
 - The server decrypts the secret using its **private key** and now both sides share the same secret
 - For the rest of the session, all data is encrypted using **AES** (symmetric encryption) with that shared secret, which is much faster than asymmetric encryption
+
+< Visualization of how TLS works ->
 
 TLS has now become the standard on the web, with browsers showing warnings when opening sites without it, and it is a requirement for both HTTP/2 and HTTP/3 for practical use in the browser. Although this does come with a slight latency cost since every new TCP connection now requires a **TCP three-way handshake** followed by a **TLS handshake**, adding up to 2-3 round trips before any application data can be exchanged.
 
@@ -220,7 +234,7 @@ Here is another visualization of how HTTP/2 transfers works over TCP:
 
 ←- Visualization of how multiplexed requests share a single TCP connection —>
 
-All of this happens over a single TCP connection unlike upto 6 in case of HTTP/1.1 and yet the performance improvement over HTTP/1.1 is dramatic. Here is the same network waterfall with HTTP/2:
+All of this happens over a single TCP connection and yet the performance improvement over HTTP/1.1 is dramatic. Here is the same network waterfall with HTTP/2:
 
 <BlogImage src={http2} alt="HTTP/2 network waterfall" />
 

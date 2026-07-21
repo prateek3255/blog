@@ -73,7 +73,7 @@ function rowY(index: number) {
 const ARROWS = [
   {
     name: "clientPacket1",
-    label: "PACKET (CP1)",
+    label: "Segment 1 (Seq = 100)",
     labelSide: "above" as const,
     color: C_CLIENT_PACKET,
     x1: LEFT_EDGE,
@@ -83,7 +83,7 @@ const ARROWS = [
   },
   {
     name: "serverAck1",
-    label: "ACK",
+    label: "ACK = 150",
     labelSide: "below" as const,
     color: C_ACK,
     x1: RIGHT_EDGE,
@@ -93,7 +93,7 @@ const ARROWS = [
   },
   {
     name: "serverPacket1",
-    label: "PACKET (SP1)",
+    label: "Segment A (Seq = 500)",
     labelSide: "above" as const,
     color: C_SERVER_PACKET,
     x1: RIGHT_EDGE,
@@ -103,7 +103,7 @@ const ARROWS = [
   },
   {
     name: "clientAck1",
-    label: "ACK",
+    label: "ACK = 550",
     labelSide: "below" as const,
     color: C_ACK,
     x1: LEFT_EDGE,
@@ -113,7 +113,7 @@ const ARROWS = [
   },
   {
     name: "clientPacket2",
-    label: "PACKET (CP2)",
+    label: "Segment 2 (Seq = 150)",
     labelSide: "above" as const,
     color: C_CLIENT_PACKET,
     x1: LEFT_EDGE,
@@ -123,7 +123,7 @@ const ARROWS = [
   },
   {
     name: "clientRetry1",
-    label: "RETRY (CP2)",
+    label: "Segment 2 (Seq = 150)",
     labelSide: "above" as const,
     color: C_CLIENT_PACKET,
     x1: LEFT_EDGE,
@@ -133,7 +133,7 @@ const ARROWS = [
   },
   {
     name: "clientRetry2",
-    label: "RETRY (CP2)",
+    label: "Segment 2 (Seq = 150)",
     labelSide: "above" as const,
     color: C_CLIENT_PACKET,
     x1: LEFT_EDGE,
@@ -143,7 +143,7 @@ const ARROWS = [
   },
   {
     name: "serverAck2",
-    label: "ACK",
+    label: "ACK = 200",
     labelSide: "below" as const,
     color: C_ACK,
     x1: RIGHT_EDGE,
@@ -155,17 +155,17 @@ const ARROWS = [
 
 const ANNOTATIONS = {
   start: "Connection established - data can now flow in either direction",
-  clientPacket1: "Client sends a packet to the server",
-  serverAck1: "Server acknowledges the packet with ACK",
+  clientPacket1: "Client sends a segment to the server",
+  serverAck1: "Server acknowledges the segment with ACK",
   settle1: "Both sides stay in sync after the ACK",
   serverPacket1: "Server can also send data back over the same TCP connection",
-  clientAck1: "Client acknowledges the server packet",
+  clientAck1: "Client acknowledges the server segment",
   settle2: "TCP continues tracking which bytes have been acknowledged",
-  clientPacket2: "Client sends another packet, but no ACK arrives",
-  timeout1: "Retransmission timeout expires - the packet is assumed lost or delayed",
-  clientRetry1: "Client retries the unacknowledged packet",
+  clientPacket2: "Client sends another segment, but no ACK arrives",
+  timeout1: "Retransmission timeout expires - the segment is assumed lost or delayed",
+  clientRetry1: "Client retries the unacknowledged segment",
   timeout2: "Still no ACK, so TCP waits and retries again",
-  clientRetry2: "Client retransmits the same packet one more time",
+  clientRetry2: "Client retransmits the same segment one more time",
   serverAck2: "Server finally receives it and sends back an ACK",
   done: "Reliability comes from ACKs plus retransmission when ACKs are missing",
 };
