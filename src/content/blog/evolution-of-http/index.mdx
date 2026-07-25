@@ -28,7 +28,7 @@ We'll start with a brief look at TCP and how it works at a high level, since und
 Transmission Control Protocol is a Transport Layer protocol used by the sender and receiver to break down a stream of data into segments and reassemble it at the receiver, with flow and error control inherently built in.
 
 <Callout>
-Each TCP segment consists of a header and a data section. The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793).
+Each TCP segment consists of a header and a data section. The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793) from 1981.
 </Callout>
 
 To begin transmitting over TCP, a three-way handshake needs to be made between the source and the destination to establish a connection. During this handshake, both the client and the server must agree on a starting sequence number that is used to guarantee the ordering of future segments.
@@ -37,9 +37,11 @@ To begin transmitting over TCP, a three-way handshake needs to be made between t
  - The server increments `x` by 1 and picks a random sequence number `y`. Then it sends a segment back to the client with the `SYN` and `ACK` flags set, the sequence number set to `y`, and the acknowledgement number set to `x+1` to acknowledge the client's request.
  - The client increments both `x` and `y` by 1 and a segment with the `ACK` flag set, the sequence number set to `x+1` and the acknowledgement number set to `y+1`, is sent back to the server, completing the handshake.
 
+Notice how the acknowledgement number provided by each side is always the incremented sequence number of the other side. This is how TCP ensures reliable delivery of segments.
+
 <TcpHandshake client:visible />
 
-Once the connection is established, either side can send data via segments over the same TCP connection. To guard against an unreliable network, each side uses a sequence number to verify correct ordering and delivery of segments. This sequence number is then acknowledged by the other side with an acknowledgement number to confirm that the transmitted data was received successfully.
+Once the connection is established, either side can send data via segments over the same TCP connection. To guard against an unreliable network, each side uses the sequence number we saw in the previous section to verify correct ordering and delivery of segments. This sequence number is then acknowledged by the other side with the acknowledgement number which is incremented to the next expected sequence number to confirm that the transmitted data was received successfully.
 
 Both sides also keep a Retransmission Timeout (RTO) timer to detect segment loss. If a segment is not acknowledged within the RTO, it is retransmitted.
 
@@ -70,7 +72,7 @@ Content-Length: 59
 { "id": 1 }
 ```
 
-The thing that made HTTP/1.1 special over its predecessors was that it allowed reusing the same TCP connection for multiple requests, skipping the need to open a new connection and perform a handshake for every request. The following example illustrates multiple HTTP/1.1 requests sent over a single persistent TCP connection, demonstrating how clients can reuse connections to load resources more efficiently:
+The thing that made HTTP/1.1 special over its predecessors was that it allowed reusing the same TCP connection for multiple requests, skipping the need to open a new connection and perform a handshake for every request. The following example illustrates multiple HTTP/1.1 requests sent over a single persistent TCP connection, demonstrating how clients can reuse the same connection to load resources more efficiently:
 
 ```
 GET / HTTP/1.1
@@ -119,7 +121,7 @@ content-type: application/json
 {"id": "a"}
 ```
 
-It worked really well for quite a long time, until the web became much more complex, with many requests being made for a single web page and its resources. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
+It worked really well for quite a long time but with the rise of SPAs (Single Page Applications), there was a dramatic increase in the resources needed by a single web page. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
 
 <Callout>
 

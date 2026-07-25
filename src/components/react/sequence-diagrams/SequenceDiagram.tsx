@@ -177,11 +177,15 @@ interface DiagramArrowProps {
   color: string;
   label?: string;
   labelSide?: "above" | "below";
+  // Optional secondary line of text (e.g. the parenthetical detail of a
+  // label) rendered on the opposite side of the line from `label`, in a
+  // smaller/lighter style so it doesn't compete visually with the main label.
+  sublabel?: string;
   progress: number;
   visible: boolean;
 }
 
-export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above", progress, visible }: DiagramArrowProps) {
+export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above", sublabel, progress, visible }: DiagramArrowProps) {
   if (!visible) return null;
 
   const dx = x2 - x1;
@@ -201,6 +205,9 @@ export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above"
   const labelOffset = shouldUseUpperNormal === (normalY <= 0) ? 12 : -12;
   const labelX = midX + normalX * labelOffset;
   const labelY = midY + normalY * labelOffset;
+  const subLabelOffset = -labelOffset;
+  const subLabelX = midX + normalX * subLabelOffset;
+  const subLabelY = midY + normalY * subLabelOffset;
 
   return (
     <g>
@@ -225,6 +232,16 @@ export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above"
           transform={`rotate(${textAngle}, ${labelX}, ${labelY})`}
         >
           {label}
+        </text>
+      )}
+      {sublabel && drawn >= 0.5 && (
+        <text
+          x={subLabelX} y={subLabelY}
+          textAnchor="middle" dominantBaseline="middle"
+          fill={color} fontSize={10.5} fontWeight={500} opacity={0.8}
+          transform={`rotate(${textAngle}, ${subLabelX}, ${subLabelY})`}
+        >
+          {sublabel}
         </text>
       )}
     </g>

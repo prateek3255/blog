@@ -93,7 +93,7 @@ const ARROWS = [
   },
   {
     name: "serverPacket1",
-    label: "Segment A (Seq = 500)",
+    label: "Segment 1 (Seq = 500)",
     labelSide: "above" as const,
     color: C_SERVER_PACKET,
     x1: RIGHT_EDGE,
@@ -181,8 +181,8 @@ function TimeoutIndicator({ rowIndex, phaseName, t }: { rowIndex: number; phaseN
 
   const y = rowY(rowIndex);
   const x = RIGHT_EDGE - 60;
-  const markerY = y - 18;
-  const textY = markerY - 14;
+  const markerY = y - 16;
+  const textY = markerY - 12;
   const progress = phaseProgress(phaseName, t);
   const showSpinner = t < phase.end && progress < TIMEOUT_SWITCH;
 

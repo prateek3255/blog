@@ -64,17 +64,17 @@ function arrowY(position: number) {
 
 const ARROWS = [
   {
-    name: "syn", label: "SYN (x = random())", color: C_SYN,
+    name: "syn", label: "SYN", sublabel: "SEQN = x = random()", color: C_SYN,
     x1: CE,      y1: arrowY(0.0),
     x2: SE - 10, y2: arrowY(0.32),
   },
   {
-    name: "synack", label: "SYN-ACK (x = x + 1, y = random())", color: C_SYNACK,
+    name: "synack", label: "SYN-ACK", sublabel: "ACKN = x + 1, SEQN = y = random()", color: C_SYNACK,
     x1: SE,      y1: arrowY(0.32),
     x2: CE + 10, y2: arrowY(0.65),
   },
   {
-    name: "ack", label: "ACK (x = x + 1, y = y + 1)", color: C_ACK,
+    name: "ack", label: "ACK", sublabel: "ACKN = x + 1, SEQN = y + 1", color: C_ACK,
     x1: CE,      y1: arrowY(0.65),
     x2: SE - 10, y2: arrowY(1.0),
   },
@@ -118,6 +118,7 @@ export default function TCPHandshake() {
           x2={arrow.x2} y2={arrow.y2}
           color={arrow.color}
           label={arrow.label}
+          sublabel={arrow.sublabel}
           visible={i <= activeIdx}
           progress={
             i < activeIdx ? 1 : phaseProgress(arrow.name, t)
