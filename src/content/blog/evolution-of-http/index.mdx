@@ -16,6 +16,8 @@ import http3 from './http3.png';
 import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
 import TcpPacketRetry from '@/components/react/sequence-diagrams/TcpPacketRetry.tsx';
 import Http1HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http1HeadOfLineBlocking.tsx';
+import TlsHandshake from '@/components/react/sequence-diagrams/TlsHandshake.tsx';
+import Http2Multiplexing from '@/components/react/sequence-diagrams/Http2Multiplexing.tsx';
 
 Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
@@ -131,15 +133,23 @@ Although HTTP/1.1 does support pipelining multiple requests and then sending the
 
 Also since browsers usually limit up to 6 concurrent TCP connections per host this significantly affected performance of websites making hundreds of requests. This is also why techniques like domain sharding (splitting assets across img1.example.com, img2.example.com, etc.) were popular for a while, more hostnames meant more connection pools, meaning more parallelism.
 
-Below we visualize HTTP/1.1 data exchange across two persistent TCP connections between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments. ACKs are shown but unlabeled for readability. Notice how, even with multiple connections, a slow response can still block later requests queued behind it on the same connection, illustrating Head of Line Blocking in action.
+Below we visualize HTTP/1.1 data exchange across two persistent TCP connections between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments.
 
 <Http1HeadOfLineBlocking client:visible />
+
+<Callout>
+
+ACKs are omitted for brevity from the above visualization, in reality each TCP segment is acknowledged by either side as we saw in the previous section.
+
+</Callout>
+
+Notice in the above visualization, even with multiple connections the `/style.css` request gets blocked because of the `/large-img.jpg` request, illustrating Head of Line Blocking in action.
 
 For testing purposes I also created a demo server running on HTTP/1.1 and loaded a hundred resources simultaneously where each took 20ms to process, and here is what the network graph looked like:
 
 <BlogImage src={http1} alt="HTTP/1.1 network waterfall" />
 
-If you check the waterfall you can clearly see that the actual requests take 20ms each but they get stalled significantly because they're waiting for other requests to complete on the same connection. With all requests taking more than 300ms to be processed.
+If you check the waterfall for the slowest chunk of requests, you can see that even though the actual requests take 20ms each to process yet they get stalled significantly because they're waiting for other requests to complete on the same connection. All requests take more than 300ms to be processed in total.
 
 ### Making HTTP secure
 
@@ -151,14 +161,15 @@ All servers that want to use `https` need a signed certificate from a recognised
 
 After the TCP handshake, the browser and server perform a **TLS handshake** (this describes TLS 1.2):
 
-- The browser verifies the server's certificate against a trusted CA and extracts the server's public key from it
-- The browser generates a secret, encrypts it using the server's **public key** (asymmetric/RSA encryption), and sends it to the server
-- The server decrypts the secret using its **private key** and now both sides share the same secret
-- For the rest of the session, all data is encrypted using **AES** (symmetric encryption) with that shared secret, which is much faster than asymmetric encryption
+- The browser sends a `ClientHello` with its supported cipher suites and a randomly generated value (**client random**). The server responds with a `ServerHello` containing its chosen cipher suite, its own randomly generated value (**server random**) and its certificate.
+- The browser verifies the server's certificate against a trusted CA and extracts the server's public key from it.
+- The browser generates a secret, encrypts it using the server's **public key** (asymmetric/RSA encryption), and sends it to the server (this is also called the **pre-master secret**).
+- The server decrypts the secret using its **private key** and now both sides have the same pre-master secret, client random, and server random. Both sides then derive the same symmetric keys from these values using a key derivation function.
+- For the rest of the session, all data is encrypted using **AES** (symmetric encryption) with those derived keys.
 
-< Visualization of how TLS works ->
+<TlsHandshake client:visible />
 
-TLS has now become the standard on the web, with browsers showing warnings when opening sites without it, and it is a requirement for both HTTP/2 and HTTP/3 for practical use in the browser. Although this does come with a slight latency cost since every new TCP connection now requires a **TCP three-way handshake** followed by a **TLS handshake**, adding up to 2-3 round trips before any application data can be exchanged.
+TLS has now become the standard on the web, with browsers showing warnings when opening sites without it, and it is a requirement for both HTTP/2 and HTTP/3 for practical use in the browser. The handshake described above is for TLS 1.2, which does come with a slight latency cost since every new TCP connection now requires a TCP three-way handshake followed by a TLS handshake, adding up to 2-3 round trips before any application data can be exchanged. TLS 1.3, which most of the web uses today, [reduces this to a single round trip](https://www.cloudflare.com/learning/ssl/why-use-tls-1.3/) for the handshake itself, bringing the total down to about 2 round trips, and even supports 0-RTT for resumed sessions with a site you've already visited.
 
 ## HTTP/2 - The protocol for performance
 
@@ -210,7 +221,7 @@ Server  -> Browser [Stream 4] 200 OK ...
 
 If you look carefully you'll see that requests and responses belonging to different streams are genuinely interleaved. The server starts responding to Stream 1 while the browser is still sending requests for Stream 3, and new requests on Streams 4 and 5 go out while earlier responses are still arriving. The client and server use stream IDs to reassemble everything correctly.
 
-Think of the TCP connection as a highway and streams as cars. Multiple cars travel the same road simultaneously without waiting for each other — they just have different license plates (stream IDs).
+A good analogy for this would be to think of the TCP connection as a highway and streams as cars. Multiple cars travel the same road simultaneously without waiting for each other, they just have different license plates (stream IDs).
 
 Stream IDs are how HTTP/2 implements multiplexing: the ability to have multiple independent request/response exchanges in flight simultaneously on a single TCP connection without them interfering with each other.
 
@@ -234,7 +245,7 @@ This allows significant reduction in header size over a persistent TCP connectio
 
 Here is another visualization of how HTTP/2 transfers works over TCP:
 
-←- Visualization of how multiplexed requests share a single TCP connection —>
+<Http2Multiplexing client:visible />
 
 All of this happens over a single TCP connection and yet the performance improvement over HTTP/1.1 is dramatic. Here is the same network waterfall with HTTP/2:
 
