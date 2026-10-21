@@ -1,0 +1,313 @@
+---
+title: "Evolution Of HTTP: An Interactive Guide"
+description: "A deep dive into the three major versions of HTTP that dominate the web today and how they evolved to meet the needs of the modern internet."
+date: "2026-10-21"
+updatedAt: "2026-10-21"
+tags:
+  - go
+  - http
+---
+
+import Callout from '@/components/mdx/Callout.astro';
+import BlogImage from '@/components/mdx/BlogImage.astro';
+import http1 from './http1.png';
+import http2 from './http2.png';
+import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
+import TcpPacketRetry from '@/components/react/sequence-diagrams/TcpPacketRetry.tsx';
+import Http1HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http1HeadOfLineBlocking.tsx';
+import TlsHandshake from '@/components/react/sequence-diagrams/TlsHandshake.tsx';
+import Http2Multiplexing from '@/components/react/sequence-diagrams/Http2Multiplexing.tsx';
+import Http2HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http2HeadOfLineBlocking.tsx';
+import Http3PacketLoss from '@/components/react/sequence-diagrams/Http3PacketLoss.tsx';
+import UdpDatagrams from '@/components/react/sequence-diagrams/UdpDatagrams.tsx';
+
+Hypertext Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
+
+In this article we'll be taking a deep dive into the three major versions of HTTP that dominate the web today. If you're not already familiar with the HTTP request and response structure, [this article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages) is a good refresher before diving in.
+
+We'll start with a brief look at TCP and how it works at a high level, since understanding it is key to appreciating why HTTP evolved the way it did.
+
+## TCP
+
+Transmission Control Protocol is a Transport Layer protocol used by the sender and receiver to break down a stream of data into segments and reassemble it at the receiver, with flow and error control inherently built in.
+
+TCP breaks data into chunks and wraps each chunk with a TCP header. This chunk plus header is called a TCP segment, and it is the unit of data that TCP uses to send and receive information over the network. 
+
+<Callout>
+The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793) from 1981.
+</Callout>
+
+To begin transmitting over TCP, a three-way handshake needs to be made between the source and the destination to establish a connection. During this handshake, both the client and the server must agree on a starting sequence number that is used to guarantee the ordering of future segments.
+
+ - The client picks a random sequence number `x`. Then it sends a segment with the `SYN` (initial request) flag set to the destination server to start the dialogue.
+ - The server increments `x` by 1 and picks a random sequence number `y`. Then it sends a segment back to the client with the `SYN` and `ACK` flags set, the sequence number set to `y`, and the acknowledgement number set to the incremented `x` to acknowledge the client's request.
+ - The client increments both `x` and `y` by 1 and a segment with the `ACK` flag set, the sequence number set to the incremented `x` and the acknowledgement number set to the incremented `y`, is sent back to the server, completing the handshake.
+
+Notice how the acknowledgement number provided by each side is always the incremented sequence number of the other side. This is how TCP ensures reliable delivery of segments.
+
+<TcpHandshake client:visible />
+
+Once the connection is established, either side can send data via segments over the same TCP connection. To guard against an unreliable network, each side uses the sequence number we saw in the previous section to verify correct ordering and delivery of segments. This sequence number is then acknowledged by the other side with the acknowledgement number which is incremented to the next expected sequence number to confirm that the transmitted data was received successfully.
+
+Both sides also keep a Retransmission Timeout (RTO) timer to detect segment loss. If a segment is not acknowledged within the RTO, it is retransmitted.
+
+<TcpPacketRetry client:visible />
+
+Now that we have a basic understanding of TCP, let's look at how it's used by HTTP.
+
+## HTTP/1.1 - The OG protocol
+
+Although this protocol went through multiple refinements, it ruled the web for nearly two decades before the introduction of HTTP/2.
+
+It followed a simple text based format sent over TCP, one that both browsers and servers could easily parse. For instance a typical HTTP request would look like this:
+
+```
+GET /resource/1 HTTP/1.1
+Host: example.com
+Connection: keep-alive
+Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+```
+
+And the response from the server would look like this:
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sun, 01 Mar 2026 11:20:08 GMT
+Content-Length: 11
+
+{ "id": 1 }
+```
+
+The thing that made HTTP/1.1 special over its predecessors was that it allowed reusing the same TCP connection for multiple requests, skipping the need to open a new connection and perform a handshake for every request. The following example illustrates multiple HTTP/1.1 requests sent over a single persistent TCP connection, demonstrating how clients can reuse the same connection to load resources more efficiently:
+
+```
+GET / HTTP/1.1
+Host: example.com
+...
+
+HTTP/1.1 200 OK
+accept-ranges: none
+content-type: text/html
+content-length: 31564
+...
+
+[31564 bytes of HTML]
+
+GET /static/css/main.css HTTP/1.1
+Host: example.com
+...
+
+HTTP/1.1 200 OK
+content-length: 20456
+content-type: text/css
+...
+
+[20456 bytes of CSS]
+
+GET /static/js/main.js HTTP/1.1
+Host: example.com
+...
+
+HTTP/1.1 200 OK
+content-length: 4057
+content-type: application/javascript
+...
+
+[4057 bytes of JS]
+
+GET /resource/a HTTP/1.1
+Host: example.com
+...
+
+HTTP/1.1 200 OK
+content-length: 11
+content-type: application/json
+...
+
+{"id": "a"}
+```
+
+It worked really well for quite a long time but as web became more ubiquotous especially with the rise of SPAs (Single Page Applications), there was a dramatic increase in the resources needed by a single web page. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
+
+<Callout>
+
+Although HTTP/1.1 does support pipelining multiple requests and then sending the responses in the same order, it still does not fix Head of Line Blocking since responses must still be returned in order, meaning a slow response blocks all subsequent ones. It is also rarely used because of implementation differences across servers.
+
+</Callout>
+
+Also since browsers usually limit up to 6 concurrent TCP connections per host this significantly affected performance of websites making hundreds of requests. This is also why techniques like domain sharding (splitting assets across img1.example.com, img2.example.com, etc.) were popular for a while, more hostnames meant more connection pools, meaning more parallelism.
+
+Below we visualize HTTP/1.1 data exchange across two persistent TCP connections between a client and server. Each request and response is shown as data carried over one or more TCP segments, with larger responses spanning multiple segments.
+
+<Http1HeadOfLineBlocking client:visible />
+
+<Callout>
+
+ACKs are omitted for brevity from the above visualization, in reality each TCP segment is acknowledged by either side as we saw in the previous section.
+
+</Callout>
+
+Notice in the above visualization, even with multiple connections the `/style.css` request gets blocked because of the `/large-img.jpg` request, illustrating Head of Line Blocking in action.
+
+For testing purposes I also created a demo server running on HTTP/1.1 and loaded a hundred resources simultaneously where each took **20ms** to process, and here is what the network graph looked like:
+
+<BlogImage src={http1} alt="HTTP/1.1 network waterfall" />
+
+If you check the waterfall and the overall time taken for all requests to complete, you'll see a pattern of at most 6 requests being processed in parallel similar to what we discussed earlier. So even though the requests take 20ms to process the slowest request took more than 300ms since they get queued behind existing requests.
+
+### Making HTTP secure
+
+Since HTTP packets are transferred in plain text, anyone on the network between you and the server could read them and even modify them before they reached the destination (a classic **Man in the Middle attack**) which is a huge security risk.
+
+As the web grew beyond academic networks, people soon realized plain HTTP wasn't enough. SSL was introduced by Netscape in 1995 as the first solution, and TLS later succeeded it in 1999 as the more secure standard. TLS is basically what adds the `s` ("secure") in `https`.
+
+All servers that want to use `https` need a signed certificate from a recognised Certificate Authority (CA) that the browser trusts. Each certificate contains the server's **public key**, while the server keeps its **private key** secret.
+
+When using `https` after the TCP handshake, the browser and server perform a **TLS handshake** (this describes TLS 1.2):
+
+- The browser sends a `ClientHello` with its supported cipher suites and a randomly generated value (**client random**). The server responds with a `ServerHello` containing its chosen cipher suite, its own randomly generated value (**server random**) and its certificate.
+- The browser verifies the server's certificate against a trusted CA and extracts the server's public key from it.
+- The browser generates a secret, encrypts it using the server's **public key** (asymmetric/RSA encryption), and sends it to the server (this is also called the **pre-master secret**).
+- The server decrypts the secret using its **private key** and now both sides have the same pre-master secret, client random, and server random. Both sides then derive the same symmetric keys from these values using a key derivation function.
+- For the rest of the session, all data is encrypted using **AES** (symmetric encryption) with those derived keys.
+
+<TlsHandshake client:visible />
+
+TLS has now become the standard on the web, with browsers showing warnings when opening sites without it, and it is a requirement for both HTTP/2 and HTTP/3 for practical use in the browser. The handshake described above is for TLS 1.2, which does come with a slight latency cost since every new TCP connection now requires a TCP three-way handshake followed by a TLS handshake, adding up to 2-3 round trips before any application data can be exchanged. TLS 1.3, which most of the web uses today, [reduces this to a single round trip](https://www.cloudflare.com/learning/ssl/why-use-tls-1.3/) for the handshake itself, bringing the total down to about 2 round trips, and even supports 0-RTT for resumed sessions with a site you've already visited.
+
+## HTTP/2 - The protocol for performance
+
+As we discussed in the previous section, the Head of Line Blocking problem in HTTP/1.1 was starting to become a major performance bottleneck as the web evolved and required a lot more assets for interactivity, media, etc. To overcome this, Google implemented an experimental protocol called [SPDY](https://en.wikipedia.org/wiki/SPDY) in the early 2010s which later became the [foundation for HTTP/2, standardized in 2015](https://www.rfc-editor.org/info/rfc7540/).
+
+One of the main ways HTTP/2 overcomes the limitations of HTTP/1.1 is by multiplexing that is sending data for multiple requests and responses over the same TCP connection in parallel.
+
+It is also a binary protocol instead of a plain text one like HTTP/1.1, so it cannot be read in its raw form on the wire the way HTTP/1.1 can, but as we'll see it enables improved optimization techniques like header compression and streams.
+
+Here is a simplified representation of how data is exchanged over TCP conceptually:
+
+```
+Browser -> Server  [Stream 1] GET /main.js
+                              Host: example.com
+                              ...
+
+Browser -> Server  [Stream 3] GET /resource/1
+                              Host: example.com
+                              ...
+
+Browser -> Server  [Stream 5] GET /resource/5
+                              Host: example.com
+                              ...
+
+Server  -> Browser [Stream 1] 200 OK
+                              content-type: application/javascript
+                              content-length: 457
+                              ...
+                              [457 bytes of JS]
+
+Browser -> Server  [Stream 7] GET /resource/7
+                              Host: example.com
+                              ...
+
+Browser -> Server  [Stream 9] GET /resource/9
+                              Host: example.com
+                              ...
+
+Server  -> Browser [Stream 3] 200 OK
+                              content-type: application/json
+                              content-length: 11
+                              ...
+                              {"id": "a"}
+
+Server  -> Browser [Stream 5] 200 OK ...
+Server  -> Browser [Stream 7] 200 OK ...
+...
+```
+
+If you look carefully you'll see that requests and responses belonging to different streams are genuinely interleaved. The server starts responding to Stream 1 while the browser is still sending more requests, and new requests on Streams 7 and 9 go out while earlier responses are still arriving. The client and server use stream IDs to reassemble everything correctly.
+
+A good analogy for this would be to think of the TCP connection as a highway and streams as cars. Multiple cars travel the same road simultaneously without waiting for each other, they just have different license plates (stream IDs).
+
+Stream IDs are how HTTP/2 implements multiplexing: the ability to have multiple independent request/response exchanges in flight simultaneously on a single TCP connection without them interfering with each other.
+
+Apart from this, since most requests share mostly common headers, HTTP/2 also implements header compression via HPACK. Both sides start with a static table of common headers, each assigned an index:
+
+```
+Index  Name                Value
+1      :authority
+2      :method             GET
+3      :method             POST
+4      :path               /
+5      :path               /index.html
+...
+```
+
+So instead of sending multiple bytes for these headers, the connection only uses a single index byte when it encounters them. 
+
+On top of the static table, both sides maintain a dynamic table that is a sliding window of headers seen in the current session. When the client sends `user-agent: Mozilla/5.0...` for the first time it's added to the dynamic table, and every subsequent request can reference it as a single index. Each direction (client to server and server to client) keeps its own dynamic table.
+
+This allows significant reduction in header size over a persistent TCP connection with multiple requests. For instance in the demo I was using I observed that the **headers for the resource requests took 51 bytes on the wire as opposed to the 983 bytes it took in plain text over HTTP/1.1**.
+
+Here is another visualization of how HTTP/2 transfers works over TCP:
+
+<Http2Multiplexing client:visible />
+
+All of this happens over a single TCP connection and yet the performance improvement over HTTP/1.1 is dramatic. Here is the same network waterfall with HTTP/2:
+
+<BlogImage src={http2} alt="HTTP/2 network waterfall" />
+
+All 100 resource requests completed in around 50ms round trip, compared to the 370ms worst case we saw with HTTP/1.1.
+
+This essentially fixes the application level Head of Line Blocking we saw with HTTP/1.1, but it still suffers from a different type of Head of Line Blocking which leads us into the next section
+
+## HTTP/3 - The protocol for resilience
+
+Now you might think if we had already solved all the problems with HTTP/2, then why did we need another version of HTTP.
+
+HTTP/3 was needed to solve another type of Head of Line Blocking, this time at the transport layer. HTTP/2 multiplexes many streams over a single TCP connection, but TCP has no idea that streams exist. It only sees one ordered stream of bytes.
+
+As we saw earlier, TCP guarantees in-order delivery. When a segment is lost, the sender detects it either through duplicate ACKs or through the Retransmission Timeout (RTO) and retransmits it. Until the retransmitted segment arrives, TCP holds back all subsequent data in its receive buffer and does not deliver it to the application, even if that data belongs to completely unrelated streams.
+
+Here is an example of HTTP/2 suffering from this. A segment carrying `large-image.jpg` data is lost. The segments after it, carrying data from other streams, arrive fine but are held by TCP. For each out-of-order segment the client sends a duplicate ACK, still asking for the missing byte. After three duplicate ACKs, the server retransmits the lost segment (fast retransmit), and only then are all the held segments delivered to the browser and can be processed by the application:
+
+<Http2HeadOfLineBlocking client:visible />
+
+With smartphones gaining huge popularity all over the planet in the late 2010s, almost 60% of the whole internet traffic is being consumed on them. Mobile networks made packet loss brutally apparent (1-2% on mobile networks compared to 0.01% on wired), and frequent network switches from WiFi → LTE → WiFi tear down the entire TCP connection, requiring a full TCP three-way handshake followed by a TLS handshake all over again.
+
+Since this time around the problem was not with HTTP/2 but with the underlying transport protocol itself, the transport layer protocol needed to be changed to use UDP instead of TCP.
+
+[UDP (User Datagram Protocol)](https://www.cloudflare.com/en-in/learning/ddos/glossary/user-datagram-protocol-udp/) like TCP is a networking protocol for transferring data between two computers. The way it differs from TCP is that UDP is more of a fire and forget protocol, where it just sends packets directly to the target computer without establishing a connection, tracking packet order, or checking whether packets arrived.
+
+<UdpDatagrams client:visible />
+
+UDP is primarily used for time-sensitive communications where occasionally dropping a packet is better than waiting. Most prominent examples include Voice over IP and Video calls, in both cases a static-y conversation is preferable over one that is crystal clear but is delayed.
+
+Although that is not the case with HTTP, we still need to ensure that all packets are delivered correctly for a web page to load. This is where [QUIC](https://developer.mozilla.org/en-US/docs/Glossary/QUIC) comes in. QUIC is a multiplexed transport protocol built on top of UDP.
+
+With QUIC over UDP we get the following things:
+
+- Multiplexing of requests over independent streams like HTTP/2, but built into the transport itself. HTTP/3 pairs this with header compression via **QPACK**, a compression algorithm designed specifically to handle out-of-order delivery of headers across streams, unlike HPACK which assumed in-order delivery.
+- QUIC tracks delivery independently per stream, so packet loss on one stream does not block any other stream from making progress, unlike TCP where a missing segment freezes delivery for everything behind it.
+- Has TLS 1.3 baked in, so encryption is no longer optional.
+- Unlike TCP which identifies a connection by the combination of source IP, source port, destination IP and destination port, QUIC uses a **Connection ID**. This means switching from WiFi to LTE no longer tears down the connection instead QUIC simply continues using the same Connection ID over the new network path, with no new handshake required.
+
+This also means that by building on UDP, QUIC moves the reliability and flow control logic out of the kernel and into userspace, meaning it is implemented in userspace as a library on top of UDP instead of in the OS kernel like TCP, this is also what allows QUIC to evolve and be updated much faster than TCP ever could.
+
+<Callout>
+
+Browsers don't inherently know that a server supports HTTP/3, so the server needs to advertise it. It does this with an extra header `Alt-Svc: h3=":443"` on a regular HTTP/1.1 or HTTP/2 response, which tells the browser the server also supports HTTP/3 on port 443, so the browser uses HTTP/3 for subsequent requests and future visits. Browsers can also discover it through HTTPS DNS records. Since UDP can be blocked on some networks, servers keep supporting HTTP/1.1 or HTTP/2 over TCP as a fallback.
+
+</Callout>
+
+Here is a simple visualization of how HTTP/3 with QUIC works over the network:
+
+<Http3PacketLoss client:visible />
+
+With HTTP/3 the browser can continue to receive data for other streams while waiting for the retransmission of older lost packets on a different stream, effectively mitigating the Head of Line Blocking problem seen in HTTP/2 over TCP.
+
+## Wrapping up
+
+To summarize, in this article we saw how HTTP has evolved over the last 3 decades, molded by the requirements around it, and I hope it gives you a better idea of why you should consider switching to HTTP/2 or HTTP/3 if you haven't already.
+
+Thanks to edge network services like Cloudflare and Vercel, switching to newer versions has never been easier. These services act as a CDN and reverse proxy, terminating the client connection at their edge using HTTP/2 or HTTP/3, even if your origin server only speaks HTTP/1.1, so your clients get the benefits of modern HTTP without requiring changes to your backend.
