@@ -309,6 +309,7 @@ export function Controls({ t, playing, setPlaying, seek }: ControlsProps) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 4px 0" }}>
       <button
+        aria-label={playing ? "Pause animation" : t >= 1 ? "Replay animation" : "Play animation"}
         onClick={() => {
         if (!playing && t >= 1) seek(0);
         setPlaying(p => !p);
@@ -333,6 +334,7 @@ export function Controls({ t, playing, setPlaying, seek }: ControlsProps) {
       </button>
       <input
         type="range" min={0} max={1000} step={1}
+        aria-label="Animation progress"
         value={Math.round(t * 1000)}
         onChange={e => { setPlaying(false); seek(parseInt(e.target.value) / 1000); }}
         style={{ flex: 1 }}

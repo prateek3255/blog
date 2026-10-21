@@ -74,7 +74,7 @@ const ARROWS = [
     x2: CE + 10, y2: arrowY(0.65),
   },
   {
-    name: "ack", label: "ACK", sublabel: "ACKN = x + 1, SEQN = y + 1", color: C_ACK,
+    name: "ack", label: "ACK", sublabel: "SEQN = x + 1, ACKN = y + 1", color: C_ACK,
     x1: CE,      y1: arrowY(0.65),
     x2: SE - 10, y2: arrowY(1.0),
   },

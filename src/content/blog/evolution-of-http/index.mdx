@@ -21,7 +21,7 @@ import Http2HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http2H
 import Http3PacketLoss from '@/components/react/sequence-diagrams/Http3PacketLoss.tsx';
 import UdpDatagrams from '@/components/react/sequence-diagrams/UdpDatagrams.tsx';
 
-Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
+Hypertext Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
 In this article we'll be taking a deep dive into the three major versions of HTTP that dominate the web today. If you're not already familiar with the HTTP request and response structure, [this article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages) is a good refresher before diving in.
 
@@ -75,7 +75,7 @@ And the response from the server would look like this:
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Sun, 01 Mar 2026 11:20:08 GMT
-Content-Length: 59
+Content-Length: 11
 
 { "id": 1 }
 ```
@@ -159,7 +159,7 @@ If you check the waterfall and the overall time taken for all requests to comple
 
 ### Making HTTP secure
 
-Since HTTP packets are transferred in plain text, anyone on the network between you and the server could read them and even modify them before they reached the destination  (a classic **Man in the Middle attack** ) which is a huge security risk.
+Since HTTP packets are transferred in plain text, anyone on the network between you and the server could read them and even modify them before they reached the destination (a classic **Man in the Middle attack**) which is a huge security risk.
 
 As the web grew beyond academic networks, people soon realized plain HTTP wasn't enough. SSL was introduced by Netscape in 1995 as the first solution, and TLS later succeeded it in 1999 as the more secure standard. TLS is basically what adds the `s` ("secure") in `https`.
 
@@ -192,11 +192,11 @@ Browser -> Server  [Stream 1] GET /main.js
                               Host: example.com
                               ...
 
-Browser -> Server  [Stream 2] GET /resource/1
+Browser -> Server  [Stream 3] GET /resource/1
                               Host: example.com
                               ...
 
-Browser -> Server  [Stream 3] GET /resource/5
+Browser -> Server  [Stream 5] GET /resource/5
                               Host: example.com
                               ...
 
@@ -206,26 +206,26 @@ Server  -> Browser [Stream 1] 200 OK
                               ...
                               [457 bytes of JS]
 
-Browser -> Server  [Stream 4] GET /resource/7
+Browser -> Server  [Stream 7] GET /resource/7
                               Host: example.com
                               ...
 
-Browser -> Server  [Stream 5] GET /resource/9
+Browser -> Server  [Stream 9] GET /resource/9
                               Host: example.com
                               ...
 
-Server  -> Browser [Stream 2] 200 OK
+Server  -> Browser [Stream 3] 200 OK
                               content-type: application/json
                               content-length: 11
                               ...
                               {"id": "a"}
 
-Server  -> Browser [Stream 3] 200 OK ...
-Server  -> Browser [Stream 4] 200 OK ...
+Server  -> Browser [Stream 5] 200 OK ...
+Server  -> Browser [Stream 7] 200 OK ...
 ...
 ```
 
-If you look carefully you'll see that requests and responses belonging to different streams are genuinely interleaved. The server starts responding to Stream 1 while the browser is still sending requests for Stream 3, and new requests on Streams 4 and 5 go out while earlier responses are still arriving. The client and server use stream IDs to reassemble everything correctly.
+If you look carefully you'll see that requests and responses belonging to different streams are genuinely interleaved. The server starts responding to Stream 1 while the browser is still sending more requests, and new requests on Streams 7 and 9 go out while earlier responses are still arriving. The client and server use stream IDs to reassemble everything correctly.
 
 A good analogy for this would be to think of the TCP connection as a highway and streams as cars. Multiple cars travel the same road simultaneously without waiting for each other, they just have different license plates (stream IDs).
 
@@ -245,7 +245,7 @@ Index  Name                Value
 
 So instead of sending multiple bytes for these headers, the connection only uses a single index byte when it encounters them. 
 
-On top of the static table, both sides maintain a dynamic table that is a sliding window of headers seen in the current session. When the server sends back `user-agent: Mozilla/5.0...` for the first time it's added to the dynamic table, and every subsequent request can reference it as a single index.
+On top of the static table, both sides maintain a dynamic table that is a sliding window of headers seen in the current session. When the client sends `user-agent: Mozilla/5.0...` for the first time it's added to the dynamic table, and every subsequent request can reference it as a single index. Each direction (client to server and server to client) keeps its own dynamic table.
 
 This allows significant reduction in header size over a persistent TCP connection with multiple requests. For instance in the demo I was using I observed that the **headers for the resource requests took 51 bytes on the wire as opposed to the 983 bytes it took in plain text over HTTP/1.1**.
 
@@ -277,7 +277,7 @@ With smartphones gaining huge popularity all over the planet in the late 2010s, 
 
 Since this time around the problem was not with HTTP/2 but with the underlying transport protocol itself, the transport layer protocol needed to be changed to use UDP instead of TCP.
 
-[UDP (User Datagram Protocol)](https://www.cloudflare.com/en-in/learning/ddos/glossary/user-datagram-protocol-udp/) like TCP is a networking protocol for transferring data between two computers. The way it differs from TCP is that UDP is more of a fire and forget protocol, where it just sends packets directly to the target computer without establishing a connection, indicating the order of packets, or checking whether they arrived as intended and no ordering guarantees.
+[UDP (User Datagram Protocol)](https://www.cloudflare.com/en-in/learning/ddos/glossary/user-datagram-protocol-udp/) like TCP is a networking protocol for transferring data between two computers. The way it differs from TCP is that UDP is more of a fire and forget protocol, where it just sends packets directly to the target computer without establishing a connection, tracking packet order, or checking whether packets arrived.
 
 <UdpDatagrams client:visible />
 
@@ -287,16 +287,16 @@ Although that is not the case with HTTP, we still need to ensure that all packet
 
 With QUIC over UDP we get the following things:
 
-- All the multiplexing of requests like HTTP/2 and header compression via **QPACK** which is QUIC's own compression algorithm designed specifically to handle out-of-order delivery of headers across streams, unlike HPACK which assumed in-order delivery.
+- Multiplexing of requests over independent streams like HTTP/2, but built into the transport itself. HTTP/3 pairs this with header compression via **QPACK**, a compression algorithm designed specifically to handle out-of-order delivery of headers across streams, unlike HPACK which assumed in-order delivery.
 - QUIC tracks delivery independently per stream, so packet loss on one stream does not block any other stream from making progress, unlike TCP where a missing segment freezes delivery for everything behind it.
 - Has TLS 1.3 baked in, so encryption is no longer optional.
-- Unlike TCP which identifies a connection by the combination of source IP, source port, destination IP and destination port, QUIC uses a **Connection ID**. This means switching from WiFi to LTE no longer tears down the connection instead QUIC simply continues using the same Connection ID over the new network path, with no handshake required.
+- Unlike TCP which identifies a connection by the combination of source IP, source port, destination IP and destination port, QUIC uses a **Connection ID**. This means switching from WiFi to LTE no longer tears down the connection instead QUIC simply continues using the same Connection ID over the new network path, with no new handshake required.
 
-This also means that by building on UDP, QUIC moves the reliability and flow control logic out of the kernel and into userspace, meaning it is implemented at the application layer rather than the OS transport layer like TCP, this is also what allows QUIC to evolve and be updated much faster than TCP ever could.
+This also means that by building on UDP, QUIC moves the reliability and flow control logic out of the kernel and into userspace, meaning it is implemented in userspace as a library on top of UDP instead of in the OS kernel like TCP, this is also what allows QUIC to evolve and be updated much faster than TCP ever could.
 
 <Callout>
 
-Browsers don't inherently know that a server supports HTTP/3, so a server needs to run HTTP/2 as a fallback alongside HTTP/3. Along with the HTTP/2 response there is an extra header `Alt-Svc: h3=":443"` which tells the browser the server also supports HTTP/3 on port 443, so the browser uses HTTP/3 for subsequent requests and future visits.
+Browsers don't inherently know that a server supports HTTP/3, so the server needs to advertise it. It does this with an extra header `Alt-Svc: h3=":443"` on a regular HTTP/1.1 or HTTP/2 response, which tells the browser the server also supports HTTP/3 on port 443, so the browser uses HTTP/3 for subsequent requests and future visits. Browsers can also discover it through HTTPS DNS records. Since UDP can be blocked on some networks, servers keep supporting HTTP/1.1 or HTTP/2 over TCP as a fallback.
 
 </Callout>
 

@@ -2,7 +2,7 @@
 // Http3PacketLoss.tsx
 //
 // Visualizes HTTP/3 (QUIC over UDP) handling a lost packet: only the stream
-// whose packet was lost (Stream 5) has to wait for the retransmit, while
+// whose packet was lost (Stream 8) has to wait for the retransmit, while
 // packets for the other streams are delivered to the browser immediately.
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -18,10 +18,10 @@ const C_CLIENT_BG = "#EAF0FB";
 const C_SERVER_FILL = "#246B47";
 const C_SERVER_BG = "#E4F5EE";
 
-const C_STREAM1 = "#5B8FD4"; // script.js
-const C_STREAM3 = "#57A87B"; // hero.jpg
-const C_STREAM5 = "#8B5FBF"; // large-image.jpg
-const C_STREAM7 = "#D68A3D"; // style.css
+const C_STREAM0 = "#5B8FD4"; // script.js
+const C_STREAM4 = "#57A87B"; // hero.jpg
+const C_STREAM8 = "#8B5FBF"; // large-image.jpg
+const C_STREAM12 = "#D68A3D"; // style.css
 const C_ACK = "#7A8696";
 
 const DIAGRAM_H = 392;
@@ -46,12 +46,12 @@ type ScheduledArrow = {
 };
 
 const ARROWS: ScheduledArrow[] = [
-  { name: "pkt1", label: "Stream 5: Pkt = 1", color: C_STREAM5, fromServer: true, row: 0, start: 0.02, end: 0.13, breakAt: 0.75 },
-  { name: "pkt2", label: "Stream 7: Pkt = 2", color: C_STREAM7, fromServer: true, row: 1, start: 0.04, end: 0.15 },
-  { name: "pkt3", label: "Stream 3: Pkt = 3", color: C_STREAM3, fromServer: true, row: 2, start: 0.17, end: 0.27 },
-  { name: "pkt4", label: "Stream 1: Pkt = 4", color: C_STREAM1, fromServer: true, row: 3, start: 0.29, end: 0.39 },
+  { name: "pkt1", label: "Stream 8: Pkt = 1", color: C_STREAM8, fromServer: true, row: 0, start: 0.02, end: 0.13, breakAt: 0.75 },
+  { name: "pkt2", label: "Stream 12: Pkt = 2", color: C_STREAM12, fromServer: true, row: 1, start: 0.04, end: 0.15 },
+  { name: "pkt3", label: "Stream 4: Pkt = 3", color: C_STREAM4, fromServer: true, row: 2, start: 0.17, end: 0.27 },
+  { name: "pkt4", label: "Stream 0: Pkt = 4", color: C_STREAM0, fromServer: true, row: 3, start: 0.29, end: 0.39 },
   { name: "ack1", label: "ACK = 2-4 (1 missing)", color: C_ACK, fromServer: false, row: 4, start: 0.43, end: 0.52 },
-  { name: "pkt5", label: "Stream 5: Pkt = 5 (resend of Pkt 1)", color: C_STREAM5, fromServer: true, row: 5, start: 0.58, end: 0.69 },
+  { name: "pkt5", label: "Stream 8: Pkt = 5 (resend of Pkt 1)", color: C_STREAM8, fromServer: true, row: 5, start: 0.58, end: 0.69 },
   { name: "ack2", label: "ACK = 5", color: C_ACK, fromServer: false, row: 6, start: 0.73, end: 0.82 },
 ];
 
@@ -63,14 +63,14 @@ function arrowProgress(arrow: ScheduledArrow, t: number) {
 
 const TIMELINE_ANNOTATIONS = [
   { start: 0,    text: "Server sends QUIC packets over UDP, each carrying data from a different HTTP/3 stream" },
-  { start: 0.02, text: "Stream 5 packet (Pkt = 1, large-image.jpg 1/3) is sent but lost on the wire" },
-  { start: 0.04, text: "Stream 7 packet (Pkt = 2, style.css) is sent right behind it and arrives" },
-  { start: 0.17, text: "Stream 3 packet (Pkt = 3, hero.jpg 1/2) arrives and is delivered to the browser immediately" },
-  { start: 0.29, text: "Stream 1 packet (Pkt = 4, script.js) is delivered immediately too - nothing waits on Pkt = 1" },
+  { start: 0.02, text: "Stream 8 packet (Pkt = 1, large-image.jpg 1/3) is sent but lost on the wire" },
+  { start: 0.04, text: "Stream 12 packet (Pkt = 2, style.css) is sent right behind it and arrives" },
+  { start: 0.17, text: "Stream 4 packet (Pkt = 3, hero.jpg 1/2) arrives and is delivered to the browser immediately" },
+  { start: 0.29, text: "Stream 0 packet (Pkt = 4, script.js) is delivered immediately too - nothing waits on Pkt = 1" },
   { start: 0.43, text: "One combined ACK: packets 2-4 received, packet 1 missing - no duplicate ACKs" },
-  { start: 0.58, text: "Server resends Stream 5's data in a NEW packet (Pkt = 5) - packet numbers are never reused" },
-  { start: 0.73, text: "ACK = 5 - Stream 5's data has arrived and is now delivered to the browser" },
-  { start: 0.88, text: "Only Stream 5 waited for the lost packet - Streams 1, 3 and 7 were never blocked" },
+  { start: 0.58, text: "Server resends Stream 8's data in a NEW packet (Pkt = 5) - packet numbers are never reused" },
+  { start: 0.73, text: "ACK = 5 - Stream 8's data has arrived and is now delivered to the browser" },
+  { start: 0.88, text: "Only Stream 8 waited for the lost packet - Streams 0, 4 and 12 were never blocked" },
 ];
 
 function getAnnotation(t: number) {
