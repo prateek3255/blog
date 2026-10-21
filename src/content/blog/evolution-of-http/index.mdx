@@ -1,8 +1,8 @@
 ---
 title: "Evolution Of HTTP: An Interactive Guide"
 description: "A deep dive into the three major versions of HTTP that dominate the web today and how they evolved to meet the needs of the modern internet."
-date: "2026-04-20"
-updatedAt: "2026-04-20"
+date: "2026-10-21"
+updatedAt: "2026-10-21"
 tags:
   - go
   - http
@@ -12,12 +12,14 @@ import Callout from '@/components/mdx/Callout.astro';
 import BlogImage from '@/components/mdx/BlogImage.astro';
 import http1 from './http1.png';
 import http2 from './http2.png';
-import http3 from './http3.png';
 import TcpHandshake from '@/components/react/sequence-diagrams/TcpHandshake.tsx';
 import TcpPacketRetry from '@/components/react/sequence-diagrams/TcpPacketRetry.tsx';
 import Http1HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http1HeadOfLineBlocking.tsx';
 import TlsHandshake from '@/components/react/sequence-diagrams/TlsHandshake.tsx';
 import Http2Multiplexing from '@/components/react/sequence-diagrams/Http2Multiplexing.tsx';
+import Http2HeadOfLineBlocking from '@/components/react/sequence-diagrams/Http2HeadOfLineBlocking.tsx';
+import Http3PacketLoss from '@/components/react/sequence-diagrams/Http3PacketLoss.tsx';
+import UdpDatagrams from '@/components/react/sequence-diagrams/UdpDatagrams.tsx';
 
 Hyper Text Transfer Protocol is the underlying technology for the web we use on a day to day basis. It started out as a way to exchange hypertext documents over a network using the existing TCP/IP protocols in the early 90s, but it has evolved significantly over the last three decades and is now the backbone of the modern internet.
 
@@ -29,15 +31,17 @@ We'll start with a brief look at TCP and how it works at a high level, since und
 
 Transmission Control Protocol is a Transport Layer protocol used by the sender and receiver to break down a stream of data into segments and reassemble it at the receiver, with flow and error control inherently built in.
 
+TCP breaks data into chunks and wraps each chunk with a TCP header. This chunk plus header is called a TCP segment, and it is the unit of data that TCP uses to send and receive information over the network. 
+
 <Callout>
-Each TCP segment consists of a header and a data section. The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793) from 1981.
+The TCP header contains 10 mandatory fields and an optional field for TCP options. The payload follows the header and contains the data for the application. You can find more details about the structure of a TCP segment in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293), which obsoletes the original [RFC 793](https://datatracker.ietf.org/doc/html/rfc793) from 1981.
 </Callout>
 
 To begin transmitting over TCP, a three-way handshake needs to be made between the source and the destination to establish a connection. During this handshake, both the client and the server must agree on a starting sequence number that is used to guarantee the ordering of future segments.
 
  - The client picks a random sequence number `x`. Then it sends a segment with the `SYN` (initial request) flag set to the destination server to start the dialogue.
- - The server increments `x` by 1 and picks a random sequence number `y`. Then it sends a segment back to the client with the `SYN` and `ACK` flags set, the sequence number set to `y`, and the acknowledgement number set to `x+1` to acknowledge the client's request.
- - The client increments both `x` and `y` by 1 and a segment with the `ACK` flag set, the sequence number set to `x+1` and the acknowledgement number set to `y+1`, is sent back to the server, completing the handshake.
+ - The server increments `x` by 1 and picks a random sequence number `y`. Then it sends a segment back to the client with the `SYN` and `ACK` flags set, the sequence number set to `y`, and the acknowledgement number set to the incremented `x` to acknowledge the client's request.
+ - The client increments both `x` and `y` by 1 and a segment with the `ACK` flag set, the sequence number set to the incremented `x` and the acknowledgement number set to the incremented `y`, is sent back to the server, completing the handshake.
 
 Notice how the acknowledgement number provided by each side is always the incremented sequence number of the other side. This is how TCP ensures reliable delivery of segments.
 
@@ -48,6 +52,8 @@ Once the connection is established, either side can send data via segments over 
 Both sides also keep a Retransmission Timeout (RTO) timer to detect segment loss. If a segment is not acknowledged within the RTO, it is retransmitted.
 
 <TcpPacketRetry client:visible />
+
+Now that we have a basic understanding of TCP, let's look at how it's used by HTTP.
 
 ## HTTP/1.1 - The OG protocol
 
@@ -123,7 +129,7 @@ content-type: application/json
 {"id": "a"}
 ```
 
-It worked really well for quite a long time but with the rise of SPAs (Single Page Applications), there was a dramatic increase in the resources needed by a single web page. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
+It worked really well for quite a long time but as web became more ubiquotous especially with the rise of SPAs (Single Page Applications), there was a dramatic increase in the resources needed by a single web page. The main bottleneck was Head of Line Blocking, since only one request could be in flight at a time on a given connection, each subsequent request had to wait for the previous one to finish.
 
 <Callout>
 
@@ -145,11 +151,11 @@ ACKs are omitted for brevity from the above visualization, in reality each TCP s
 
 Notice in the above visualization, even with multiple connections the `/style.css` request gets blocked because of the `/large-img.jpg` request, illustrating Head of Line Blocking in action.
 
-For testing purposes I also created a demo server running on HTTP/1.1 and loaded a hundred resources simultaneously where each took 20ms to process, and here is what the network graph looked like:
+For testing purposes I also created a demo server running on HTTP/1.1 and loaded a hundred resources simultaneously where each took **20ms** to process, and here is what the network graph looked like:
 
 <BlogImage src={http1} alt="HTTP/1.1 network waterfall" />
 
-If you check the waterfall for the slowest chunk of requests, you can see that even though the actual requests take 20ms each to process yet they get stalled significantly because they're waiting for other requests to complete on the same connection. All requests take more than 300ms to be processed in total.
+If you check the waterfall and the overall time taken for all requests to complete, you'll see a pattern of at most 6 requests being processed in parallel similar to what we discussed earlier. So even though the requests take 20ms to process the slowest request took more than 300ms since they get queued behind existing requests.
 
 ### Making HTTP secure
 
@@ -159,7 +165,7 @@ As the web grew beyond academic networks, people soon realized plain HTTP wasn't
 
 All servers that want to use `https` need a signed certificate from a recognised Certificate Authority (CA) that the browser trusts. Each certificate contains the server's **public key**, while the server keeps its **private key** secret.
 
-After the TCP handshake, the browser and server perform a **TLS handshake** (this describes TLS 1.2):
+When using `https` after the TCP handshake, the browser and server perform a **TLS handshake** (this describes TLS 1.2):
 
 - The browser sends a `ClientHello` with its supported cipher suites and a randomly generated value (**client random**). The server responds with a `ServerHello` containing its chosen cipher suite, its own randomly generated value (**server random**) and its certificate.
 - The browser verifies the server's certificate against a trusted CA and extracts the server's public key from it.
@@ -173,7 +179,7 @@ TLS has now become the standard on the web, with browsers showing warnings when 
 
 ## HTTP/2 - The protocol for performance
 
-Over the years, especially in the 2010s, web pages became much more complex, and with the introduction of SPAs, the concept of web apps became a thing. These pages required a lot of assets for interactivity, media, etc. and HTTP/1.1 was starting to become a clear bottleneck. To overcome this, Google implemented an experimental protocol called SPDY in the early 2010s which later became the foundation for HTTP/2, standardized in 2015.
+As we discussed in the previous section, the Head of Line Blocking problem in HTTP/1.1 was starting to become a major performance bottleneck as the web evolved and required a lot more assets for interactivity, media, etc. To overcome this, Google implemented an experimental protocol called [SPDY](https://en.wikipedia.org/wiki/SPDY) in the early 2010s which later became the [foundation for HTTP/2, standardized in 2015](https://www.rfc-editor.org/info/rfc7540/).
 
 One of the main ways HTTP/2 overcomes the limitations of HTTP/1.1 is by multiplexing that is sending data for multiple requests and responses over the same TCP connection in parallel.
 
@@ -241,7 +247,7 @@ So instead of sending multiple bytes for these headers, the connection only uses
 
 On top of the static table, both sides maintain a dynamic table that is a sliding window of headers seen in the current session. When the server sends back `user-agent: Mozilla/5.0...` for the first time it's added to the dynamic table, and every subsequent request can reference it as a single index.
 
-This allows significant reduction in header size over a persistent TCP connection with multiple requests. For instance in the demo I was using I observed that the headers for the resource requests took 51 bytes on the wire as opposed to the 983 bytes it took in plain text over HTTP/1.1.
+This allows significant reduction in header size over a persistent TCP connection with multiple requests. For instance in the demo I was using I observed that the **headers for the resource requests took 51 bytes on the wire as opposed to the 983 bytes it took in plain text over HTTP/1.1**.
 
 Here is another visualization of how HTTP/2 transfers works over TCP:
 
@@ -259,15 +265,21 @@ This essentially fixes the application level Head of Line Blocking we saw with H
 
 Now you might think if we had already solved all the problems with HTTP/2, then why did we need another version of HTTP.
 
-HTTP/3 was needed to solve another type of Head of Line Blocking which was at the transport layer itself with TCP. As we saw earlier, when a TCP packet is lost, TCP detects it either via a missing ACK or via the Retransmission Timeout. Until that missing packet is retransmitted and received, TCP will not deliver any subsequent data to the application, even data belonging to completely unrelated streams.
+HTTP/3 was needed to solve another type of Head of Line Blocking, this time at the transport layer. HTTP/2 multiplexes many streams over a single TCP connection, but TCP has no idea that streams exist. It only sees one ordered stream of bytes.
 
-Also with smartphones gaining huge popularity all over the planet in the late 2010s, almost 60% of the whole internet traffic is being consumed on them. Mobile networks made packet loss brutally apparent (1-2% on mobile networks compared to 0.01% on wired), and frequent network switches from WiFi → LTE → WiFi tear down the entire TCP connection, requiring a full TCP three-way handshake followed by a TLS handshake all over again.
+As we saw earlier, TCP guarantees in-order delivery. When a segment is lost, the sender detects it either through duplicate ACKs or through the Retransmission Timeout (RTO) and retransmits it. Until the retransmitted segment arrives, TCP holds back all subsequent data in its receive buffer and does not deliver it to the application, even if that data belongs to completely unrelated streams.
+
+Here is an example of HTTP/2 suffering from this. A segment carrying `large-image.jpg` data is lost. The segments after it, carrying data from other streams, arrive fine but are held by TCP. For each out-of-order segment the client sends a duplicate ACK, still asking for the missing byte. After three duplicate ACKs, the server retransmits the lost segment (fast retransmit), and only then are all the held segments delivered to the browser and can be processed by the application:
+
+<Http2HeadOfLineBlocking client:visible />
+
+With smartphones gaining huge popularity all over the planet in the late 2010s, almost 60% of the whole internet traffic is being consumed on them. Mobile networks made packet loss brutally apparent (1-2% on mobile networks compared to 0.01% on wired), and frequent network switches from WiFi → LTE → WiFi tear down the entire TCP connection, requiring a full TCP three-way handshake followed by a TLS handshake all over again.
 
 Since this time around the problem was not with HTTP/2 but with the underlying transport protocol itself, the transport layer protocol needed to be changed to use UDP instead of TCP.
 
-UDP like TCP is a networking protocol for transferring data between two computers. The way it differs from TCP is that UDP is more of a fire and forget protocol, where it just sends packets directly to the target computer without establishing a connection, indicating the order of packets, or checking whether they arrived as intended and no ordering guarantees.
+[UDP (User Datagram Protocol)](https://www.cloudflare.com/en-in/learning/ddos/glossary/user-datagram-protocol-udp/) like TCP is a networking protocol for transferring data between two computers. The way it differs from TCP is that UDP is more of a fire and forget protocol, where it just sends packets directly to the target computer without establishing a connection, indicating the order of packets, or checking whether they arrived as intended and no ordering guarantees.
 
-← Visualization of how UDP sends packets ->
+<UdpDatagrams client:visible />
 
 UDP is primarily used for time-sensitive communications where occasionally dropping a packet is better than waiting. Most prominent examples include Voice over IP and Video calls, in both cases a static-y conversation is preferable over one that is crystal clear but is delayed.
 
@@ -277,8 +289,7 @@ With QUIC over UDP we get the following things:
 
 - All the multiplexing of requests like HTTP/2 and header compression via **QPACK** which is QUIC's own compression algorithm designed specifically to handle out-of-order delivery of headers across streams, unlike HPACK which assumed in-order delivery.
 - QUIC tracks delivery independently per stream, so packet loss on one stream does not block any other stream from making progress, unlike TCP where a missing segment freezes delivery for everything behind it.
-- Has TLS 1.3 baked in, so encryption is no longer optional
-- As we saw earlier TCP + TLS required 2-3 round trips before any data could flow. With QUIC, the connection and TLS 1.3 handshake are combined into a single round trip. For previously visited servers, QUIC supports **0-RTT** by reusing session parameters from the last visit to send data immediately with zero round trips.
+- Has TLS 1.3 baked in, so encryption is no longer optional.
 - Unlike TCP which identifies a connection by the combination of source IP, source port, destination IP and destination port, QUIC uses a **Connection ID**. This means switching from WiFi to LTE no longer tears down the connection instead QUIC simply continues using the same Connection ID over the new network path, with no handshake required.
 
 This also means that by building on UDP, QUIC moves the reliability and flow control logic out of the kernel and into userspace, meaning it is implemented at the application layer rather than the OS transport layer like TCP, this is also what allows QUIC to evolve and be updated much faster than TCP ever could.
@@ -291,11 +302,9 @@ Browsers don't inherently know that a server supports HTTP/3, so a server needs 
 
 Here is a simple visualization of how HTTP/3 with QUIC works over the network:
 
-← Visualization showing multiple UDP packets being sent without ACK →
+<Http3PacketLoss client:visible />
 
-The network waterfall of 100 resource requests looks quite similar to what we saw with HTTP/2, which is expected, both were running on a local server with no packet loss, where HTTP/3's advantages don't come into play. The real difference would be visible on mobile networks or high packet loss environments, where HTTP/2's TCP-layer Head of Line Blocking would cause significant stalls while QUIC streams would continue delivering independently.
-
-<BlogImage src={http3} alt="HTTP/3 network waterfall" />
+With HTTP/3 the browser can continue to receive data for other streams while waiting for the retransmission of older lost packets on a different stream, effectively mitigating the Head of Line Blocking problem seen in HTTP/2 over TCP.
 
 ## Wrapping up
 

@@ -50,8 +50,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_1_ROWS[0],
     x2: RIGHT_EDGE - 10,
     y2: CONN_1_ROWS[0],
-    start: 0.04,
-    end: 0.11,
+    start: 0.048,
+    end: 0.131,
   },
   {
     name: "conn2-req1",
@@ -62,8 +62,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[0],
     x2: RIGHT_EDGE - 10,
     y2: CONN_2_ROWS[0],
-    start: 0.05,
-    end: 0.12,
+    start: 0.06,
+    end: 0.143,
   },
   // NOTE: Conn2 transit durations below intentionally match Conn1's
   // benchmark pattern (req/resp = 0.07, chunk gap = 0.01, new-request gap =
@@ -82,8 +82,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_1_ROWS[1],
     x2: LEFT_EDGE + 10,
     y2: CONN_1_ROWS[1],
-    start: 0.15,
-    end: 0.22,
+    start: 0.179,
+    end: 0.262,
   },
   {
     name: "conn1-req2",
@@ -94,8 +94,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_1_ROWS[2],
     x2: RIGHT_EDGE - 10,
     y2: CONN_1_ROWS[2],
-    start: 0.28,
-    end: 0.35,
+    start: 0.333,
+    end: 0.417,
   },
   {
     name: "conn2-resp1a",
@@ -106,8 +106,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[1],
     x2: LEFT_EDGE + 10,
     y2: CONN_2_ROWS[1],
-    start: 0.44,
-    end: 0.51,
+    start: 0.524,
+    end: 0.607,
   },
   {
     name: "conn1-resp2a",
@@ -118,8 +118,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_1_ROWS[3],
     x2: LEFT_EDGE + 10,
     y2: CONN_1_ROWS[3],
-    start: 0.38,
-    end: 0.45,
+    start: 0.452,
+    end: 0.536,
   },
   {
     name: "conn1-resp2b",
@@ -130,8 +130,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_1_ROWS[4],
     x2: LEFT_EDGE + 10,
     y2: CONN_1_ROWS[4],
-    start: 0.40,
-    end: 0.47,
+    start: 0.476,
+    end: 0.56,
   },
   {
     name: "conn2-resp1b",
@@ -142,8 +142,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[2],
     x2: LEFT_EDGE + 10,
     y2: CONN_2_ROWS[2],
-    start: 0.46,
-    end: 0.53,
+    start: 0.548,
+    end: 0.631,
   },
   {
     name: "conn2-resp1c",
@@ -154,8 +154,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[3],
     x2: LEFT_EDGE + 10,
     y2: CONN_2_ROWS[3],
-    start: 0.48,
-    end: 0.55,
+    start: 0.571,
+    end: 0.655,
   },
   {
     name: "conn2-req2",
@@ -166,8 +166,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[4],
     x2: RIGHT_EDGE - 10,
     y2: CONN_2_ROWS[4],
-    start: 0.73,
-    end: 0.80,
+    start: 0.679,
+    end: 0.762,
   },
   {
     name: "conn2-resp2",
@@ -178,8 +178,8 @@ const ARROWS: ScheduledArrow[] = [
     y1: CONN_2_ROWS[5],
     x2: LEFT_EDGE + 10,
     y2: CONN_2_ROWS[5],
-    start: 0.84,
-    end: 0.91,
+    start: 0.81,
+    end: 0.893,
   },
 ];
 
@@ -195,12 +195,12 @@ function isVisible(arrow: ScheduledArrow, t: number) {
 
 const TIMELINE_ANNOTATIONS = [
   { start: 0, text: "Two persistent TCP connections can carry requests in parallel" },
-  { start: 0.05, text: "Client requests script.js on connection 1 while a large image starts downloading on connection 2" },
-  { start: 0.16, text: "Connection 2 is now busy generating and streaming the large image" },
-  { start: 0.28, text: "Connection 1 reuses its freed capacity for hero.jpg" },
-  { start: 0.48, text: "style.css got queued behind the large image on connection 2" },
-  { start: 0.73, text: "Only after the large image completes can style.css finally be sent" },
-  { start: 0.96, text: "Head-of-line blocking is per connection, but still slows the overall page load" },
+  { start: 0.06, text: "Client requests script.js on connection 1 while a large image starts downloading on connection 2" },
+  { start: 0.19, text: "Connection 2 is now busy generating and streaming the large image" },
+  { start: 0.333, text: "Connection 1 reuses its freed capacity for hero.jpg" },
+  { start: 0.571, text: "style.css got queued behind the large image on connection 2" },
+  { start: 0.679, text: "Only after the large image completes can style.css finally be sent" },
+  { start: 0.952, text: "Head-of-line blocking is per connection, but still slows the overall page load" },
 ];
 
 function getAnnotation(t: number) {
@@ -294,9 +294,9 @@ function ServerSpinner({ visible }: { visible: boolean }) {
 }
 
 export default function Http1HeadOfLineBlocking() {
-  const { t, playing, setPlaying, seek } = useSequenceAnimation(15000);
+  const { t, playing, setPlaying, seek } = useSequenceAnimation(12600);
   const annotation = getAnnotation(t);
-  const showSpinner = t >= 0.16 && t < 0.56;
+  const showSpinner = t >= 0.19 && t < 0.667;
 
   return (
     <SequenceDiagram

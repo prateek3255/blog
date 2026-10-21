@@ -120,6 +120,7 @@ const ARROWS = [
     y1: rowY(2),
     x2: RIGHT_EDGE - 10,
     y2: rowY(2),
+    breakAt: 1,
   },
   {
     name: "clientRetry1",
@@ -130,6 +131,7 @@ const ARROWS = [
     y1: rowY(3),
     x2: RIGHT_EDGE - 10,
     y2: rowY(3),
+    breakAt: 1,
   },
   {
     name: "clientRetry2",
@@ -256,6 +258,7 @@ export default function TcpPacketRetry() {
           color={arrow.color}
           label={arrow.label}
           labelSide={arrow.labelSide}
+          breakAt={arrow.breakAt}
           visible={i <= activeIdx}
           progress={i < activeIdx ? 1 : phaseProgress(arrow.name, t)}
         />

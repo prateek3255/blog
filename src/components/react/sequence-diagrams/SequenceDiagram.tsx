@@ -181,17 +181,23 @@ interface DiagramArrowProps {
   // label) rendered on the opposite side of the line from `label`, in a
   // smaller/lighter style so it doesn't compete visually with the main label.
   sublabel?: string;
+  // Optional 0..1 fraction of the path at which the arrow breaks (a lost
+  // packet). The line stops there with no arrowhead and a ✗ is drawn.
+  breakAt?: number;
   progress: number;
   visible: boolean;
 }
 
-export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above", sublabel, progress, visible }: DiagramArrowProps) {
+const BREAK_COLOR = "#D14B4B";
+
+export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above", sublabel, breakAt, progress, visible }: DiagramArrowProps) {
   if (!visible) return null;
 
   const dx = x2 - x1;
   const dy = y2 - y1;
   const len = Math.hypot(dx, dy);
-  const drawn = easeInOut(Math.max(0, progress));
+  const reach = breakAt ?? 1;
+  const drawn = easeInOut(Math.max(0, progress)) * reach;
   const offset = len * (1 - drawn);
   const angle = Math.atan2(dy, dx) * (180 / Math.PI);
   const textAngle = Math.abs(angle) > 90 ? angle + 180 : angle;
@@ -217,12 +223,18 @@ export function DiagramArrow({ x1, y1, x2, y2, color, label, labelSide = "above"
         strokeDasharray={len} strokeDashoffset={offset}
         strokeLinecap="round"
       />
-      {progress > 0.02 && (
+      {progress > 0.02 && breakAt === undefined && (
         <polygon
           points="-9,0 0,-5.5 0,5.5"
           fill={color}
           transform={`translate(${tipX},${tipY}) rotate(${angle + 180})`}
         />
+      )}
+      {breakAt !== undefined && progress >= 1 && (
+        <g stroke={BREAK_COLOR} strokeWidth={3} strokeLinecap="round">
+          <line x1={tipX - 6} y1={tipY - 6} x2={tipX + 6} y2={tipY + 6} />
+          <line x1={tipX - 6} y1={tipY + 6} x2={tipX + 6} y2={tipY - 6} />
+        </g>
       )}
       {label && drawn >= 0.5 && (
         <text
@@ -357,20 +369,27 @@ interface SequenceDiagramProps {
 
 export function SequenceDiagram({ t, playing, setPlaying, seek, annotation, legendItems = [], viewBoxHeight, children }: SequenceDiagramProps) {
   const { W, H } = LAYOUT;
-  const svgH = viewBoxHeight ?? H;
+  // Annotation text is hidden, so trim the 20px it used to occupy; the bottom
+  // padding then matches the 20px top padding around the actor boxes.
+  const svgH = (viewBoxHeight ?? H) - 20;
 
   return (
     <div style={{ fontFamily: "sans-serif", maxWidth: W, margin: "0 auto", padding: "16px 0" }}>
       <svg
         viewBox={`0 0 ${W} ${svgH}`} width="100%"
         style={{ display: "block", border: "0.5px solid #e0e0e0", borderRadius: 8, background: "#fff" }}
+        onClick={() => {
+          if (window.getSelection()?.toString()) return;
+          if (!playing && t >= 1) seek(0);
+          setPlaying(p => !p);
+        }}
       >
         {children}
-        {annotation && (
+        {/* {annotation && (
           <text x={W / 2} y={svgH - 14} textAnchor="middle" dominantBaseline="auto" fill="#aaa" fontSize={13} fontWeight={600}>
             {annotation}
           </text>
-        )}
+        )} */}
       </svg>
       <Controls t={t} playing={playing} setPlaying={setPlaying} seek={seek} />
       {legendItems.length > 0 && <Legend items={legendItems} />}
